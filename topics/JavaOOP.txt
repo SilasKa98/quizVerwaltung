@@ -1,0 +1,35 @@
+!Fragen zu OOP in Java, Version Juli 2020.
+MultiOptions#Was sind Klassen fuer eine THM-Software?#0,1,4#Professor#Student#SWE2#Medieninformatik#Fachbereich#IEM
+Options#Welche Beziehung sollte zwischen Kind- und Eltern-Klasse gelten?#1#Geh&ouml;rt zu#Ist ein#Wird benutzt
+Options#Wie kann eine Klasse verhindern, dass Kind-Klassen direkt auf ein Eltern-Attribut zugreifen k&ouml;nnen?#1#garnicht#mit dem Zugriffsmodifikator private#mit dem Zugriffsmodifikator protected
+Open#Elternklasse, wenn keine andere angegeben#Object
+Open#Referenz auf das Objekt, in dem wir uns befinden#this
+Open#Schl&uuml;sselwort Ableitung von Elternklasse#extends
+Open#Schl&uuml;sselwort f&uuml;r Implementierung eines Interfaces#implements
+Open#Schl&uuml;sselwort f&uuml;r Klassen-Methoden#static
+Open#Schl&uuml;sselwort f&uuml;r Konstanten#final
+Options#Eine Methode mit gleicher Signatur wie eine Methode in den Elternklassen#1#&uuml;berladen (overload)#&uuml;berschreiben (overwrite)
+Options#Wie sollte man eine static Methode aufrufen?#0#&Uuml;ber den Klassennamen#&Uuml;ber eine Instanz
+YesNo#<html>Die Basisklasse Object ist abstrakt</html>#false
+YesNo#Eine Klasse kann nur ein Interface implementieren#false
+YesNo#Eine Klasse kann nur eine Elternklasse erweitern#true
+YesNo#Eine abstrakte Klasse darf nur abstrakte Methoden enthalten#false
+YesNo#Java ist OOP#true
+YesNo#String ist ein primitiver Datentyp#false
+YesNo#int und Integer sind das selbe#false
+MultiOptions#Was sind Interfaces?#1,3#JLabel#ActionListener#JButton#BoardClickListener
+YesNo#Jede Klasse muss eine main-Methode enthalten#false
+YesNo#In einem package darf nur eine Klasse eine main-Methode enthalten#false
+YesNo#Die main-Methode muss static sein#true
+YesNo#Eine Klasse kann mehrere Konstruktoren mit unterschiedlichen Parameterlisten enthalten#true
+MultiOptions#Was gehoert zur Objektorientierten Programmierung?#0,1,2#Programme basieren auf Objekten#Objekte sind Instanzen einer Klasse#Zwischen den Klassen besteht eine Vererbungshierarchie#Methoden sind auch Objekte
+Options#Wenn man in einer Klasse keinen Konstruktor schreibt#1#gibt es einen Compilerfehler#kann nur der parameterlose Konstruktor genutzt werden#koennen die Konstruktoren der Elternklassen benutzt werden
+Order#Ordnen Sie die Zugriffsmodifikatoren nach zunehmender Sichtbarkeit#ABC#private#protected#public
+Options#Wie kann man verhindern, dass von einer Klasse Objekte instanziiert werden?#3#garnicht#alles auf static setzten#keinen Konstruktor schreiben#mindestens einen Konstruktor schreiben und alle auf private setzen
+Options#Was bewirkt final bei Methoden?#2#Die Methode gibt immer den selben Wert zur&uuml;ck#Die Methode kann nicht &uuml;berladen werden#Die Methode kann nicht in Kindklassen &uuml;berschrieben werden.
+Options#Kann ein Interface Attribute enthalten?#2#Nein#Ja#Ja, aber diese sind automatisch static final#Ja, aber nur primitive Typen
+Options#Kann ein Interface nichtstatische auscodierte Methoden enthalten?#0#Ja, seit Java 8 ist dies erlaubt (Schl&uuml;sselwort default)#Nein, nur abstrakte Methoden sind erlaubt
+Options#Was halten Sie von der Idee, eine abstrakte Methode auf private zu setzten?#1#Das ist ein guter Schutz gegen versehentliche Verwendung#Das ist nicht erlaubt (Compiler-Fehler)#Das kann man machen, die Methode muss dann nicht &uuml;berschrieben werden.
+MultiOptions#<em>Student</em> ist eine Kindklasse der abstrakten Klasse <em>Person</em>. Was ist erlaubt?#1,2#Person p = new Person();#Person p = new Student();#Student s = new Student();#Student s = new Person();
+Options#Gegeben ist eine Klasse Form mit diversen Kindklassen wie Kreis oder Dreieck und form soll vom Typ Form sein. Wann wird ausgew&auml;hlt, welche Methode bei dem folgenden Aufruf ausgef&uuml;hrt wird? <pre>form.zeichnen();</pre>#1#Beim Compilieren (Statische Bindung)#Zur Laufzeit (Dynamische Bindung)
+Options#Was bedeutet Polymorphie oder Polymorphismus w&ouml;rtlich?#2#Mehrdeutigkeit#Mehrfarbigkeit#Vielgestaltigkeit

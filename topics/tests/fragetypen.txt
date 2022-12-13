@@ -1,0 +1,30 @@
+! Beispiele f&uuml;r alle Fragetypen 
+! (siehe auch <a href="https://www.researchgate.net/publication/344556147_SimpQui_-_ein_simples_Quiz">Dokumentation</a>)
+!<ol>
+!<li>YesNo</li>
+!<li>Open</li>
+!<li>RegOpen</li>
+!<li>Correct</li>
+!<li>Options</li>
+!<li>MultiOptions</li>
+!<li>Order</li>
+!<li>Dyn (&auml;ndert sich beim Neuladen)</li>
+!<li>MultiLine</li>
+!</ol>
+YesNo#Java ist OOP#true
+Open#i nach <pre>i=4; ++i;</pre>#5
+RegOpen#Wie kann man den Wert <em>eine Million</em> mit drei Zeichen als Java-Literal darstellen?#^1[Ee]6$
+Correct#if( 50 <= p <= 100 )#if( 50 <= p & p <= 100 )
+Options#Wie beginnt ein Zeilen-Kommentar in Java?#1#%#//#\\#**
+MultiOptions#Was sind g&uuml;ltige int-Werte?#0,2#007#009#011
+Order#Ordnen Sie die Modifikatoren nach zunehmender Sichtbarkeit#ABC#private#protected#public
+Dyn#mod
+<<
+for( int i=0; i<30; i+=10 ) {
+   for( int j=0; j<3; j++ ) {
+      System.out.print( i + j + " ");
+   }
+}
+#
+0 1 2 10 11 12 20 21 22
+>>

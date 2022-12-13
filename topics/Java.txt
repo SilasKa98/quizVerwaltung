@@ -1,0 +1,14 @@
+!Ein Fragenset zu Grundlagen von Java
+YesNo#Java ist OOP#true
+YesNo#Java ist &auml;lter als die Programmiersprache C#false
+Options#Wonach wurde die Java-Technologie benannt?#1#Der gleichnamigen Insel#Einer Kaffee-Sorte#Einem  Gesellschaftstanz im 3/4-Takt aus den 1920er-Jahren 
+Options#Von welcher Firma wurde die Java-Technologie entwickelt?#2#Microsoft#Apple#Sun Microsystems#IBM#HP#Google
+Options#Welche dieser Programmiersprachen ist am &auml;hnlichsten zu Java?#0#C++#Javascript#PHP#Pascal
+Options#Welches Werkzeug &uuml;bersetzt den Java-Quellcode in maschinenverst&auml;ndlichen Java-Bytecode?#0#Compiler#Interpreter#Translator
+Options#Was ben&ouml;tigt man zum Ausf&uuml;hren von Java Programmen?#1#Java Development Kit#Java Runtime Environment#Eclipse IDE
+Options#In welchem Jahr ist Java erschienen?#2#1975#1985#1995#2005#2015
+Options#Wof&uuml;r steht JDK?#1#Java Deployment Kit#Java Development Kit#Java Design Klub
+MultiOptions#Welche Datei-Typen spielen bei Java eine Rolle?#0,1#.java - Quellcode#.class - ausf&uuml;hrbarer Byte-Code#.exe - ausf&uuml;hrbarer Maschinen-Code
+Options#Wof&uuml;r wurde die Java-Technologie urspr&uuml;nglich entwickelt?#1#Einsatz in Webservern#Steuerung einfacher Ger&auml;te#Wissenschaftliche Simulationen#Computer-Spiele
+Options#Womit beginnt ein Zeilen-Kommentar in Java?#1#!#//#\\#**
+Options#Womit wird ein Mehrzeilen-Kommentar in Java gekennzeichnet?#2#<< ... >>#!! ... !!#/* ... */#// ... \\

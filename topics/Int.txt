@@ -1,0 +1,33 @@
+!Aufgaben zu int - Werten und Variablen
+Dyn#mod
+Dyn#mod10
+Dyn#mod10
+Dyn#intDiv
+Dyn#intDiv
+Dyn#plusplus
+Dyn#plusplusPost
+Dyn#minusminus
+Dyn#minusminusPost
+Dyn#exp2
+Dyn#exp2
+Open#i nach <pre>i=4; ++i;</pre>#5
+Open#j nach <pre>i=4; j=3; j = ++i*j;</pre>#15
+Open#j nach <pre>i=4; j=3; j = i++*j;</pre>#12
+Open#<pre>6789 % 100</pre>#89 
+Open#<pre>6789 / 100</pre>#67
+Options#<pre>3^2</pre>#0#1 (bitweise XOR)#9 (3 hoch 2)
+Options#int-Wert &uuml;berschreitet gr&ouml;&szlig;ten darstellbaren Wert#3#Programmabsturz#Wert Inf#Wert NaN#negativer Wert
+Open#Was bedeutet das R in RGB (Deutsch, Anfangsbuchstabe gro&szlig;)#Rot
+YesNo#$2 ist ein nicht empfehlenswerter aber legaler Variablenname#true
+YesNo#Ist int n = 10_000_000; erlaubt?#true
+YesNo#Ist int n = 10.; erlaubt?#false
+YesNo#Nach <em>int m;</em> hat m immer den Wert 0#false
+MultiOptions#Was sind g&uuml;ltige int-Werte (Hexadezimal)?#0,1,2,4,5#0x#0x89ab#-0x89ab#0x-89ab#0XFF#0xFf
+MultiOptions#Was sind g&uuml;ltige int-Werte?#0,2#007#009#011
+Options#Was passiert, wenn man eine int-Variable verwendet, ohne ihr vorher eine Wert zuzuweisen?#3#Das Programm st&uuml;rzt ab#Dann wird automatisch der Wert 0 genommen#Es wird der Wert genommem, der zuf&auml;llig an der entsprechenden Spreicherstelle steht#Das erkennt der Compiler und meldet einen Fehler 
+MultiOptions#Schlechte Namen fuer Variablen?#1,2,3#anzahl#a#l#Note#studiengang
+MultiOptions#Erlaubte Namen fuer Variablen?#0,1,3#sem1#sem_1#sem-1#sem$1#sem%1#sem@1
+MultiOptions#Welche Anweisungen sind erlaubt?#2#int n = [2 + 3] * 5;#int n = {2 + 3} * 5;#int n = (2 + 3) * 5;
+Options#Was sagen Sie  zu folgendem Code?<pre>int i=2, j;</pre>#2#Alles bestens#Falsche Syntax, so nicht erlaubt#Funktioniert, aber man sollte immer nur eine Variable pro Zeile definieren.
+Options#Wo sollte man Variablen definieren?#1#Alle zusammen, ganz am Anfang#M&ouml;glichst dicht vor der ersten Verwendung#Ganz am Ende
+MultiOptions#Welche Regeln gelten f&uuml;r einen Variablennamen?#1,3#Mindestl&auml;nge 3 Zeichen#Sollte mit Kleinbuchstaben beginnen#Darf nur Ziffern und Buchstaben enthalten#Darf nicht mit einer Ziffer beginnen.#Namen f&uuml;r int Variablen m&uuml;ssen mit  i oder j beginnen. 
