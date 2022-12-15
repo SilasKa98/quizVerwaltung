@@ -18,8 +18,22 @@ class ReadQuestion{
 
     function printQuestion($questionObject){
         for($i=0;$i<count($questionObject);$i++){
-            print_r($questionObject[$i]);
-            print "<br><br>";
+            print '
+            <div class="panel panel-info">
+                <div class="panel-heading">'.$questionObject[$i]->question.'</div>';
+                print'<div class="panel-body">';
+                print'<p>Antwort: '.$questionObject[$i]->answer."</p>";
+                print'<p>Typ: '.$questionObject[$i]->questionType."</p>";
+                #print'<p>Optionen: '.$questionObject[$i]->options."</p>";
+                print'<p>Erstellungsdatum: '.$questionObject[$i]->creationDate."</p>";
+                print'<p>Letzte Änderung: '.$questionObject[$i]->modificationDate."</p>";
+                print'<p>Version: '.$questionObject[$i]->version."</p>";
+                print'<p>Tags: '.$questionObject[$i]->tags."</p>";
+                print'</div>
+            </div>';
+
+
+            #print "<h1 class='question'>".$questionObject[$i]->question."</h1>";
         }
     }
 
