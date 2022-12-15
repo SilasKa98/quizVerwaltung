@@ -19,8 +19,6 @@
 </head>
 <body>
     
-</body>
-</html>
 
 <?php
 include_once "handleQuestion.php";
@@ -30,25 +28,24 @@ include_once "translation.php";
 $question = new HandleQuestion("Java","topics");
 $questionObject = $question->getQuestion();
 
+echo '<div id="questionWrapper">';
+    //this needs to be done later on the objects which have been fetched from the database and not directly from the read in object...
+    $question->printQuestion($questionObject);
 
-//this needs to be done later on the objects which have been fetched from the database and not directly from the read in object...
-$question->printQuestion($questionObject);
+    /*
+    ############################################
+    #!!delete this comment to use translation!!#
+    ############################################
+    $translation = new Translator1("en-Us");
+    $objectTest = $translation->translateObject($questionObject);
 
-/*
-############################################
-#!!delete this comment to use translation!!#
-############################################
-$translation = new Translator1("en-Us");
-$objectTest = $translation->translateObject($questionObject);
+    print "<br><br><br><br>";
+    print "<h3>Translated: </h3>";
+    print "<br>";
 
-print "<br><br><br><br>";
-print "<h3>Translated: </h3>";
-print "<br>";
-
-$question->printQuestion($objectTest);
-*/
-
-
+    $question->printQuestion($objectTest);
+    */
+echo '</div>';
 
 
 
@@ -116,3 +113,7 @@ print_r($questionObject);
 */
 
 ?>
+
+
+</body>
+</html>
