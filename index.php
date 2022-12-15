@@ -61,15 +61,8 @@ echo '<div id="questionWrapper">';
     print "<br>";
    
     $question->printQuestion($objectTest);
-     */
+    */
 echo '</div>';
-
-
-
-
-
-
-
 
 
 
