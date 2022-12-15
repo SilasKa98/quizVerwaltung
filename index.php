@@ -30,6 +30,8 @@ include_once "translation.php";
 $question = new HandleQuestion("Java","topics");
 $questionObject = $question->getQuestion();
 
+
+//this needs to be done later on the objects which have been fetched from the database and not directly from the read in object...
 $question->printQuestion($questionObject);
 
 
