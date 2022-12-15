@@ -30,8 +30,8 @@ for($i=0;$i<count(json_decode($serializedQuestion));$i++){
 $translation = new Translator1("en-Us");
 $objectTest = $translation->translateObject($questionObject);
 
-
 print_r($objectTest);
+
 for($i=0;$i<count($objectTest);$i++){
     print_r($objectTest[$i]);
     print "<br><br>";

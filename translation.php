@@ -20,7 +20,6 @@ class Translator1{
     function translateText($inputText){
         $translator = new \DeepL\Translator($this->authKey);
         $result = $translator->translateText($inputText, null, $this->targetLanguage);
-        #echo $result->text; //translated text
         return $result->text;
     }
 
@@ -28,11 +27,18 @@ class Translator1{
         for($i=0;$i<count($inputObject);$i++){
             $questionValues = get_object_vars($inputObject[$i]);
             foreach($questionValues as $key => &$value){
-                if(is_string($inputObject[$i]->$key) && $key != "answer"){
+                if($key == "question"){
+                    #translating the questions here
                     $inputObject[$i]->$key = $this->translateText($inputObject[$i]->$key); 
+                }elseif($key == "options"){
+                    #translating arrays (options) here
+                    for($x=0;$x<count($inputObject[$i]->options);$x++){
+                        $inputObject[$i]->options[$x] = $this->translateText($inputObject[$i]->options[$x]); 
+                    }
                 }else{
-                    #implement for arrays (option etc....) here....
-                } 
+                    //all other fields, that are not handeled in the else if statement wont get translated
+                   //do not translate these fields;
+                }
             }
         }  
         return $inputObject;      
