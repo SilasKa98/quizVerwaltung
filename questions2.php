@@ -3,14 +3,14 @@ class Question {
   public $question;
   public $answer;
 
-  public function __construct($question, $answer, $questionType) {
+  public function __construct($question, $answer, $questionType, $version) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->id = uniqid();
     $this->questionType = $questionType;
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
-    $this->version = "";
+    $this->version = $version;
     $this->tags = "";
     $this->karma = "";
     $this->author = "";
@@ -43,7 +43,7 @@ class MultiLineQuestion extends Question{
 class OptionsQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType) {
+  public function __construct($question, $answer, $options, $questionType, $version) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -51,7 +51,7 @@ class OptionsQuestion extends Question{
     $this->questionType = $questionType;
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
-    $this->version = "";
+    $this->version = $version;
     $this->tags = "";
     $this->karma = "";
     $this->author = "";
@@ -66,7 +66,7 @@ class MultiOptionsQuestion extends OptionsQuestion{
 class OrderQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType) {
+  public function __construct($question, $answer, $options, $questionType, $version) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -74,7 +74,7 @@ class OrderQuestion extends Question{
     $this->questionType = $questionType;
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
-    $this->version = "";
+    $this->version = $version;
     $this->tags = "";
     $this->karma = "";
     $this->author = "";
@@ -86,30 +86,37 @@ class OrderQuestion extends Question{
 function parseLine( $line ) {
 	$parts = preg_split( "/#/", $line );
 	$parts = str_replace( "&num;", "#", $parts );
-    $questionType = $parts[0];
+  
+  $questionType = $parts[0];
+
+  include_once "versionService.php";
+  $version = new VersionService();
+  $version->setVersion("1.0");
+  $version = $version->version;
+
 	if( $parts[0] == "YesNo" ) {
-		return new YesNoQuestion( $parts[1], $parts[2], $questionType);
+		return new YesNoQuestion( $parts[1], $parts[2], $questionType, $version);
 	} else if( $parts[0] == "RegOpen" ) {
-		return new RegOpenQuestion( $parts[1], $parts[2], $questionType);
+		return new RegOpenQuestion( $parts[1], $parts[2], $questionType, $version);
 	} else if( $parts[0] == "Open" ) {
-		return new OpenQuestion( $parts[1], $parts[2], $questionType);
+		return new OpenQuestion( $parts[1], $parts[2], $questionType, $version);
 	} else if( $parts[0] == "Correct" ) {
-		return new CorrectQuestion( $parts[1], $parts[2], $questionType);
+		return new CorrectQuestion( $parts[1], $parts[2], $questionType, $version);
 	} else if( $parts[0] == "Order" ) {
-		return new OrderQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType);
+		return new OrderQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version);
 	} else if( $parts[0] == "Options" ) {
-		return new OptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType);
+		return new OptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version);
 	} else if( $parts[0] == "MultiOptions" ) {
-		return new MultiOptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType);
+		return new MultiOptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version);
 	} else if( $parts[0] == "Dyn" ) {
 		$func = $parts[1];
 		if( method_exists( "Dyn", $func ) ) {
 			return Dyn::{$func}();
 		} else {
-			return new Question( "-", "", "" );
+			return new Question( "-", "", "", "");
 		}
 	} else {
-		return new Question( "-", "", "" );
+		return new Question( "-", "", "", "");
 	}
 }
 
