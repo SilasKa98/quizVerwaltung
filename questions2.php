@@ -11,7 +11,7 @@ class Question {
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
     $this->version = "";
-    $this->tag = "";
+    $this->tags = "";
   }
 
   public function print() {
@@ -71,7 +71,7 @@ class OptionsQuestion extends Question{
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
     $this->version = "";
-    $this->tag = "";
+    $this->tags = "";
   }
 
   public function print() {
@@ -97,7 +97,7 @@ class OrderQuestion extends Question{
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
     $this->version = "";
-    $this->tag = "";
+    $this->tags = "";
   }
 
   public function print() {
