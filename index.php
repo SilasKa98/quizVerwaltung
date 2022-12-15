@@ -23,11 +23,11 @@
 </html>
 
 <?php
-include_once "readQuestion.php";
+include_once "handleQuestion.php";
 include_once "translation.php";
 
 
-$question = new ReadQuestion("Java","topics");
+$question = new HandleQuestion("Java","topics");
 $questionObject = $question->getQuestion();
 
 $question->printQuestion($questionObject);
@@ -35,8 +35,6 @@ $question->printQuestion($questionObject);
 
 $serializedQuestion = $question->serializeQuestion($questionObject);
 
-print "<br><br><br>";
-$question->addAttributesToObject($questionObject);
 
 /*
 echo "<pre>".$serializedQuestion."</pre>";

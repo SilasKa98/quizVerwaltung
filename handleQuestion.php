@@ -1,7 +1,7 @@
 <?php
 include_once "questions2.php";
 
-class ReadQuestion{
+class HandleQuestion{
     var $questionToRead;
     var $basePath;
 
