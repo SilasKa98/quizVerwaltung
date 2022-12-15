@@ -74,7 +74,15 @@ class MongoDBService {
         $result = $this->db->$collection->findOne($filter, $options);
     }
 
-    //TODO findMany
+    /**
+     * Function to find all matching entries in the database and returning them
+     * 
+     * @param string        $collection     The collection name of the mongodb
+     * @param array[string] $filter         An array of assignments [id => 123, "name" => "xyz] defining filters
+     * @param array[string] $options        An array of assignments defining options
+     * 
+     * @return object       $documents      Returns an array of php objects matching the criteria
+     */
     public function read($collection, $filter, $options) {
         $results = $this->db->$collection->find($filter, $options);
 
@@ -88,7 +96,7 @@ class MongoDBService {
 
     //TODO delete by
     
-    //TODO update 
+    //TODO update
 
     //TODO vllt auch start und end session als extra function ?!?!? --> ansonsten in den einzelnen Funktionen machen 
   }
