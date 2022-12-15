@@ -40,16 +40,6 @@ class ReadQuestion{
     function serializeQuestion($questionObject){
         return json_encode($questionObject, JSON_PRETTY_PRINT);
     }
-
-    function addAttributesToObject($questionObject){
-        $id = uniqid();
-        for($i=0;$i<count($questionObject);$i++){
-           # print_r($questionObject[$i]);
-            print get_class($questionObject[$i]);
-            print "<br><br>";
-        }
-    }
-
 }
 
 
