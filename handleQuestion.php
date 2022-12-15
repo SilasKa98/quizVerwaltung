@@ -12,7 +12,7 @@ class HandleQuestion{
 
     function getQuestion(){
         $set = filter_var($this->questionToRead, FILTER_SANITIZE_STRING);
-        $lines =  file($this->basePath."/".$set.".txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $lines =  file($this->basePath."/".$set, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         return array_map('parseLine', $lines);
     }
 
@@ -46,7 +46,7 @@ class HandleQuestion{
     }
 
     function serializeQuestion($questionObject){
-        return json_encode($questionObject, JSON_PRETTY_PRINT);
+        return json_encode($questionObject, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
     }
 }
 

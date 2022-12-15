@@ -19,14 +19,31 @@
 </head>
 <body>
     
+<form method="post">
+  <input type="file" name="inputFile">
+  <button type="submit" name="import">importieren</button>
+</form>
 
 <?php
 include_once "handleQuestion.php";
 include_once "translation.php";
 
 
-$question = new HandleQuestion("Java","topics");
-$questionObject = $question->getQuestion();
+if (isset($_POST['import'])) {
+    $inputFile = $_POST['inputFile'];
+    echo $inputFile;
+    $question = new HandleQuestion($inputFile,"topics");
+    $questionObject = $question->getQuestion();
+    $serializedQuestion = $question->serializeQuestion($questionObject);
+    print "<pre>".$serializedQuestion."</pre>";
+    #$testmongo = new MongoDBSerive("192.168.2.97:27017", "root", "masterprojekt");
+    #$testmongo->testInsert($serializedQuestion);
+}
+
+
+
+#$question = new HandleQuestion("foo","topics");
+#$questionObject = $question->getQuestion();
 
 echo '<div id="questionWrapper">';
     //this needs to be done later on the objects which have been fetched from the database and not directly from the read in object...
