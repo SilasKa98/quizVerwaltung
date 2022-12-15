@@ -1,5 +1,5 @@
 <?php
-include_once "questions.php";
+include_once "questions2.php";
 
 class ReadQuestion{
     var $questionToRead;
