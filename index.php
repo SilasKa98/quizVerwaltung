@@ -27,100 +27,60 @@
 <?php
 include_once "questionService.php";
 include_once "translationService.php";
+include_once "mongoService.php";
+include_once "questions2.php";
 
 
 if (isset($_POST['import'])) {
     $inputFile = $_POST['inputFile'];
     echo $inputFile;
-    $question = new QuestionService($inputFile,"topics");
-    $questionObject = $question->getQuestion();
-    $serializedQuestion = $question->serializeQuestion($questionObject);
-    print "<pre>".$serializedQuestion."</pre>";
-    #$testmongo = new MongoDBSerive("192.168.2.97:27017", "root", "masterprojekt");
-    #$testmongo->testInsert($serializedQuestion);
+    $question = new QuestionService();
+    $questionObject = $question->getQuestion($inputFile,"topics");
+    /*
+    echo "<pre>";
+    print_r($questionObject);
+    echo "</pre>";
+    */
+    #$serializedQuestion = $question->serializeQuestion($questionObject);
+   # print "<pre>".$serializedQuestion."</pre>";
+    #print gettype($serializedQuestion);
+    $mongo = new MongoDBService();
+    $mongo->insert("questions",$questionObject);
 }
 
 
 
-#$question = new QuestionService("foo","topics");
-#$questionObject = $question->getQuestion();
+##################################################################
+################Question auslesen und darstellung#################
+##################################################################
+$question = new QuestionService();
+$mongoRead = new MongoDBService();
+$mongoData = $mongoRead->read("questions", "639b260d1c6fc");
+foreach ($mongoData as $doc) {
+    $fetchedObject = $doc;
+}
+$fetchedQuestion = $question -> parseReadInQuestion($fetchedObject);
+
 
 echo '<div id="questionWrapper">';
-    //this needs to be done later on the objects which have been fetched from the database and not directly from the read in object...
-    $question->printQuestion($questionObject);
+    $question->printQuestion($fetchedQuestion);
 
     /*
     ############################################
     #!!delete this comment to use translation!!#
     ############################################
     $translation = new TranslationService("en-Us");
-    $objectTest = $translation->translateObject($questionObject);
+    $objectTest = $translation->translateObject($fetchedQuestion);
 
     print "<br><br><br><br>";
     print "<h3>Translated: </h3>";
     print "<br>";
-   
+
     $question->printQuestion($objectTest);
     */
+
 echo '</div>';
 
-
-
-
-
-
-
-
-
-
-
-##########Trash##########
-
-#$serializedQuestion = $question->serializeQuestion($questionObject);
-
-
-/*
-echo "<pre>".$serializedQuestion."</pre>";
-print "<br><br>";
-print_r(json_decode($serializedQuestion));
-for($i=0;$i<count(json_decode($serializedQuestion));$i++){
-    print_r(json_decode($serializedQuestion)[$i]);
-    print "<br><br>";
-}
-
-*/
-
-
-
-#print_r($serializedQuestion);
-
-
-#print_r(unserialize($serializedQuestion));
-
-
-/*
-for($i=0;$i<count($questionObject);$i++){
-  # print_r(get_object_vars($questionObject[$i]));
-   #print "<br><br>";
-   $questionValues = get_object_vars($questionObject[$i]);
-   #print "<br>";
-   #print_r($questionValues);
-   foreach($questionValues as $key => &$value){
-        print "[".$key."]";
-        print_r($questionObject[$i]->$key);
-        print "<br>";
-        if(is_string($questionObject[$i]->$key)){
-            $questionObject[$i]->$key = "FOO"; 
-        }else{
-
-        } 
-   }
-   print "<br>";
-}
-
-print_r($questionObject);
-
-*/
 
 ?>
 
