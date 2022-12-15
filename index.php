@@ -25,14 +25,14 @@
 </form>
 
 <?php
-include_once "handleQuestion.php";
-include_once "translation.php";
+include_once "questionService.php";
+include_once "translationService.php";
 
 
 if (isset($_POST['import'])) {
     $inputFile = $_POST['inputFile'];
     echo $inputFile;
-    $question = new HandleQuestion($inputFile,"topics");
+    $question = new QuestionService($inputFile,"topics");
     $questionObject = $question->getQuestion();
     $serializedQuestion = $question->serializeQuestion($questionObject);
     print "<pre>".$serializedQuestion."</pre>";
@@ -42,7 +42,7 @@ if (isset($_POST['import'])) {
 
 
 
-#$question = new HandleQuestion("foo","topics");
+#$question = new QuestionService("foo","topics");
 #$questionObject = $question->getQuestion();
 
 echo '<div id="questionWrapper">';
@@ -53,7 +53,7 @@ echo '<div id="questionWrapper">';
     ############################################
     #!!delete this comment to use translation!!#
     ############################################
-    $translation = new Translator1("en-Us");
+    $translation = new TranslationService("en-Us");
     $objectTest = $translation->translateObject($questionObject);
 
     print "<br><br><br><br>";
