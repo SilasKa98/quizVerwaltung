@@ -24,7 +24,15 @@ class HandleQuestion{
                 print'<div class="panel-body">';
                 print'<p>Antwort: '.$questionObject[$i]->answer."</p>";
                 print'<p>Typ: '.$questionObject[$i]->questionType."</p>";
-                #print'<p>Optionen: '.$questionObject[$i]->options."</p>";
+
+                if(isset($questionObject[$i]->options)){
+                    print'<p>Optionen: ';
+                    for($x=0;$x<count($questionObject[$i]->options);$x++){
+                        print'<span class="badge badge-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options[$x].'</span>';
+                    }
+                    print'</p>';
+                }
+                
                 print'<p>Erstellungsdatum: '.$questionObject[$i]->creationDate."</p>";
                 print'<p>Letzte Änderung: '.$questionObject[$i]->modificationDate."</p>";
                 print'<p>Version: '.$questionObject[$i]->version."</p>";
