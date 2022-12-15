@@ -1,1 +1,11 @@
 YesNo#Swing ist ein GUI-Toolkit fuer die Programmiersprache Java#true
+Options#Wonach wurde die Java-Technologie benannt?#1#Der gleichnamigen Insel#Einer Kaffee-Sorte#Einem  Gesellschaftstanz im 3/4-Takt aus den 1920er-Jahren 
+Options#Welches Werkzeug &uuml;bersetzt den Java-Quellcode in maschinenverst&auml;ndlichen Java-Bytecode?#0#Compiler#Interpreter#Translator
+Options#Was ben&ouml;tigt man zum Ausf&uuml;hren von Java Programmen?#1#Java Development Kit#Java Runtime Environment#Eclipse IDE
+Options#In welchem Jahr ist Java erschienen?#2#1975#1985#1995#2005#2015
+MultiOptions#Was sind g&uuml;ltige int-Werte (Hexadezimal)?#0,1,2,4,5#0x#0x89ab#-0x89ab#0x-89ab#0XFF#0xFf
+MultiOptions#Was sind g&uuml;ltige int-Werte?#0,2#007#009#011
+Open#Schl&uuml;sselwort Ableitung von Elternklasse#extends
+Open#Schl&uuml;sselwort f&uuml;r Implementierung eines Interfaces#implements
+Open#Schl&uuml;sselwort f&uuml;r Klassen-Methoden#static
+Open#Schl&uuml;sselwort f&uuml;r Konstanten#final

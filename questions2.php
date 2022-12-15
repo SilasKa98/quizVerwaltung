@@ -17,50 +17,28 @@ class Question {
     $this->verification = "";
   }
 
-  public function print() {
-	return $this->question;
- }
-  public function getQuestionInfo() {
-	return $this->question;
- }
 }
 
 class YesNoQuestion extends Question{
 
-  public function print() {
-	return $this->question . getYesNoButton( );
- }
 }
 
 class OpenQuestion extends Question{
 
-  public function print() {
-	return $this->question . getOpenField( );
- }
 }
 
 class RegOpenQuestion extends Question{
 
-  public function print() {
-	return $this->question . getRegOpenField( );
- }
 }
 
 class CorrectQuestion extends Question{
 
-  public function print() {
-	return "Bitte korrigieren" . getCorrectField( $this->question  );
- }
 }
 
 class MultiLineQuestion extends Question{
-  public function print() {
-	return getPre( $this->question ) . getOpenField( );
- }
-  public function getQuestionInfo() {
-	return html_entity_decode( preg_replace('/\s/', '', $this->question) );
- }
+ 
 }
+
 
 class OptionsQuestion extends Question{
   public $options;
@@ -79,16 +57,10 @@ class OptionsQuestion extends Question{
     $this->author = "";
     $this->verification = "";
   }
-
-  public function print() {
-	return $this->question . getOptionsSelector( $this->options );
- }
 }
 
 class MultiOptionsQuestion extends OptionsQuestion{
-  public function print() {
-	return $this->question . getMultiOptions( $this->options );
- }
+  
 }
 
 class OrderQuestion extends Question{
@@ -108,10 +80,6 @@ class OrderQuestion extends Question{
     $this->author = "";
     $this->verification = "";
   }
-
-  public function print() {
-	return $this->question . getOrderSelector( $this->options );
- }
 }
 
 
