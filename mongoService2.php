@@ -1,5 +1,5 @@
 <?php
-    class MongoDBSerive {
+    class MongoDBSerive2 {
         const DATABASE_NAME = "test";
         const COLLECTION_NAME = "test";
 

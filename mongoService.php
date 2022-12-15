@@ -4,7 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-class MongoDB {
+class MongoDBService {
     private $client;
     private $db;
   
@@ -20,7 +20,7 @@ class MongoDB {
   }
 
 
-  $mongo = new MongoDB();
+  $mongo = new MongoDBService();
   $id = $mongo->insert('questions', [
     'name' => 'test Doe',
     'email' => 'johndoe@example.com'
