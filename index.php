@@ -34,8 +34,42 @@ $questionObject = $question->getQuestion();
 //this needs to be done later on the objects which have been fetched from the database and not directly from the read in object...
 $question->printQuestion($questionObject);
 
+/*
+############################################
+#!!delete this comment to use translation!!#
+############################################
+$translation = new Translator1("en-Us");
+$objectTest = $translation->translateObject($questionObject);
 
-$serializedQuestion = $question->serializeQuestion($questionObject);
+print "<br><br><br><br>";
+print "<h3>Translated: </h3>";
+print "<br>";
+
+$question->printQuestion($objectTest);
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##########Trash##########
+
+#$serializedQuestion = $question->serializeQuestion($questionObject);
 
 
 /*
@@ -49,19 +83,6 @@ for($i=0;$i<count(json_decode($serializedQuestion));$i++){
 
 */
 
-
-
-/*
-$translation = new Translator1("en-Us");
-$objectTest = $translation->translateObject($questionObject);
-
-print_r($objectTest);
-
-for($i=0;$i<count($objectTest);$i++){
-    print_r($objectTest[$i]);
-    print "<br><br>";
-}
-*/
 
 
 #print_r($serializedQuestion);
