@@ -12,6 +12,9 @@ class Question {
     $this->modificationDate = "";
     $this->version = "";
     $this->tags = "";
+    $this->karma = "";
+    $this->author = "";
+    $this->verification = "";
   }
 
   public function print() {
@@ -72,6 +75,9 @@ class OptionsQuestion extends Question{
     $this->modificationDate = "";
     $this->version = "";
     $this->tags = "";
+    $this->karma = "";
+    $this->author = "";
+    $this->verification = "";
   }
 
   public function print() {
@@ -98,6 +104,9 @@ class OrderQuestion extends Question{
     $this->modificationDate = "";
     $this->version = "";
     $this->tags = "";
+    $this->karma = "";
+    $this->author = "";
+    $this->verification = "";
   }
 
   public function print() {

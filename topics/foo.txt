@@ -1,0 +1,1 @@
+YesNo#Swing ist ein GUI-Toolkit fuer die Programmiersprache Java#true
