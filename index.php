@@ -19,7 +19,7 @@
 </head>
 <body>
     
-<form method="post">
+<form method="post" action="insertQuestions.php">
   <input type="file" name="inputFile">
   <button type="submit" name="import">importieren</button>
 </form>
@@ -30,26 +30,6 @@ include_once "questionService.php";
 include_once "translationService.php";
 include_once "mongoService.php";
 include_once "questions2.php";
-
-
-if (isset($_POST['import'])) {
-    $inputFile = $_POST['inputFile'];
-    echo $inputFile;
-    $question = new QuestionService();
-    $questionObject = $question->getQuestion($inputFile,"topics");
-    
-    #echo "<pre>";
-    #print_r($questionObject);
-    #echo "</pre>";
-    
-    #$serializedQuestion = $question->serializeQuestion($questionObject);
-   # print "<pre>".$serializedQuestion."</pre>";
-    #print gettype($serializedQuestion);
-    $mongo = new MongoDBService();
-    $mongo->insertMultiple("questions",$questionObject);
-    unset($inputFile);
-    unset($_POST['import']);
-}
 
 
 include "frontend/questionSection.php";
