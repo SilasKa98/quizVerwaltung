@@ -16,6 +16,7 @@ class MongoDBService {
             $this->client = new MongoDB\Client($_ENV["dbConnection"]);
             # From the Client one Database is selected and only the DB is used for Operations
             $this->db = $this->client->quizVerwaltung;
+            #echo("Connection successfull !!!");
 
         } catch (\Throwable $e) {
             echo("Error writing in Database. <br>" . $e);
@@ -33,8 +34,9 @@ class MongoDBService {
     public function insertSingle($collection, $data) {
       try {
         $result = $this->db->$collection->insertOne($data);
+        #echo("Insertion of Single Data successfull !!!");
       } catch (\Throwable $e) {
-        echo("Insertion Failed !!!");
+        echo("Insertion Failed !!! . $e");
         return null;
       }
         
@@ -51,11 +53,15 @@ class MongoDBService {
      */
     public function insertMultiple($collection, $data) {
         $array = [];
-        $result = $this->db->$collection->insertMany($data);
-        
-        # convert the curser object from mongodb into an array of ids of the objects
-        foreach ($result as $value) {
-            $array[] = $value;
+        try {
+            $result = $this->db->$collection->insertMany($data);
+            #echo("Insertion of Multiple Data successfull !!!");
+            # convert the curser object from mongodb into an array of ids of the objects
+            foreach ($result as $value) {
+                $array[] = $value;
+            }
+        } catch (\Throwable $e) {
+            echo("Insertion Failed !!!" . $e);
         }
 
         return $array;
@@ -72,6 +78,8 @@ class MongoDBService {
      */
     public function findSingle($collection, $filter, $options) {
         $result = $this->db->$collection->findOne($filter, $options);
+
+        return $result;
     }
 
     /**
