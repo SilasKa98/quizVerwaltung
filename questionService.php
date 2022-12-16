@@ -49,11 +49,12 @@ class QuestionService{
 
 
     function parseReadInQuestion($questionObject){
+
         $questionType = $questionObject->questionType;
         $question = $questionObject->question;
         $answer = $questionObject->answer;
         $version = $questionObject->version;
-        
+    
         if( $questionType == "YesNo" ) {
             $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version);
         } else if( $questionType == "RegOpen" ) {
@@ -83,6 +84,7 @@ class QuestionService{
         } else {
             $formattedQuestion = new Question( "-", "", "", "");
         }
+    
         return [$formattedQuestion];
     }
 }

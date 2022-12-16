@@ -25,6 +25,7 @@
 </form>
 
 <?php
+//read in all required classes
 include_once "questionService.php";
 include_once "translationService.php";
 include_once "mongoService.php";
@@ -36,50 +37,24 @@ if (isset($_POST['import'])) {
     echo $inputFile;
     $question = new QuestionService();
     $questionObject = $question->getQuestion($inputFile,"topics");
-    /*
-    echo "<pre>";
-    print_r($questionObject);
-    echo "</pre>";
-    */
+    
+    #echo "<pre>";
+    #print_r($questionObject);
+    #echo "</pre>";
+    
     #$serializedQuestion = $question->serializeQuestion($questionObject);
    # print "<pre>".$serializedQuestion."</pre>";
     #print gettype($serializedQuestion);
     $mongo = new MongoDBService();
-    $mongo->insert("questions",$questionObject);
+    $mongo->insertMultiple("questions",$questionObject);
+    unset($inputFile);
+    unset($_POST['import']);
 }
 
 
-
-##################################################################
-################Question auslesen und darstellung#################
-##################################################################
-$question = new QuestionService();
-$mongoRead = new MongoDBService();
-$mongoData = $mongoRead->read("questions", "639b260d1c6fc");
-foreach ($mongoData as $doc) {
-    $fetchedObject = $doc;
-}
-$fetchedQuestion = $question -> parseReadInQuestion($fetchedObject);
+include "frontend/questionSection.php";
 
 
-echo '<div id="questionWrapper">';
-    $question->printQuestion($fetchedQuestion);
-
-    /*
-    ############################################
-    #!!delete this comment to use translation!!#
-    ############################################
-    $translation = new TranslationService("en-Us");
-    $objectTest = $translation->translateObject($fetchedQuestion);
-
-    print "<br><br><br><br>";
-    print "<h3>Translated: </h3>";
-    print "<br>";
-
-    $question->printQuestion($objectTest);
-    */
-
-echo '</div>';
 
 
 ?>
