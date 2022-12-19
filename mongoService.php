@@ -5,11 +5,13 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 //TODO session management irgendwie machen damit es keine überschneidungen etc. gibt !!!!
+//TODO ebenfalls die options optional machen weil die bisher einfach nich gebraucht werden !!!! also einfach einen standardwert mit [] !!!!!
 
 class MongoDBService {
     private $client;    # Connection to The MongoDB instance
     private $db;        # The actual Database of the instance
   
+    //TODO Hier würde ich am besten schon direkt die collection definieren damit wir die nicht jedes mal neu angeben müssen !!!!
     public function __construct() {
         try {
             # Connecting to the MongoDB using the dbConnection defined in the .env file
@@ -19,7 +21,7 @@ class MongoDBService {
             #echo("Connection successfull !!!");
 
         } catch (\Throwable $e) {
-            echo("Error writing in Database. <br>" . $e);
+            echo("Error connecting to the Database. <br>" . $e);
         }
     }
 
@@ -102,7 +104,44 @@ class MongoDBService {
         return $documents;
     }
 
-    //TODO delete by
+    /**
+     * Funtion to delete one entry in the Database by its id
+     * 
+     * @param string        $collection     The collection name of the mongodb
+     * @param string        $id             The oid of the entry in the mongodb
+     * @param array[string] $options        An array of assignments defining options
+     */
+    public function deleteById($collection, $id, $options){
+        $oid = $id;    
+        $filter = ["_id" => new MongoDB\BSON\ObjectId($oid)];
+
+        try {
+            $deleteResult = $this->db->$collection->deleteOne($filter, $options);
+            # echo("Deleting DB Entry Succsessful !!!");
+            if ($deleteResult->getDeletedCount() == 1) {
+                echo("Entry deleted !!");
+            }else {
+                echo("Entry could not be deleted");
+            }
+        } catch (\Throwable $e) {
+            # echo("Deletion cloud not be performed !!!" . $e);
+        }
+    }
+
+    /**
+     * Function to completly remove every entry in the Collection of the MongoDB
+     * 
+     * @param string        $collection     The collection name of the mongodb
+     */
+    public function cleanCollection($collection) {
+        try {
+            $this->db->$collection->drop();
+            $this->db->createCollection($collection);
+            echo("Succsessfully cleaned the Collection !!!");
+        } catch (\Throwable $e) {
+            echo("Collection could not be deleted(cleaned) !!!" . $e);
+        }
+    }
     
     //TODO update
 
