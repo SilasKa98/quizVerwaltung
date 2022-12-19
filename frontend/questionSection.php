@@ -24,19 +24,18 @@ foreach ($readForPrintObjects as $doc) {
     $question->printQuestion($doc);
 }
 
-    /*
+    
     ############################################
     #!!delete this comment to use translation!!#
     ############################################
-    $translation = new TranslationService("en-Us");
-    $objectTest = $translation->translateObject($fetchedQuestion);
-
     print "<br><br><br><br>";
     print "<h3>Translated: </h3>";
     print "<br>";
-
-    $question->printQuestion($objectTest);
-    */
+    $translation = new TranslationService("en-Us");
+    foreach ($readForPrintObjects as $doc) {
+        $objectTest = $translation->translateObject($doc);
+        $question->printQuestion($objectTest);
+    }
 
 echo '</div>';
 
