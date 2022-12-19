@@ -12,6 +12,10 @@ if (isset($_POST['import'])) {
     $mongo = new MongoDBService();
     $mongo->insertMultiple("questions",$questionObject);
 }
+if (isset($_POST['clean'])) {
+    $mongo = new MongoDBService();
+    $mongo->cleanCollection("questions");
+}
 
 
 header("LOCATION:index.php?insert=success");

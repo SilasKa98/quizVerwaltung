@@ -19,10 +19,17 @@
 </head>
 <body>
     
-<form method="post" action="insertQuestions.php">
-  <input type="file" name="inputFile">
-  <button type="submit" name="import">importieren</button>
-</form>
+
+<div class="container">
+  <div class="center">
+  <form method="post" action="insertQuestions.php">
+    <input class="inputfile "type="file" name="inputFile">
+    <button class="button-5" type="submit" name="import">importieren</button>
+    <button class="button-5" type="submit" name="clean" role="button">Clean Database (only dev)</button>
+  </form>
+  </div>
+</div>
+
 
 <?php
 //read in all required classes
@@ -33,9 +40,6 @@ include_once "questions2.php";
 
 
 include "frontend/questionSection.php";
-
-
-
 
 ?>
 
