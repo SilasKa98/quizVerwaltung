@@ -3,10 +3,10 @@ class Question {
   public $question;
   public $answer;
 
-  public function __construct($question, $answer, $questionType, $version) {
+  public function __construct($question, $answer, $questionType, $version, $id) {
     $this->question = $question;
     $this->answer  = $answer;
-    $this->id = uniqid();
+    $this->id = $id;
     $this->questionType = $questionType;
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
@@ -43,11 +43,11 @@ class MultiLineQuestion extends Question{
 class OptionsQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
-    $this->id = uniqid();
+    $this->id = $id;
     $this->questionType = $questionType;
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
@@ -66,11 +66,11 @@ class MultiOptionsQuestion extends OptionsQuestion{
 class OrderQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
-    $this->id = uniqid();
+    $this->id = $id;
     $this->questionType = $questionType;
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
@@ -95,28 +95,28 @@ function parseLine( $line ) {
   $version = $version->version;
 
 	if( $parts[0] == "YesNo" ) {
-		return new YesNoQuestion( $parts[1], $parts[2], $questionType, $version);
+		return new YesNoQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "RegOpen" ) {
-		return new RegOpenQuestion( $parts[1], $parts[2], $questionType, $version);
+		return new RegOpenQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Open" ) {
-		return new OpenQuestion( $parts[1], $parts[2], $questionType, $version);
+		return new OpenQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Correct" ) {
-		return new CorrectQuestion( $parts[1], $parts[2], $questionType, $version);
+		return new CorrectQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Order" ) {
-		return new OrderQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version);
+		return new OrderQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version, uniqid());
 	} else if( $parts[0] == "Options" ) {
-		return new OptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version);
+		return new OptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version, uniqid());
 	} else if( $parts[0] == "MultiOptions" ) {
-		return new MultiOptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version);
+		return new MultiOptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version, uniqid());
 	} else if( $parts[0] == "Dyn" ) {
 		$func = $parts[1];
 		if( method_exists( "Dyn", $func ) ) {
 			return Dyn::{$func}();
 		} else {
-			return new Question( "-", "", "", "");
+			return new Question( "-", "", "", "", "");
 		}
 	} else {
-		return new Question( "-", "", "", "");
+		return new Question( "-", "", "", "", "");
 	}
 }
 

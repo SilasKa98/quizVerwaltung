@@ -16,6 +16,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
+
 </head>
 <body>
     
@@ -31,15 +32,12 @@
 </div>
 
 
+
 <?php
-//read in all required classes
-include_once "questionService.php";
-include_once "translationService.php";
-include_once "mongoService.php";
-include_once "questions2.php";
 
 
 include "frontend/questionSection.php";
+
 
 ?>
 
