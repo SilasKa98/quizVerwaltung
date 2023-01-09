@@ -23,17 +23,23 @@ class TranslationService{
         return $result->text;
     }
 
-    function translateObject($inputObject){
+    function detectLanguage($inputText){
+        $translator = new \DeepL\Translator($this->authKey);
+        $result = $translator->translateText($inputText, null, $this->targetLanguage);
+        return $result->detectedSourceLang;
+    }
+
+    function translateObject($inputObject,$sourceLanguage){
         for($i=0;$i<count($inputObject);$i++){
             $questionValues = get_object_vars($inputObject[$i]);
             foreach($questionValues as $key => &$value){
                 if($key == "question"){
                     #translating the questions here
-                    $inputObject[$i]->$key = $this->translateText($inputObject[$i]->$key); 
+                    $inputObject[$i]->$key->$sourceLanguage = $this->translateText($inputObject[$i]->$key->$sourceLanguage); 
                 }elseif($key == "options"){
                     #translating arrays (options) here
-                    for($x=0;$x<count($inputObject[$i]->options);$x++){
-                        $inputObject[$i]->options[$x] = $this->translateText($inputObject[$i]->options[$x]); 
+                    for($x=0;$x<count($inputObject[$i]->options->$sourceLanguage->jsonSerialize());$x++){
+                       $inputObject[$i]->options->$sourceLanguage[$x] = $this->translateText($inputObject[$i]->options->$sourceLanguage[$x]); 
                     }
                 }else{
                     //all other fields, that are not handeled in the else if statement wont get translated
