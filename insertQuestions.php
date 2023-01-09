@@ -6,6 +6,7 @@ include_once "mongoService.php";
 
 if (isset($_POST['import'])) {
     $inputFile = $_POST['inputFile'];
+    $inputLang = $_POST['inputLang'];
     $question = new QuestionService();
     $questionObject = $question->getQuestion($inputFile,"topics");
     

@@ -18,34 +18,20 @@ $filterQuery = [];
 $options = [];
 $mongoData = $mongoRead->read("questions", $filterQuery, $options);
 
+
+
 $readForPrintObjects = [];
 foreach ($mongoData as $doc) {
-    $fetchedQuestion = $question -> parseReadInQuestion($doc);
+    $fetchedQuestion = $question->parseReadInQuestion($doc);
     array_push($readForPrintObjects,$fetchedQuestion);
 }
 
-
-
 echo '<div id="questionWrapper">';
-
 foreach ($readForPrintObjects as $doc) {
-    $printer->printQuestion($doc);
+    //set desired language here for each object
+    $lang = "de";
+    $printer->printQuestion($doc,$lang);
 }
-
-/*
-    ############################################
-    #!!delete this comment to use translation!!#
-    ############################################
-    print "<br><br><br><br>";
-    print "<h3>Translated: </h3>";
-    print "<br>";
-    $translation = new TranslationService("en-Us");
-    foreach ($readForPrintObjects as $doc) {
-        $objectTest = $translation->translateObject($doc);
-        $question->printQuestion($objectTest);
-    }
-*/
-    
 
 echo '</div>';
 
@@ -53,6 +39,7 @@ echo '</div>';
 ?>
 
 <script>
+
     function changeLanguage(e){
         console.log(e);
         console.log(e.value);
@@ -61,6 +48,7 @@ echo '</div>';
         let id = e.nextElementSibling.nextElementSibling.value;
         buttonWrapper.style.display = "inline";
         let method = "changeLanguage";
+        let sourceLanguage = e.nextElementSibling.nextElementSibling.nextElementSibling.value;
 
         console.log(id);
         $.ajax({
@@ -69,10 +57,11 @@ echo '</div>';
             data: {
 				selLanguage: selLanguage,
                 method: method,
+                sourceLanguage: sourceLanguage,
                 id: id
 			},
 			success: function(response) {
-				$("#response").text("test: " + response);
+				$("#response").text(response);
 			}
         });
 

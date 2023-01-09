@@ -5,19 +5,20 @@ class Printer{
     public function __construct() {
     }
 
-    function printQuestion($questionObject){
+    function printQuestion($questionObject,$lang){
         for($i=0;$i<count($questionObject);$i++){
-
+            #print_r($questionObject[$i]);
             print '
             <div class="panel panel-info">
-                <div class="panel-heading">'.$questionObject[$i]->question.'
+                <div class="panel-heading">'.$questionObject[$i]->question->$lang.'
                 <select onchange="changeLanguage(this)" name="language">
                     <option></option>
                     <option>DE</option>
-                    <option>En-us</option>
+                    <option>en-Us</option>
                 </select>
                 <div style="display:none;"><input type="submit" value="Nur Übersetzen"><input type="submit" value="Übersetzen & Speichern"></div>
                 <input type="hidden" value="'.$questionObject[$i]->id.'">
+                <input type="hidden" value="'.$lang.'">
                 </div>';
                 print'<div class="panel-body">';
                 print'<p>Antwort: '.$questionObject[$i]->answer."</p>";
