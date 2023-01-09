@@ -142,6 +142,11 @@ class MongoDBService {
             echo("Collection could not be deleted(cleaned) !!!" . $e);
         }
     }
+
+    public function updateEntry($collection,$filter,$update){
+        $result = $this->db->$collection->updateMany($filter, $update);
+        return $result;
+    }
     
     //TODO update
 
