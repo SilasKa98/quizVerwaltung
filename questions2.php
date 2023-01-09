@@ -3,8 +3,9 @@ class Question {
   public $question;
   public $answer;
 
+
   public function __construct($question, $answer, $questionType, $version, $id) {
-    $this->question = $question;
+    $this->question =  $question;
     $this->answer  = $answer;
     $this->id = $id;
     $this->questionType = $questionType;
@@ -86,8 +87,15 @@ class OrderQuestion extends Question{
 function parseLine( $line ) {
 	$parts = preg_split( "/#/", $line );
 	$parts = str_replace( "&num;", "#", $parts );
-  
   $questionType = $parts[0];
+
+
+  //language needs to be set here!!
+  #$language = "de";
+  //language is automatically detected with the deepL Api
+  include_once "translationService.php";
+  $deepLDetectLanguage = new TranslationService("de");
+  $language = $deepLDetectLanguage->detectLanguage($parts[1]);
 
   include_once "versionService.php";
   $version = new VersionService();
@@ -95,19 +103,19 @@ function parseLine( $line ) {
   $version = $version->version;
 
 	if( $parts[0] == "YesNo" ) {
-		return new YesNoQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
+		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "RegOpen" ) {
-		return new RegOpenQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
+		return new RegOpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Open" ) {
-		return new OpenQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
+		return new OpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Correct" ) {
-		return new CorrectQuestion( $parts[1], $parts[2], $questionType, $version, uniqid());
+		return new CorrectQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Order" ) {
-		return new OrderQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version, uniqid());
+		return new OrderQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Options" ) {
-		return new OptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version, uniqid());
+		return new OptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid());
 	} else if( $parts[0] == "MultiOptions" ) {
-		return new MultiOptionsQuestion( $parts[1], $parts[2], array_slice($parts,3), $questionType, $version, uniqid());
+		return new MultiOptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid());
 	} else if( $parts[0] == "Dyn" ) {
 		$func = $parts[1];
 		if( method_exists( "Dyn", $func ) ) {
