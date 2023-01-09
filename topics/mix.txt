@@ -1,2 +1,1 @@
-YesNo#Swing ist ein GUI-Toolkit fuer die Programmiersprache Java#true
 Options#Wonach wurde die Java-Technologie benannt?#1#Der gleichnamigen Insel#Einer Kaffee-Sorte#Einem  Gesellschaftstanz im 3/4-Takt aus den 1920er-Jahren 
