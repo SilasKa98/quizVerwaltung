@@ -39,8 +39,7 @@ echo '</div>';
 ?>
 
 <script>
-
-    function changeLanguage(e){
+    async function changeLanguage(e){
         console.log(e);
         console.log(e.value);
         let selLanguage = e.value;
@@ -50,20 +49,33 @@ echo '</div>';
         let method = "changeLanguage";
         let sourceLanguage = e.nextElementSibling.nextElementSibling.nextElementSibling.value;
 
-        console.log(id);
-        $.ajax({
-            type: "POST",
-            url: 'changeQuestionLanguage.php',
-            data: {
-				selLanguage: selLanguage,
-                method: method,
-                sourceLanguage: sourceLanguage,
-                id: id
-			},
-			success: function(response) {
-				$("#response").text(response);
-			}
+        const saveOnly = e.nextElementSibling.children[0];
+        const transAndSave = e.nextElementSibling.children[1];
+
+        await buttonCheck(saveOnly,transAndSave,selLanguage,method,sourceLanguage,id);
+    }
+
+    function buttonCheck(saveOnly,transAndSave,selLanguage,method,sourceLanguage,id) {
+        transAndSave.addEventListener("click", function() {
+            $.ajax({
+                type: "POST",
+                url: 'changeQuestionLanguage.php',
+                data: {
+                    selLanguage: selLanguage,
+                    method: method,
+                    sourceLanguage: sourceLanguage,
+                    id: id
+                },
+                success: function(response) {
+                    $("#response").text(response);
+                    console.log("save successfull");
+                }
+            });
         });
 
+        saveOnly.addEventListener("click", function() {
+            console.log('saveOnly not implemented yet');
+        });
     }
+
 </script>

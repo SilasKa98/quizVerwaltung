@@ -18,7 +18,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
     }
     
 
-    //TODO muss umgebaut werden, damit einfach die neue übersetzung in bestehendes Object gepusht wird...
+    //TODO muss umgebaut werden, damit einfach die neue übersetzung in bestehendes Object gepusht wird... und nicht das question object erneut gebaut werden muss und dann gepusht wird
     if(isset($fetchedQuestion[0]->question)){
         $newQuestion = [$sourceLanguage => $fetchedQuestion[0]->question->$sourceLanguage];
         $translation = new TranslationService($_POST["selLanguage"]);

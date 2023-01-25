@@ -16,7 +16,7 @@ class Printer{
                     <option>DE</option>
                     <option>en-Us</option>
                 </select>
-                <div style="display:none;"><input type="submit" value="Nur Übersetzen"><input type="submit" value="Übersetzen & Speichern"></div>
+                <div style="display:none;"><button id="saveOnly">Nur Übersetzen</button><button id="transAndSave">Übersetzen & Speichern</button></div>
                 <input type="hidden" value="'.$questionObject[$i]->id.'">
                 <input type="hidden" value="'.$lang.'">
                 </div>';
