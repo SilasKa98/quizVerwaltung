@@ -68,6 +68,7 @@ echo '</div>';
                 },
                 success: function(response) {
                     $("#response").text(response);
+                    console.log(response);
                     console.log("save successfull");
                 }
             });

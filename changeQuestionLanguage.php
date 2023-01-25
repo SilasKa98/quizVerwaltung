@@ -18,18 +18,24 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
     }
     
 
-    //TODO muss umgebaut werden, damit einfach die neue übersetzung in bestehendes Object gepusht wird... und nicht das question object erneut gebaut werden muss und dann gepusht wird
     if(isset($fetchedQuestion[0]->question)){
         $newQuestion = [$sourceLanguage => $fetchedQuestion[0]->question->$sourceLanguage];
         $translation = new TranslationService($_POST["selLanguage"]);
         $translatedQuestion = $translation->translateObject($fetchedQuestion,$sourceLanguage);
-        $newQuestion += [$targetLanguage => $translatedQuestion[0]->question->$sourceLanguage];
-        $update = ['$set' =>  ['question'=> $newQuestion]];
+        $newLangQuestion = $translatedQuestion[0]->question->$sourceLanguage;
+
+        //first get all question versions that exist
+        $searchDbEntry = $mongo->findSingle("questions",$filterQuery,[]);
+        //cast it to array so the new field can get added
+        $searchDbEntry = (array)$searchDbEntry["question"];
+        //and then add the new language version
+        $searchDbEntry[$targetLanguage] = $newLangQuestion;
+        $update = ['$set' =>  ['question'=> $searchDbEntry]];
         $mongo->updateEntry("questions",$filterQuery,$update);
     }
 
     //at this point the whole object is translated, now it can be taken apart and only the needed parts can be inserted into the database into the right object (object with id xxxx)
-    #$mongo->insertMultiple("questions",$translatedQuestion);
+    //same as done obove with the question
     exit();
 }
 
