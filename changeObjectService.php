@@ -39,5 +39,20 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
     exit();
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
+    include_once "karmaService.php";
+    $karma = new KarmaService();
+    if($_POST["job"] == "increaseKarma"){
+        $newKarma = $karma->increaseKarma($_POST["id"]);
+        echo $newKarma;
+    }else{
+        $newKarma = $karma->decreaseKarma($_POST["id"]);
+        echo $newKarma;
+    }
+
+    $filterQuery = (['id' => $_POST["id"]]);
+    $update = ['$set' =>  ['karma'=> $newKarma]];
+    $mongo->updateEntry("questions",$filterQuery,$update);
+}
 
 ?>
