@@ -19,9 +19,11 @@ class Printer{
                 <div style="display:none;"><button id="saveOnly">Nur Übersetzen</button><button id="transAndSave">Übersetzen & Speichern</button></div>
                 <input type="hidden" value="'.$questionObject[$i]->id.'">
                 <input type="hidden" value="'.$lang.'">
-
-                <button id="'.$questionObject[$i]->id.'" name="increaseKarma" onclick="changeKarma(this)">&#8593;</button>
-                <button id="'.$questionObject[$i]->id.'" name="decreaseKarma" onclick="changeKarma(this)">&#8595;</button>
+                <div class="karmaWrapper">
+                    <p class="karmaDisplay">Karma:<span id="karma_'.$questionObject[$i]->id.'">'.$questionObject[$i]->karma.'</span></p>
+                    <button id="'.$questionObject[$i]->id.'" name="increaseKarma" onclick="changeKarma(this)">&#8593;</button>
+                    <button id="'.$questionObject[$i]->id.'" name="decreaseKarma" onclick="changeKarma(this)">&#8595;</button>
+                </div>
                 </div>';
                 print'<div class="panel-body" id="'.$questionObject[$i]->id.'">';
                 print'<p>Antwort: '.$questionObject[$i]->answer."</p>";
@@ -39,7 +41,6 @@ class Printer{
                 print'<p>Letzte Änderung: '.$questionObject[$i]->modificationDate."</p>";
                 print'<p>Version: '.$questionObject[$i]->version."</p>";
                 print'<p>Tags: '.$questionObject[$i]->tags."</p>";
-                print'<p id="karma_'.$questionObject[$i]->id.'">Karma: '.$questionObject[$i]->karma."</p>";
                 print'</div>
             </div>';
         }

@@ -95,3 +95,13 @@
     background: #0d45a5;
   }
   
+
+
+  .karmaDisplay{
+    display: inline;
+  }
+
+
+  .karmaWrapper{
+    float: right;
+  }

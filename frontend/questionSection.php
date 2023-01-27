@@ -93,9 +93,9 @@ echo '</div>';
                 },
                 success: function(response) {
                     console.log(response);
-                    //change this to another field where karma is displayed later
+                    //instantly shows the changes to the karma without reload
                     let karmaId = document.getElementById("karma_"+id);
-                    karmaId.innerHTML = "Karma: "+response;
+                    karmaId.innerHTML = response;
                     console.log("karma change successfull");
                 }
             });
