@@ -4,7 +4,7 @@ class Question {
   public $answer;
 
 
-  public function __construct($question, $answer, $questionType, $version, $id) {
+  public function __construct($question, $answer, $questionType, $version, $id, $karma) {
     $this->question =  $question;
     $this->answer  = $answer;
     $this->id = $id;
@@ -13,7 +13,7 @@ class Question {
     $this->modificationDate = "";
     $this->version = $version;
     $this->tags = "";
-    $this->karma = "";
+    $this->karma = $karma;
     $this->author = "";
     $this->verification = "";
   }
@@ -44,7 +44,7 @@ class MultiLineQuestion extends Question{
 class OptionsQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version, $id) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -54,7 +54,7 @@ class OptionsQuestion extends Question{
     $this->modificationDate = "";
     $this->version = $version;
     $this->tags = "";
-    $this->karma = "";
+    $this->karma = $karma;
     $this->author = "";
     $this->verification = "";
   }
@@ -67,7 +67,7 @@ class MultiOptionsQuestion extends OptionsQuestion{
 class OrderQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version, $id) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -77,7 +77,7 @@ class OrderQuestion extends Question{
     $this->modificationDate = "";
     $this->version = $version;
     $this->tags = "";
-    $this->karma = "";
+    $this->karma = $karma;
     $this->author = "";
     $this->verification = "";
   }
@@ -97,25 +97,27 @@ function parseLine( $line ) {
   $deepLDetectLanguage = new TranslationService("de");
   $language = $deepLDetectLanguage->detectLanguage($parts[1]);
 
+  $karma = 0;
+
   include_once "versionService.php";
   $version = new VersionService();
   $version->setVersion("1.0");
   $version = $version->version;
 
 	if( $parts[0] == "YesNo" ) {
-		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
+		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma);
 	} else if( $parts[0] == "RegOpen" ) {
-		return new RegOpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
+		return new RegOpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma);
 	} else if( $parts[0] == "Open" ) {
-		return new OpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
+		return new OpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma);
 	} else if( $parts[0] == "Correct" ) {
-		return new CorrectQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid());
+		return new CorrectQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma);
 	} else if( $parts[0] == "Order" ) {
-		return new OrderQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid());
+		return new OrderQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma);
 	} else if( $parts[0] == "Options" ) {
-		return new OptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid());
+		return new OptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma);
 	} else if( $parts[0] == "MultiOptions" ) {
-		return new MultiOptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid());
+		return new MultiOptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma);
 	} else if( $parts[0] == "Dyn" ) {
 		$func = $parts[1];
 		if( method_exists( "Dyn", $func ) ) {

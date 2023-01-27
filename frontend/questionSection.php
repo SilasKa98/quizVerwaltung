@@ -59,7 +59,7 @@ echo '</div>';
         transAndSave.addEventListener("click", function() {
             $.ajax({
                 type: "POST",
-                url: 'changeQuestionLanguage.php',
+                url: 'changeObjectService.php',
                 data: {
                     selLanguage: selLanguage,
                     method: method,
@@ -77,6 +77,30 @@ echo '</div>';
         saveOnly.addEventListener("click", function() {
             console.log('saveOnly not implemented yet');
         });
+    }
+
+    function changeKarma(e){
+        let job = e.name;
+        let id = e.id;
+        let method = "changeKarma";
+        $.ajax({
+                type: "POST",
+                url: 'changeObjectService.php',
+                data: {
+                    job: job,
+                    method: method,
+                    id: id
+                },
+                success: function(response) {
+                    console.log(response);
+                    //change this to another field where karma is displayed later
+                    let karmaId = document.getElementById("karma_"+id);
+                    karmaId.innerHTML = "Karma: "+response;
+                    console.log("karma change successfull");
+                }
+            });
+
+
     }
 
 </script>

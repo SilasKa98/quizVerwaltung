@@ -28,24 +28,25 @@ class QuestionService{
         $answer = $questionObject->answer;
         $version = $questionObject->version;
         $id = $questionObject->id;
+        $karma = $questionObject->karma;
 
         if( $questionType == "YesNo" ) {
-            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id);
+            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id, $karma);
         } else if( $questionType == "RegOpen" ) {
-            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id);
+            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id, $karma);
         } else if( $questionType == "Open" ) {
-            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id);
+            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id, $karma);
         } else if( $questionType == "Correct" ) {
-            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id);
+            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id, $karma);
         } else if( $questionType == "Order" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id);
+            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id, $karma);
         } else if( $questionType == "Options" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id);
+            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma);
         } else if( $questionType == "MultiOptions" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id);
+            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma);
         } else if( $questionType == "Dyn" ) {
             /*
             $func = $parts[1];
@@ -56,7 +57,7 @@ class QuestionService{
             }
             */
         } else {
-            $formattedQuestion = new Question( "-", "", "", "", "");
+            $formattedQuestion = new Question( "-", "", "", "", "", "");
         }
         return [$formattedQuestion];
     }
