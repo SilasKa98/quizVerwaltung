@@ -1,6 +1,19 @@
 <?php
   session_start();
+  if(!$_SESSION["logged_in"]){
+    header("Location: frontend/loginAccount.php");
+    exit();
+  }
   extract($_SESSION["userData"]);
+
+  //get the selected userLanguage to display the system in the right language
+  include_once "mongoService.php";
+  $mongo = new MongoDBService();
+  $filterQuery = (['userId' => $userId]);
+  $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
+  $selectedLanguage = $selectedLanguage->userLanguage;
+  include "systemLanguages/text_".$selectedLanguage.".php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,19 +36,29 @@
 
 </head>
 <body>
-    <p>hallo <?php echo $username ?></p>
-    <form  method="post" action="doTransaction.php">
-      <button class="button-5" type="submit" name="logout" role="button" style="float: right;">logout</button>
-    </form>
-<div class="container">
-  <div class="center">
-  <form method="post" action="insertQuestions.php">
-    <input class="inputfile" type="file" name="inputFile">
-    <button class="button-5" type="submit" name="import">importieren</button>
-    <button class="button-5" type="submit" name="clean" role="button">Clean Database (only dev)</button>
+  <p>hallo <?php echo $username ?></p>
+  <form  method="post" action="doTransaction.php">
+    <button class="button-5" type="submit" name="logout" role="button" style="float: right;"><?php echo $text_logout_btn?></button>
   </form>
+  <form method="post" action="doTransaction.php">
+    <select name="language" onchange="this.form.submit()">
+      <?php
+      echo $selectedLanguage;
+        foreach($all_languages as $key => $value){
+          echo "<option value='".$key."'"; if($key == $selectedLanguage){echo "selected='selected'";}  echo">".$value."</option>";
+        }
+      ?>
+    </select>
+  </form>
+  <div class="container">
+    <div class="center">
+    <form method="post" action="insertQuestions.php">
+      <input class="inputfile" type="file" name="inputFile" >
+      <button class="button-5" type="submit" name="import"><?php echo $text_import_form["import_btn"]?></button>
+      <button class="button-5" type="submit" name="clean" role="button"><?php echo $text_import_form["clean_db_btn"]?></button>
+    </form>
+    </div>
   </div>
-</div>
 
 
 

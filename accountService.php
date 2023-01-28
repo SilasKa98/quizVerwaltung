@@ -16,10 +16,10 @@ class AccountService{
      * @param string        $pwd_repeat     given repeated password of the user
      * 
      */
-    function register($username, $mail, $pwd, $pwd_repeat){
+    function register($username, $mail, $pwd, $pwd_repeat, $language){
 
         //check of errors in the given informations
-        if(empty($username)|| empty($mail) || empty($pwd) || empty($pwd_repeat)){
+        if(empty($username)|| empty($mail) || empty($pwd) || empty($pwd_repeat)|| empty($language)){
             header("Location: frontend/registerAccount.php?error=emptyfields&user_id=".$username."&mail=".$mail);
             exit();
         }
@@ -66,7 +66,8 @@ class AccountService{
             "userId"=>$userId,
             "username"=>$username,
             "mail"=>$mail,
-            "password"=>$hashedPwd
+            "password"=>$hashedPwd,
+            "userLanguage"=>$language
         ];
 
         //insert the new User
@@ -119,6 +120,7 @@ class AccountService{
             exit();
         }elseif($pwdCheck == true){
             session_start();
+            $_SESSION["logged_in"] = true;
             $_SESSION["userData"] = [
                 "username"=>$getUserinformation->username,
                 "userId"=>$getUserinformation->userId
@@ -137,6 +139,13 @@ class AccountService{
         session_destroy();
         header("Location: frontend/loginAccount.php?logout=success");
         exit();
+    }
+
+    function changeLanguage($language, $userId){
+        $filterQuery = (['userId' => $userId]);
+        $update = ['$set' =>  ['userLanguage'=> $language]];
+        $this->mongo->updateEntry("accounts",$filterQuery,$update);
+        return header("Location: index.php?changeLanguage=success");
     }
 
 }

@@ -1,4 +1,10 @@
 <?php
+/**
+ * All sorts of calls to the different services get handeled in this file
+ * 
+ * 
+ */
+
 include_once "mongoService.php";
 include_once "translationService.php";
 include_once "questionService.php";
@@ -59,7 +65,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
     include_once "accountService.php";
     $account = new AccountService();
-    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"]);
+    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["language"]);
 }
 
 if(isset($_POST["method"]) && $_POST["method"] == "loginAccount"){
@@ -72,6 +78,13 @@ if(isset($_POST["logout"])){
     include_once "accountService.php";
     $account = new AccountService();
     $account->logout();
+}
+
+if(isset($_POST["language"])){
+    include_once "accountService.php";
+    $account = new AccountService();
+    session_start();
+    $account->changeLanguage($_POST["language"], $_SESSION["userData"]["userId"]);
 }
 
 ?>
