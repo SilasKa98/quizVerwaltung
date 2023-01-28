@@ -55,4 +55,9 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
     $mongo->updateEntry("questions",$filterQuery,$update);
 }
 
+
+if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
+
+}
+
 ?>

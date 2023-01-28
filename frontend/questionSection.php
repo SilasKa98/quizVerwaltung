@@ -59,7 +59,7 @@ echo '</div>';
         transAndSave.addEventListener("click", function() {
             $.ajax({
                 type: "POST",
-                url: 'changeObjects.php',
+                url: 'doTransaction.php',
                 data: {
                     selLanguage: selLanguage,
                     method: method,
@@ -85,7 +85,7 @@ echo '</div>';
         let method = "changeKarma";
         $.ajax({
                 type: "POST",
-                url: 'changeObjects.php',
+                url: 'doTransaction.php',
                 data: {
                     job: job,
                     method: method,
