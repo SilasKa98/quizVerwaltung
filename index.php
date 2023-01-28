@@ -1,3 +1,7 @@
+<?php
+  session_start();
+  extract($_SESSION["userData"]);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +23,10 @@
 
 </head>
 <body>
-    
-
+    <p>hallo <?php echo $username ?></p>
+    <form  method="post" action="doTransaction.php">
+      <button class="button-5" type="submit" name="logout" role="button" style="float: right;">logout</button>
+    </form>
 <div class="container">
   <div class="center">
   <form method="post" action="insertQuestions.php">

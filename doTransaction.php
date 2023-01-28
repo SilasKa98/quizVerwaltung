@@ -57,7 +57,21 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 
 
 if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
+    include_once "accountService.php";
+    $account = new AccountService();
+    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"]);
+}
 
+if(isset($_POST["method"]) && $_POST["method"] == "loginAccount"){
+    include_once "accountService.php";
+    $account = new AccountService();
+    $account->login($_POST["mailuid"],$_POST["pwd"]);
+}
+
+if(isset($_POST["logout"])){
+    include_once "accountService.php";
+    $account = new AccountService();
+    $account->logout();
 }
 
 ?>
