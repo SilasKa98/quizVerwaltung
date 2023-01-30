@@ -9,7 +9,7 @@ class Printer{
         for($i=0;$i<count($questionObject);$i++){
             #print_r($questionObject[$i]);
             print '
-            <div class="card">
+            <div class="card questionCard">
                 <div class="card-header"><h5 class="card-title">'.$questionObject[$i]->question->$lang.'</h5>
                     <select onchange="changeLanguage(this)" name="language">
                         <option></option>

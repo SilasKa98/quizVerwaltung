@@ -24,18 +24,32 @@
     <link rel="stylesheet" href="general.css">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
-
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </head>
 <body>
-  <p>hallo <?php echo $username ?></p>
-  <form  method="post" action="doTransaction.php">
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php">
+            <img src="media/logo.jpg" alt="Logo" width="60" height="48" class="d-inline-block align-text-top">
+            <p id="headerName">Quiz Verwaltung</p>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
+                <a class="nav-link" href="#">Bar</a>
+                <a class="nav-link" href="#">Help</a>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <form  method="post" action="doTransaction.php" id="logoutForm">
     <button class="button-5" type="submit" name="logout" role="button" style="float: right;"><?php echo $text_logout_btn?></button>
   </form>
-  <form method="post" action="doTransaction.php">
+  <form method="post" action="doTransaction.php" id="languageForm">
     <select name="language" onchange="this.form.submit()">
       <?php
       echo $selectedLanguage;
@@ -45,26 +59,39 @@
       ?>
     </select>
   </form>
-  <div class="container">
-    <div class="center">
-    <form method="post" action="insertQuestions.php">
-      <input class="inputfile" type="file" name="inputFile" >
-      <button class="button-5" type="submit" name="import"><?php echo $text_import_form["import_btn"]?></button>
-      <button class="button-5" type="submit" name="clean" role="button"><?php echo $text_import_form["clean_db_btn"]?></button>
-    </form>
+  <div class="container-fluid">
+
+    <div class="card mb-3" id="profileCard" style="max-width: 540px;">
+      <div class="row g-0 innerProfileDiv">
+          <div class="col-md-4">
+              <img src="media/defaultAvatar.png" class="img-fluid rounded-start" id="profileAvatar" alt="Your Avatar">
+          </div>
+          <div class="col-md-8">
+              <div class="card-body">
+                  <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
+                  <p class="card-text">Here could be some information about the user or other links to something.</p>
+                  <p class="card-text"><small class="text-muted" id="smallProfileCardText">Last updated 3 mins ago</small></p>
+              </div>
+          </div>
+      </div>
     </div>
-  </div>
-
-
+    <!--Moved to frontend_insertQuestion.php-->
+    <!--
+    <div class="container">
+      <div class="center">
+        <form method="post" action="insertQuestions.php">
+          <input class="inputfile" type="file" name="inputFile" >
+          <button class="button-5" type="submit" name="import"><?php echo $text_import_form["import_btn"]?></button>
+          <button class="button-5" type="submit" name="clean" role="button"><?php echo $text_import_form["clean_db_btn"]?></button>
+        </form>
+      </div>
+    </div>
+    -->
 
 <?php
-
-
 include "frontend/questionSection.php";
-
-
 ?>
 
-
+  </div>
 </body>
 </html>

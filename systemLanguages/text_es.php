@@ -11,5 +11,7 @@
         "clean_db_btn"=> "Limpiar base de datos (dev only)"
     ];
 
-    $text_logout_btn = "Cerrar sesión"
+    $text_logout_btn = "Cerrar sesión";
+    $welcomeTitel = "Hola";
+    $navText_insertQuestion = "Insertar pregunta";
 ?>

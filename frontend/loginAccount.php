@@ -12,7 +12,7 @@
 <body>
     <form action="../doTransaction.php" method="post">
 		<input type="text" name="mailuid" placeholder="E-mail/Benutzername...">
-		<input type="text" name="pwd" placeholder="Passwort...">
+		<input type="password" name="pwd" placeholder="Passwort...">
         <input type="hidden" name="method" value="loginAccount">
 		<input type="submit" name="login_submit" value="Einloggen">
 	</form>
