@@ -26,7 +26,7 @@ class Printer{
                     <input type="hidden" value="'.$questionObject[$i]->id.'">
                     <input type="hidden" value="'.$lang.'">
                     <div class="karmaWrapper">
-                        <p class="karmaDisplay">Karma:<span id="karma_'.$questionObject[$i]->id.'">'.$questionObject[$i]->karma.'</span></p>
+                        <p class="karmaDisplay"><span id="karma_'.$questionObject[$i]->id.'">'.$questionObject[$i]->karma.'</span></p>
                         <button class="karmaBtn" id="'.$questionObject[$i]->id.'" name="increaseKarma" onclick="changeKarma(this)"'; if(array_search($questionObject[$i]->id,$userKarmaGivenUp)!== false){ print "style='background: rgb(5, 125, 238);'";} print'>&#8593;</button>
                         <button class="karmaBtn" id="'.$questionObject[$i]->id.'" name="decreaseKarma" onclick="changeKarma(this)"'; if(array_search($questionObject[$i]->id,$userKarmaGivenDown)!== false){ print "style='background: rgb(5, 125, 238);'";} print'>&#8595;</button>
                     </div>
