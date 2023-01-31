@@ -1,3 +1,20 @@
+<?php
+  session_start();
+  if(!$_SESSION["logged_in"]){
+    header("Location: frontend/loginAccount.php");
+    exit();
+  }
+  extract($_SESSION["userData"]);
+
+  //get the selected userLanguage to display the system in the right language
+  include_once "mongoService.php";
+  $mongo = new MongoDBService();
+  $filterQuery = (['userId' => $userId]);
+  $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
+  $selectedLanguage = $selectedLanguage->userLanguage;
+  include "systemLanguages/text_".$selectedLanguage.".php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,15 +23,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Question</title>
 
+    <link rel="stylesheet" href="stylesheets/importQuestionCheck.css">
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
     <style>
 
@@ -51,12 +63,21 @@
         margin: 10px;
         width: 99%;
     }
+
+    .innerImportCard{
+        margin-right:1%;
+    }
+    .allCardsWrapper{
+        margin-top: 1%;
+    }
+    #importMainHeader{
+        text-align: center;
+        padding: 1%;
+    }
     </style>
 </head>
     <body>
-        
         <?php
-
         include_once "questionService.php";
         include_once "mongoService.php";
 
@@ -66,35 +87,31 @@
             $question = new QuestionService();
             $questionObject = $question->getQuestion($inputFile,"topics");
             
-            #echo $inputFile;
-            #print_r($questionObject[0]);
-            echo '<div class="jumbotronWrapper">';
+            echo '<div class="container-fluid">';
+            echo '<h1 id="importMainHeader">'.$importCheckPageTitel.'</h1>';
             $questionCounter=0;
             foreach ($questionObject as $qObj){
                 $questionCounter++;
-                echo '<div class="jumbotronObjectWrapper">';
-                echo '<h1 class="questionHeading">Frage '.$questionCounter.'</h1>';
+                echo'
+                <div class="card text-center allCardsWrapper">
+                    <div class="card-header">
+                        <h3 class="card-title">Frage '.$questionCounter.'</h3>
+                    </div>
+                ';
+                echo '<div class="card-body">';
+                echo '<div class="row row-cols-1 row-cols-md-2 g-1">';
                 foreach ($qObj as $key => $value) {
                     if(is_array($value)){
                         foreach ($value as $innerKey => $innerValue) {
                             if(!is_array($innerValue)){
                                 echo '
-                                <div class="jumbotron">
-                                    <div class="container">
-                                        <h1>Sprache</h1>
-                                        <p>'.$innerKey.'</p>
-                                        <p><a class="btn btn-primary btn-lg" href="#" role="button">Anpassen</a></p>
+                                    <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">'.$innerKey.'</h5>
+                                            <p class="card-text">'.$innerValue.'</p>
+                                            <a href="#" class="btn btn-primary">Anpassen</a>
+                                        </div>
                                     </div>
-                                </div>
-                                ';
-                                echo '
-                                <div class="jumbotron">
-                                    <div class="container">
-                                        <h1>Frage</h1>
-                                        <p>'.$innerValue.'</p>
-                                        <p><a class="btn btn-primary btn-lg" href="#" role="button">Anpassen</a></p>
-                                    </div>
-                                </div>
                                 ';
                             }
                         }
@@ -103,17 +120,21 @@
                             $value = "-";
                         }
                         echo '
-                        <div class="jumbotron">
-                            <div class="container">
-                                <h1>'.$key.'</h1>
-                                <p>'.$value.'</p>
-                                <p><a class="btn btn-primary btn-lg" href="#" role="button">Anpassen</a></p>
+                            <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">'.$key.'</h5>
+                                    <p class="card-text">'.$value.'</p>
+                                    <a href="#" class="btn btn-primary">Anpassen</a>
+                                </div>
                             </div>
-                        </div> 
-                        ';
+                            ';
                     } 
                 }
-                echo '</div>';
+                echo '
+                        </div>
+                    </div>
+                </div>
+                ';
             }
             echo '</div>';
             echo '<form action="insertQuestions.php" id="finalizeImport" method="POST">';
@@ -138,8 +159,6 @@
             $mongo = new MongoDBService();
             $mongo->cleanCollection("questions");
         }
-        //header("LOCATION:index.php?insert=success");
-
         ?>
     </body>
 </html>
