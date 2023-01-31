@@ -19,6 +19,8 @@
     $text_logout_btn = "Abmelden";
     $welcomeTitel = "Hallo";
     $navText_insertQuestion = "Frage Hinzufügen";
+    $profileInfoText = "Hier könnten Informationen über den Benutzer oder andere Links zu etwas stehen.";
+    $profileMiniText = "Zuletzt aktualisiert vor 3 Minuten";
 
     //insertQuestions.php
     $importCheckPageTitel = "Import Übersicht";

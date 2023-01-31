@@ -69,8 +69,8 @@
           <div class="col-md-8">
               <div class="card-body">
                   <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
-                  <p class="card-text">Here could be some information about the user or other links to something.</p>
-                  <p class="card-text"><small class="text-muted" id="smallProfileCardText">Last updated 3 mins ago</small></p>
+                  <p class="card-text"><?php echo $profileInfoText?></p>
+                  <p class="card-text"><small class="text-muted" id="smallProfileCardText"><?php echo $profileMiniText?></small></p>
               </div>
           </div>
       </div>
