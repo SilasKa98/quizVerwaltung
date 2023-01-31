@@ -1,6 +1,7 @@
 <?php
-    $selectedLanguage = "de";
-    include "../systemLanguages/text_".$selectedLanguage.".php";
+    //default include text_en to get all_languages array
+    include "../systemLanguages/text_en.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +19,9 @@
         <input type="password" name="pwd" placeholder="Password"><br><br>
         <input type="password" name="pwd_repeat" placeholder="Repeat Password"><br><br>
         <select name="language">
-            <option value="de">German</option>
-            <option value="en">English</option>
-            <option value="es">Spanish</option>
+            <?php foreach($all_languages as $key => $value){ ?>
+                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+            <?php } ?>
         </select>
         <input type="hidden" name="method" value="registerAccount"><br><br>
         <input type="submit" name="signup_submit" value="Sign Up"><br><br>
