@@ -88,13 +88,22 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
         
         //search in other vote category(up/down) for existence
         $isQuestionExistingInOppositVote = array_search($_POST["id"],(array)$searchUser["questionsUserGaveKarmaTo"][$oppositHandle]);
-        //if found delete it
+        //if found delete it and give a additional upvote to correct the previous entry
+        $correctPreviousSelection = false;
         if($isQuestionExistingInOppositVote !== false){
             $oppositKarmaArray = (array)$searchUser["questionsUserGaveKarmaTo"][$oppositHandle];
             unset($oppositKarmaArray[$isQuestionExistingInOppositVote]);
             $fieldQueryOppositDel = "questionsUserGaveKarmaTo.".$oppositHandle;
             $updateUserKarmaOpposit = ['$set' =>  [$fieldQueryOppositDel=> $oppositKarmaArray]];
             $mongo->updateEntry("accounts",$searchUserFilter,$updateUserKarmaOpposit);
+
+            //example: if the question already got upvoted from the user and the he downvotes, there is needed a additional -1 to neutralize the previous upvote 
+            //karmaAddition is applied below, before the new karma value gets inserted
+            if($_POST["job"] == "increaseKarma"){
+                $karmaAddition = 1;
+            }else{
+                $karmaAddition = -1;
+            }
         }
 
 
@@ -104,14 +113,33 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
         }else{
             $newKarma = $karma->decreaseKarma($_POST["id"]);
         }
+        
+
+        if(isset($karmaAddition)){
+            $newKarma = $newKarma + $karmaAddition;
+        }
+
         //echo is needed for displaying the increase
         echo $newKarma;
         $update = ['$set' =>  ['karma'=> $newKarma]];
         $mongo->updateEntry("questions",$filterQueryQuestions,$update); 
     }else{
         //echo is needed for displaying the correct Karma
-        echo $currentKarma;
-        exit();
+
+        $neutralizeKarmaArray = (array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle];
+        unset($neutralizeKarmaArray[$isQuestionVoteExisting]);
+        $fieldQueryNeutralize = "questionsUserGaveKarmaTo.".$currentHandle;
+        $updateUserKarmaNeutralize = ['$set' =>  [$fieldQueryNeutralize=> $neutralizeKarmaArray]];
+        $mongo->updateEntry("accounts",$searchUserFilter,$updateUserKarmaNeutralize);
+
+        if($_POST["job"] == "increaseKarma"){
+            $newKarma = $karma->decreaseKarma($_POST["id"]);
+        }else{
+            $newKarma = $karma->increaseKarma($_POST["id"]);
+        }
+        echo $newKarma;
+        $update = ['$set' =>  ['karma'=> $newKarma]];
+        $mongo->updateEntry("questions",$filterQueryQuestions,$update); 
     }
 }
 
