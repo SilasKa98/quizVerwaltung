@@ -47,6 +47,7 @@ class Printer{
                 print'<p "card-text">Letzte Änderung: '.$questionObject[$i]->modificationDate."</p>";
                 print'<p "card-text">Version: '.$questionObject[$i]->version."</p>";
                 print'<p "card-text">Tags: '.$questionObject[$i]->tags."</p>";
+                print'<p "card-text">Author: '.$questionObject[$i]->author."</p>";
                 print'</div>
             </div>';
         }

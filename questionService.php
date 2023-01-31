@@ -29,24 +29,25 @@ class QuestionService{
         $version = $questionObject->version;
         $id = $questionObject->id;
         $karma = $questionObject->karma;
+        $author = $questionObject->author;
 
         if( $questionType == "YesNo" ) {
-            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id, $karma);
+            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
         } else if( $questionType == "RegOpen" ) {
-            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id, $karma);
+            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
         } else if( $questionType == "Open" ) {
-            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id, $karma);
+            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
         } else if( $questionType == "Correct" ) {
-            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id, $karma);
+            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
         } else if( $questionType == "Order" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id, $karma);
+            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author);
         } else if( $questionType == "Options" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma);
+            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author);
         } else if( $questionType == "MultiOptions" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma);
+            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author);
         } else if( $questionType == "Dyn" ) {
             /*
             $func = $parts[1];
@@ -57,7 +58,7 @@ class QuestionService{
             }
             */
         } else {
-            $formattedQuestion = new Question( "-", "", "", "", "", "");
+            $formattedQuestion = new Question( "-", "", "", "", "", "", "");
         }
         return [$formattedQuestion];
     }
