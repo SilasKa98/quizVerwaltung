@@ -14,6 +14,14 @@ class KarmaService{
         $currentKarma = $currentKarma["karma"];
         return $currentKarma;
     }
+
+    public function getKarmaUserRelation($userId){
+        $filterQuery = (['userId' => $userId]);
+        $options = [];
+        $karmaRelation= $this->mongo->findSingle("accounts",$filterQuery,$options);
+        $karmaRelation = $karmaRelation["questionsUserGaveKarmaTo"];
+        return $karmaRelation;
+    }
     
     public function increaseKarma($id) {
         $filterQuery = (['id' => $id]);
