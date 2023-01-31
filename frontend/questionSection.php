@@ -80,7 +80,7 @@ echo '</div>';
     }
 
     function changeKarma(e){
-        let job = e.name;
+        var job = e.name;
         let id = e.id;
         let method = "changeKarma";
         $.ajax({
@@ -94,7 +94,20 @@ echo '</div>';
                 success: function(response) {
                     console.log(response);
                     //instantly shows the changes to the karma without reload
-                    let karmaId = document.getElementById("karma_"+id);
+                    let karmaId = document.getElementById("karma_"+id);  
+                    if(job == "increaseKarma"){
+                        var otherBtn = e.nextElementSibling;
+                    }else{
+                        var otherBtn = e.previousElementSibling;
+                    }
+                    otherBtn.style.background = "none";
+                    if(e.style.background == "rgb(5, 125, 238)"){
+                       e.style.background = "none"; 
+                    }else{
+                        e.style.background = "rgb(5, 125, 238)"; 
+                    }
+                    
+                    
                     karmaId.innerHTML = response;
                     console.log("karma change successfull");
                 }
