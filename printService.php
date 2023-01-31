@@ -37,8 +37,8 @@ class Printer{
 
                 if(isset($questionObject[$i]->options)){
                     print'<p "card-text">Optionen: ';
-                    for($x=0;$x<count($questionObject[$i]->options);$x++){
-                        print'<span class="badge badge-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options[$x].'</span>';
+                    for($x=0;$x<count($questionObject[$i]->options->$lang);$x++){
+                        print'<span class="badge rounded-pill text-bg-primary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
                     }
                     print'</p>';
                 }

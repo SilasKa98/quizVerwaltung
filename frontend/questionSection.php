@@ -20,14 +20,14 @@ $mongoData = $mongoRead->read("questions", $filterQuery, $options);
 
 
 
-$readForPrintObjects = [];
+$readyForPrintObjects = [];
 foreach ($mongoData as $doc) {
     $fetchedQuestion = $question->parseReadInQuestion($doc);
-    array_push($readForPrintObjects,$fetchedQuestion);
+    array_push($readyForPrintObjects,$fetchedQuestion);
 }
 
 echo '<div id="questionWrapper">';
-foreach ($readForPrintObjects as $doc) {
+foreach ($readyForPrintObjects as $doc) {
     //set desired language here for each object
     $lang = "de";
     $printer->printQuestion($doc,$lang);
