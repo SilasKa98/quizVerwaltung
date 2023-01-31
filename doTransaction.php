@@ -45,20 +45,74 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
     exit();
 }
 
+
+/**
+* Insert + increase/decrease Karma and also check+handling if and how user already voted for this question is checked in here
+*/
 if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
     include_once "karmaService.php";
     $karma = new KarmaService();
-    if($_POST["job"] == "increaseKarma"){
-        $newKarma = $karma->increaseKarma($_POST["id"]);
-        echo $newKarma;
-    }else{
-        $newKarma = $karma->decreaseKarma($_POST["id"]);
-        echo $newKarma;
+    $currentKarma = $karma->getCurrentKarma($_POST["id"]);
+    session_start();
+    $currentUserId = $_SESSION["userData"]["userId"];
+
+    $searchUserFilter = (['userId'=>$currentUserId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+
+    //shouldnt be happening/needed, however still checking it for safty
+    if(!isset($searchUser)){
+        exit();
     }
 
-    $filterQuery = (['id' => $_POST["id"]]);
-    $update = ['$set' =>  ['karma'=> $newKarma]];
-    $mongo->updateEntry("questions",$filterQuery,$update);
+    $filterQueryQuestions = (['id' => $_POST["id"]]);
+
+    if($_POST["job"] == "increaseKarma"){
+        $currentHandle = "up";
+        $oppositHandle = "down";
+    }else{
+        $currentHandle = "down";
+        $oppositHandle = "up";
+    }
+
+
+    //search for the questionId in the karma->up array
+    $isQuestionVoteExisting = array_search($_POST["id"],(array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle]);
+    
+    if($isQuestionVoteExisting === false){
+        $newKarmaArray = (array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle];
+        array_push($newKarmaArray,$_POST["id"]);
+        $fieldQuery = "questionsUserGaveKarmaTo.".$currentHandle;
+        $updateUserKarma = ['$set' =>  [$fieldQuery=> $newKarmaArray]];
+        $mongo->updateEntry("accounts",$searchUserFilter,$updateUserKarma);
+
+        
+        //search in other vote category(up/down) for existence
+        $isQuestionExistingInOppositVote = array_search($_POST["id"],(array)$searchUser["questionsUserGaveKarmaTo"][$oppositHandle]);
+        //if found delete it
+        if($isQuestionExistingInOppositVote !== false){
+            $oppositKarmaArray = (array)$searchUser["questionsUserGaveKarmaTo"][$oppositHandle];
+            unset($oppositKarmaArray[$isQuestionExistingInOppositVote]);
+            $fieldQueryOppositDel = "questionsUserGaveKarmaTo.".$oppositHandle;
+            $updateUserKarmaOpposit = ['$set' =>  [$fieldQueryOppositDel=> $oppositKarmaArray]];
+            $mongo->updateEntry("accounts",$searchUserFilter,$updateUserKarmaOpposit);
+        }
+
+
+        //increase/decrease the Karma int of the quesition (karma of the question in the questions collection)
+        if($_POST["job"] == "increaseKarma"){
+            $newKarma = $karma->increaseKarma($_POST["id"]);
+        }else{
+            $newKarma = $karma->decreaseKarma($_POST["id"]);
+        }
+        //echo is needed for displaying the increase
+        echo $newKarma;
+        $update = ['$set' =>  ['karma'=> $newKarma]];
+        $mongo->updateEntry("questions",$filterQueryQuestions,$update); 
+    }else{
+        //echo is needed for displaying the correct Karma
+        echo $currentKarma;
+        exit();
+    }
 }
 
 

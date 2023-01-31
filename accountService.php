@@ -67,7 +67,8 @@ class AccountService{
             "username"=>$username,
             "mail"=>$mail,
             "password"=>$hashedPwd,
-            "userLanguage"=>$language
+            "userLanguage"=>$language,
+            "questionsUserGaveKarmaTo"=>["up"=>[],"down"=>[]]
         ];
 
         //insert the new User
