@@ -16,5 +16,7 @@
         <input type="hidden" name="method" value="loginAccount">
 		<input type="submit" name="login_submit" value="Einloggen">
 	</form>
+    <br>
+    <a href="registerAccount.php">No Account yet? Sign up now!</a>
 </body>
 </html>
