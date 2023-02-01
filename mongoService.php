@@ -148,8 +148,6 @@ class MongoDBService {
         return $result;
     }
 
-    
-    //TODO update
 
     //TODO vllt auch start und end session als extra function ?!?!? --> ansonsten in den einzelnen Funktionen machen 
   }

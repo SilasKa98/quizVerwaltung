@@ -74,7 +74,7 @@ class AccountService{
         //insert the new User
         $this->mongo->insertSingle("accounts",$userInformation);
 
-        return header("Location: frontend/loginAccount.php?login=success");
+        return header("Location: frontend/loginAccount.php?signUp=success");
     } 
 
 
