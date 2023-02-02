@@ -2,7 +2,7 @@
     //general --> needs to be set in every text_xx.php
     $all_languages=[
         "de"=>"German",
-        "en"=>"English",
+        "en-Us"=>"English",
         "es"=>"Spanish"
     ];
 
@@ -20,6 +20,11 @@
     $profileInfoText = "Aquí podría haber alguna información sobre el usuario u otros enlaces a algo.";
     $profileMiniText = "Última actualización hace 3 minutos";
 
+    //Toast (index.php)
+    $toastTimeDisplay = "justo ahora";
+
     //insertQuestions.php
     $importCheckPageTitel = "Descripción general de la importación";
+    $InsertNewLanguageTitel = "Seleccione su idioma deseado";
+
 ?>
