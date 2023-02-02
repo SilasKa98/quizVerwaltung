@@ -1,4 +1,31 @@
 <div id="response"></div>
+
+<div class="modal fade" id="changeLangModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"><?php echo $InsertNewLanguageTitel; ?></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <select class="selLanguageDropDown" id="insertNewLanguageDrpDwn" name="language">
+                <option></option>
+                <option>DE</option>
+                <option>en-Us</option>
+                <option>es</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="submitNewLanguageInsertBtn"  data-bs-dismiss="modal" class="btn btn-primary">Save</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+        
+
 <?php
 
 
@@ -26,58 +53,84 @@ foreach ($mongoData as $doc) {
     array_push($readyForPrintObjects,$fetchedQuestion);
 }
 
-echo '<div id="questionWrapper">';
-foreach ($readyForPrintObjects as $doc) {
-    //set desired language here for each object
-    $lang = "de";
-    $printer->printQuestion($doc,$lang);
-}
-
+echo '<div class="container-fluid" id="allQuestionWrapper">';
+    foreach ($readyForPrintObjects as $doc) {
+        //set desired language here for each object
+        $lang = "de";
+        $printer->printQuestion($doc,$lang);
+    }
 echo '</div>';
 
 
 ?>
 
 <script>
-    async function changeLanguage(e){
-        console.log(e);
-        console.log(e.value);
-        let selLanguage = e.value;
-        let buttonWrapper = e.nextElementSibling;
-        let id = e.nextElementSibling.nextElementSibling.value;
-        buttonWrapper.style.display = "inline";
-        let method = "changeLanguage";
-        let sourceLanguage = e.nextElementSibling.nextElementSibling.nextElementSibling.value;
 
-        const saveOnly = e.nextElementSibling.children[0];
-        const transAndSave = e.nextElementSibling.children[1];
-
-        await buttonCheck(saveOnly,transAndSave,selLanguage,method,sourceLanguage,id);
-    }
-
-    function buttonCheck(saveOnly,transAndSave,selLanguage,method,sourceLanguage,id) {
-        transAndSave.addEventListener("click", function() {
-            $.ajax({
-                type: "POST",
-                url: 'doTransaction.php',
-                data: {
-                    selLanguage: selLanguage,
-                    method: method,
-                    sourceLanguage: sourceLanguage,
-                    id: id
-                },
-                success: function(response) {
-                    $("#response").text(response);
-                    console.log(response);
-                    console.log("save successfull");
+    //check if the user presses "save" in the insert new Language modal
+    function submitNewLanguageInsert(){
+        subCheck =  new Promise(function (resolve, reject) {
+            var submitNewLang = document.getElementById("submitNewLanguageInsertBtn");
+            submitNewLang.addEventListener('click', (event) => {
+                if(event){
+                    resolve(event);
                 }
+                else{
+                    reject("error ...")
+                } 
             });
-        });
+        })
+        return subCheck;
+    }
 
-        saveOnly.addEventListener("click", function() {
-            console.log('saveOnly not implemented yet');
+
+    //get what language the user wants to translate the question into.. 
+    //this function is also asyncrounus so it will wait until the user submits the selection with the save button --> function submitNewLanguageInsert()
+    async function getNewQuestionLanguage(){
+        p =  new Promise(function (resolve, reject) {
+            var newLang = document.getElementById("insertNewLanguageDrpDwn");
+            newLang.addEventListener('change', (event) => {
+                var result = event;
+                if(result != ""){
+                    resolve(result);
+                }
+                else{
+                    reject("error ...")
+                } 
+            });
+        })
+        let checkFinalSubmit = await submitNewLanguageInsert();
+        return p;
+    }
+
+    //this function awaits a return from getNewQuestionLanguage(), the getNewQuestionLanguage() only returns if the user submitted his selection.
+    //with this structure its secured that the user can change the target language as often as he wants, till he presses submit
+    async function changeLanguage(e){
+        let newLang = await getNewQuestionLanguage();
+        let selLanguage = newLang.target.value;
+        let id = e.getAttribute("name").split("_")[0];
+        let sourceLanguage = e.getAttribute("name").split("_")[1];
+        let method = "changeLanguage";
+
+        $.ajax({
+            type: "POST",
+            url: 'doTransaction.php',
+            data: {
+                selLanguage: selLanguage,
+                method: method,
+                sourceLanguage: sourceLanguage,
+                id: id
+            },
+            success: function(response) {
+                $("#response").text(response);
+                console.log(response);
+                console.log("save successfull");
+                toastMsgBody.innerHTML = "New Language added successfully!";
+                $(".toast").toast('show');
+                
+            }
         });
     }
+
 
     function changeKarma(e){
         var job = e.name;

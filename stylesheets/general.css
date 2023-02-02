@@ -2,12 +2,9 @@ body{
   background-color: rgba(218, 218, 221, 0.8) !important;
 }
 
-#questionWrapper{
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
+#allQuestionWrapper{
+  margin-top: 3%;
+  width: 90%;
 }
 
 /* CSS */
@@ -107,7 +104,7 @@ body{
   }
 
 
-  .karmaWrapper{
+  .rightInnerMenuWrapper{
     float: right;
   }
 
@@ -131,7 +128,9 @@ body{
   }
 
   .questionCard{
-    margin-bottom: 1%;
+    margin-bottom: 1% !important;
+    margin: 0 auto;
+    margin-right: 10px !important;
   }
 
   #profileAvatar{
@@ -159,3 +158,33 @@ body{
     background-color: rgb(5, 125, 238);
     border-radius: 5px;
   }
+
+  .collapsable_header{
+    text-decoration: none;
+    color: black;
+
+    padding-right: 64%;
+    padding-bottom: 44px;
+  }
+
+  .selLanguageDropDown{
+    margin-top: 10px;
+  }
+
+  .rightOuterMenu{
+    float: right;
+    margin-left: 2px;
+  }
+
+  .outerMenuItems{
+    min-width: fit-content !important;
+  }
+
+  .outerMenuItemsListElem{
+    cursor: pointer;
+  }
+
+
+
+  
+ 
