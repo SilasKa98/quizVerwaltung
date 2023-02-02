@@ -14,6 +14,15 @@ $question = new QuestionService();
 $mongo = new MongoDBService();
 
 if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
+
+    //maybe later fetch it from somewhere?
+    $allSupportedLanguages = ["de","en-Us","es"];
+
+    //catching falsly given values from the user 
+    if(!in_array($_POST["selLanguage"],$allSupportedLanguages)){
+        exit();
+    }
+    
     $filterQuery = (['id' => $_POST["id"]]);
     $options = [];
     $sourceLanguage = $_POST["sourceLanguage"];
