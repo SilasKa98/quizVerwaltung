@@ -55,9 +55,7 @@ foreach ($mongoData as $doc) {
 
 echo '<div class="container-fluid" id="allQuestionWrapper">';
     foreach ($readyForPrintObjects as $doc) {
-        //set desired language here for each object
-        $lang = "de";
-        $printer->printQuestion($doc,$lang);
+        $printer->printQuestion($doc);
     }
 echo '</div>';
 
@@ -66,8 +64,10 @@ echo '</div>';
 
 <script>
 
+
     //check if the user presses "save" in the insert new Language modal
     function submitNewLanguageInsert(){
+
         subCheck =  new Promise(function (resolve, reject) {
             var submitNewLang = document.getElementById("submitNewLanguageInsertBtn");
             submitNewLang.addEventListener('click', (event) => {
@@ -80,12 +80,14 @@ echo '</div>';
             });
         })
         return subCheck;
+
     }
 
 
     //get what language the user wants to translate the question into.. 
     //this function is also asyncrounus so it will wait until the user submits the selection with the save button --> function submitNewLanguageInsert()
     async function getNewQuestionLanguage(){
+
         p =  new Promise(function (resolve, reject) {
             var newLang = document.getElementById("insertNewLanguageDrpDwn");
             newLang.addEventListener('change', (event) => {
@@ -100,16 +102,19 @@ echo '</div>';
         })
         let checkFinalSubmit = await submitNewLanguageInsert();
         return p;
+
     }
+
 
     //this function awaits a return from getNewQuestionLanguage(), the getNewQuestionLanguage() only returns if the user submitted his selection.
     //with this structure its secured that the user can change the target language as often as he wants, till he presses submit
-    async function changeLanguage(e){
+    async function insertNewLanguage(e){
+
         let newLang = await getNewQuestionLanguage();
         let selLanguage = newLang.target.value;
         let id = e.getAttribute("name").split("_")[0];
         let sourceLanguage = e.getAttribute("name").split("_")[1];
-        let method = "changeLanguage";
+        let method = "insertNewLanguage";
 
         $.ajax({
             type: "POST",
@@ -129,44 +134,73 @@ echo '</div>';
                 
             }
         });
+
     }
 
 
     function changeKarma(e){
+
         var job = e.name;
         let id = e.id;
         let method = "changeKarma";
         $.ajax({
-                type: "POST",
-                url: 'doTransaction.php',
-                data: {
-                    job: job,
-                    method: method,
-                    id: id
-                },
-                success: function(response) {
-                    console.log(response);
-                    //instantly shows the changes to the karma without reload
-                    let karmaId = document.getElementById("karma_"+id);  
-                    if(job == "increaseKarma"){
-                        var otherBtn = e.nextElementSibling;
-                    }else{
-                        var otherBtn = e.previousElementSibling;
-                    }
-                    otherBtn.style.background = "none";
-                    if(e.style.background == "rgb(5, 125, 238)"){
-                       e.style.background = "none"; 
-                    }else{
-                        e.style.background = "rgb(5, 125, 238)"; 
-                    }
-                    
-                    
-                    karmaId.innerHTML = response;
-                    console.log("karma change successfull");
+            type: "POST",
+            url: 'doTransaction.php',
+            data: {
+                job: job,
+                method: method,
+                id: id
+            },
+            success: function(response) {
+                console.log(response);
+                //instantly shows the changes to the karma without reload
+                let karmaId = document.getElementById("karma_"+id);  
+                if(job == "increaseKarma"){
+                    var otherBtn = e.nextElementSibling;
+                }else{
+                    var otherBtn = e.previousElementSibling;
                 }
-            });
-
+                otherBtn.style.background = "none";
+                if(e.style.background == "rgb(5, 125, 238)"){
+                    e.style.background = "none"; 
+                }else{
+                    e.style.background = "rgb(5, 125, 238)"; 
+                }
+                
+                
+                karmaId.innerHTML = response;
+                console.log("karma change successfull");
+            }
+        });
 
     }
+
+    
+    function changeQuestionLanguage(e){
+
+        let questionId = e.getAttribute("name").split("_")[1];
+        let questionLang = e.value;
+        const method = "changeQuestionLanguageRelation";
+        $.ajax({
+            type: "POST",
+            url: 'doTransaction.php',
+            data: {
+                questionId: questionId,
+                questionLang: questionLang,
+                method: method
+            },
+            success: function(response) {
+                //adjust displayed values --> currently only question Titel, others need to be added too (TODO)
+                let questionText = document.getElementById("headerText_"+questionId);
+                questionText.innerHTML = response;
+
+                console.log("language change successfull");
+                toastMsgBody.innerHTML = "Changed the question language successfully!";
+                $(".toast").toast('show');
+            }
+        });
+
+    }
+
 
 </script>

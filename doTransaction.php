@@ -13,7 +13,7 @@ include_once "questionService.php";
 $question = new QuestionService();
 $mongo = new MongoDBService();
 
-if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
+if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 
     //maybe later fetch it from somewhere?
     $allSupportedLanguages = ["de","en-Us","es"];
@@ -22,7 +22,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
     if(!in_array($_POST["selLanguage"],$allSupportedLanguages)){
         exit();
     }
-    
+
     $filterQuery = (['id' => $_POST["id"]]);
     $options = [];
     $sourceLanguage = $_POST["sourceLanguage"];
@@ -51,6 +51,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeLanguage"){
 
     //at this point the whole object is translated, now it can be taken apart and only the needed parts can be inserted into the database into the right object (object with id xxxx)
     //same as done obove with the question
+
+    //TODO options field 
     exit();
 }
 
@@ -133,8 +135,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
         $update = ['$set' =>  ['karma'=> $newKarma]];
         $mongo->updateEntry("questions",$filterQueryQuestions,$update); 
     }else{
-        //echo is needed for displaying the correct Karma
-
+        
         $neutralizeKarmaArray = (array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle];
         unset($neutralizeKarmaArray[$isQuestionVoteExisting]);
         $fieldQueryNeutralize = "questionsUserGaveKarmaTo.".$currentHandle;
@@ -146,6 +147,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
         }else{
             $newKarma = $karma->increaseKarma($_POST["id"]);
         }
+        //echo is needed for displaying the correct Karma
         echo $newKarma;
         $update = ['$set' =>  ['karma'=> $newKarma]];
         $mongo->updateEntry("questions",$filterQueryQuestions,$update); 
@@ -176,6 +178,54 @@ if(isset($_POST["language"])){
     $account = new AccountService();
     session_start();
     $account->changeLanguage($_POST["language"], $_SESSION["userData"]["userId"]);
+}
+
+
+if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelation"){
+    session_start();
+    $currentUserId = $_SESSION["userData"]["userId"];
+    $searchUserFilter = (['userId'=>$currentUserId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+
+
+    /*
+    *search the given inputs in the db to check if they are valid
+    *START OF VALIDATION
+    */
+        $searchQuestionIdFilter = (['id'=>$_POST["questionId"]]);
+        $searchQuestionId = $mongo->findSingle("questions",$searchQuestionIdFilter,[]);
+        if(!isset($searchQuestionId)){
+            exit();
+        }
+
+        //maybe later fetch it from somewhere?
+        $allSupportedLanguages = ["de","en-Us","es"];
+        if(!in_array($_POST["questionLang"],$allSupportedLanguages)){
+            exit();
+        }
+    /*
+    *END OF VALIDATION
+    */
+
+
+    $questionLangUserRelation = (array)$searchUser["questionLangUserRelation"];
+
+    $isQuestionPresent = array_search($_POST["questionId"],$questionLangUserRelation);
+
+    if($isQuestionPresent !== false){
+        unset($questionLangUserRelation[$isQuestionPresent]);
+    }
+
+    //first get all current relations that exist
+    $checkRelationEntrys = $searchUser;
+    //cast it to array and select the field of the object so the new field can get added
+    $checkRelationEntrys = $questionLangUserRelation;
+    // add the new id lang relation
+    $checkRelationEntrys[$_POST["questionLang"]] = $_POST["questionId"];
+    $update = ['$set' =>  ['questionLangUserRelation'=> $checkRelationEntrys]];
+    $mongo->updateEntry("accounts",$searchUserFilter,$update);
+
+    echo $searchQuestionId["question"][$_POST["questionLang"]];
 }
 
 ?>

@@ -42,7 +42,7 @@ class AccountService{
             exit();
         }
 
-        
+
         //check if user or mail already exists
         $options = [];
         $filterQuery = (['username' => $username]);
@@ -68,7 +68,8 @@ class AccountService{
             "mail"=>$mail,
             "password"=>$hashedPwd,
             "userLanguage"=>$language,
-            "questionsUserGaveKarmaTo"=>["up"=>[],"down"=>[]]
+            "questionsUserGaveKarmaTo"=>["up"=>[],"down"=>[]],
+            "questionLangUserRelation"=>[]
         ];
 
         //insert the new User

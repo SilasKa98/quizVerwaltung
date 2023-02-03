@@ -1,6 +1,6 @@
 <?php
     //default include text_en to get all_languages array
-    include "../systemLanguages/text_en.php";
+    include "../systemLanguages/text_en-Us.php";
 
 ?>
 
