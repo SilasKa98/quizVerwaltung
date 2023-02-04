@@ -53,12 +53,6 @@ body{
   transform: translateY(0);
 }
 
-.container {
-    margin: 60px;
-    height: 200px;
-    position: relative;
-    border: 3px solid rgba(0, 0, 0, 0.345); 
-  }
   
   .center {
     margin: 0;

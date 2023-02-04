@@ -13,7 +13,6 @@
   $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
   $selectedLanguage = $selectedLanguage->userLanguage;
   include "systemLanguages/text_".$selectedLanguage.".php";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

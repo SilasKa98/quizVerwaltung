@@ -103,7 +103,7 @@ class Printer{
                                     print'</p>';
                                 }
 
-                                print'<p "card-text">Author: <a href="frontend/userProfile.php?username='.$questionObject[$i]->author.'"><span class="badge rounded-pill text-bg-primary" style="margin-right: 2px;">'.$questionObject[$i]->author."</span></a></p>";
+                                print'<p "card-text">Author: <a href="frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'"><span class="badge rounded-pill text-bg-primary" style="margin-right: 2px;">'.$questionObject[$i]->author."</span></a></p>";
                             print'</div>
                         </div>
                     </div> 

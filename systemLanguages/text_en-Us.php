@@ -24,10 +24,12 @@
     //Toast (index.php)
     $toastTimeDisplay = "just Now";
 
+    //questionSection.php
+    $InsertNewLanguageMainHeader = "Pick up a new language for the question";
+    $InsertNewLanguageTitel = "Select your disired Language";
 
     //insertQuestions.php
     $importCheckPageTitel = "Import overview";
-    $InsertNewLanguageTitel = "Select your disired Language";
     $selectYourTagsHeader = "Select the appropriate tags for the question";
     $adjustButton = "Adjust";
     $finalizeImportButton = "Import questions";
