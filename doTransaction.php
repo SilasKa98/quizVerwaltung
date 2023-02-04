@@ -228,4 +228,39 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
     echo $searchQuestionId["question"][$_POST["questionLang"]];
 }
 
+
+if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
+    include_once "versionService.php";
+    $version = new VersionService();
+    $version->setVersion("1.0");
+    $version = $version->version;
+    session_start();
+    $fetchedData = $_POST["allQuestions"];
+    foreach($fetchedData as $key => $value){
+        $question = $value["question"];
+        $language = $value["language"];
+        if(isset($value["options"])){
+            $options = explode(",",$value["options"]);
+            unset($value["options"]);
+            $value["options"] = [$language=>$options];
+        }
+        if(isset($value["tags"])){
+            $tags = explode(",",$value["tags"]);
+            $value["tags"] = $tags;
+        }
+        unset($value["question"]);
+        unset($value["language"]);
+        $value["question"] = [$language=>$question];
+        $value["id"] = uniqid();
+        $value["creationDate"] = date("Y-m-d");
+        $value["modificationDate"] = "";
+        $value["version"] = $version;
+        $value["karma"] = 0;
+        $value["author"] = $_SESSION["userData"]["username"];
+        $value["verification"] = "";
+        print_r($value);
+        $mongo->insertMultiple("questions",[$value]);
+    }
+}
+
 ?>

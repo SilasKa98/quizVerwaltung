@@ -5,7 +5,7 @@ class Question {
   public $answer;
 
 
-  public function __construct($question, $answer, $questionType, $version, $id, $karma, $author) {
+  public function __construct($question, $answer, $questionType, $version, $id, $karma, $author, $tags) {
     $this->question =  $question;
     $this->answer  = $answer;
     $this->id = $id;
@@ -13,7 +13,7 @@ class Question {
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
     $this->version = $version;
-    $this->tags = "";
+    $this->tags = $tags;
     $this->karma = $karma;
     $this->author = $author;
     $this->verification = "";
@@ -45,7 +45,7 @@ class MultiLineQuestion extends Question{
 class OptionsQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -54,7 +54,7 @@ class OptionsQuestion extends Question{
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
     $this->version = $version;
-    $this->tags = "";
+    $this->tags = $tags;
     $this->karma = $karma;
     $this->author = $author;
     $this->verification = "";
@@ -68,7 +68,7 @@ class MultiOptionsQuestion extends OptionsQuestion{
 class OrderQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -77,7 +77,7 @@ class OrderQuestion extends Question{
     $this->creationDate = date("Y-m-d");
     $this->modificationDate = "";
     $this->version = $version;
-    $this->tags = "";
+    $this->tags = $tags;
     $this->karma = $karma;
     $this->author = $author;
     $this->verification = "";
@@ -106,30 +106,31 @@ function parseLine( $line ) {
   $version = $version->version;
 
   $author = $_SESSION["userData"]["username"];
+  $tags = "";
 
 	if( $parts[0] == "YesNo" ) {
-		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author);
+		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags);
 	} else if( $parts[0] == "RegOpen" ) {
-		return new RegOpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author);
+		return new RegOpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags);
 	} else if( $parts[0] == "Open" ) {
-		return new OpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author);
+		return new OpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags);
 	} else if( $parts[0] == "Correct" ) {
-		return new CorrectQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author);
+		return new CorrectQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags);
 	} else if( $parts[0] == "Order" ) {
-		return new OrderQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author);
+		return new OrderQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags);
 	} else if( $parts[0] == "Options" ) {
-		return new OptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author);
+		return new OptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags);
 	} else if( $parts[0] == "MultiOptions" ) {
-		return new MultiOptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author);
+		return new MultiOptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags);
 	} else if( $parts[0] == "Dyn" ) {
 		$func = $parts[1];
 		if( method_exists( "Dyn", $func ) ) {
 			return Dyn::{$func}();
 		} else {
-			return new Question( "-", "", "", "", "", "");
+			return new Question( "-", "", "", "", "", "", "");
 		}
 	} else {
-		return new Question( "-", "", "", "", "", "");
+		return new Question( "-", "", "", "", "", "", "");
 	}
 }
 

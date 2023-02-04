@@ -1,0 +1,2 @@
+YesNo#Swing ist ein GUI-Toolkit fuer die Programmiersprache Java#true
+Options#Was ben&ouml;tigt man zum Ausf&uuml;hren von Java Programmen?#1#Java Development Kit#Java Runtime Environment#Eclipse IDE

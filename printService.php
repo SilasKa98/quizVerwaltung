@@ -85,7 +85,7 @@ class Printer{
                                 if(isset($questionObject[$i]->options)){
                                     print'<p "card-text">Optionen: ';
                                     for($x=0;$x<count($questionObject[$i]->options->$lang);$x++){
-                                        print'<span class="badge rounded-pill text-bg-primary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                        print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
                                     }
                                     print'</p>';
                                 }
@@ -93,7 +93,16 @@ class Printer{
                                 print'<p "card-text">Erstellungsdatum: '.$questionObject[$i]->creationDate."</p>";
                                 print'<p "card-text">Letzte Änderung: '.$questionObject[$i]->modificationDate."</p>";
                                 print'<p "card-text">Version: '.$questionObject[$i]->version."</p>";
-                                print'<p "card-text">Tags: '.$questionObject[$i]->tags."</p>";
+                                
+                                if(isset($questionObject[$i]->tags)){
+    
+                                    print'<p "card-text">Tags: ';
+                                    for($x=0;$x<count($questionObject[$i]->tags);$x++){
+                                        print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->tags[$x].'</span>';
+                                    }
+                                    print'</p>';
+                                }
+
                                 print'<p "card-text">Author: <a href="frontend/userProfile.php?username='.$questionObject[$i]->author.'"><span class="badge rounded-pill text-bg-primary" style="margin-right: 2px;">'.$questionObject[$i]->author."</span></a></p>";
                             print'</div>
                         </div>

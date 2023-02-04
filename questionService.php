@@ -30,24 +30,25 @@ class QuestionService{
         $id = $questionObject->id;
         $karma = $questionObject->karma;
         $author = $questionObject->author;
+        $tags = $questionObject->tags;
 
         if( $questionType == "YesNo" ) {
-            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
+            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags);
         } else if( $questionType == "RegOpen" ) {
-            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
+            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags);
         } else if( $questionType == "Open" ) {
-            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
+            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags);
         } else if( $questionType == "Correct" ) {
-            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id, $karma, $author);
+            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags);
         } else if( $questionType == "Order" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author);
+            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags);
         } else if( $questionType == "Options" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author);
+            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags);
         } else if( $questionType == "MultiOptions" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author);
+            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags);
         } else if( $questionType == "Dyn" ) {
             /*
             $func = $parts[1];
@@ -58,7 +59,7 @@ class QuestionService{
             }
             */
         } else {
-            $formattedQuestion = new Question( "-", "", "", "", "", "", "");
+            $formattedQuestion = new Question( "-", "", "", "", "", "", "", "");
         }
         return [$formattedQuestion];
     }

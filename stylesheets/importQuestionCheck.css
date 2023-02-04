@@ -1,0 +1,15 @@
+#finalImportBtn{
+    margin: 10px;
+    width: 99%;
+}
+
+.innerImportCard{
+    margin-right:1%;
+}
+.allCardsWrapper{
+    margin-top: 1%;
+}
+#importMainHeader{
+    text-align: center;
+    padding: 1%;
+}

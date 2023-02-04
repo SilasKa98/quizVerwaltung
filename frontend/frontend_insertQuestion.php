@@ -12,6 +12,11 @@
   $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
   $selectedLanguage = $selectedLanguage->userLanguage;
   include "../systemLanguages/text_".$selectedLanguage.".php";
+
+  //get all available tags
+  $filterQueryTags = (['id' => '1234']);
+  $allTagsObj= $mongo->findSingle("tags",$filterQueryTags,[]);
+  $allTagsArray = (array)$allTagsObj->allTags;
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +38,7 @@
             <div class="center">
                 <form method="post" action="../insertQuestions.php">
                     <input class="inputfile" type="file" name="inputFile" >
+                    <input type="hidden" name="allTags" value="<?php echo implode(',',$allTagsArray) ?>">
                     <button class="button-5" type="submit" name="import"><?php echo $text_import_form["import_btn"]?></button>
                     <button class="button-5" type="submit" name="clean" role="button"><?php echo $text_import_form["clean_db_btn"]?></button>
                 </form>
