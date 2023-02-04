@@ -30,4 +30,5 @@
     $InsertNewLanguageTitel = "Select your disired Language";
     $selectYourTagsHeader = "Select the appropriate tags for the question";
     $adjustButton = "Adjust";
+    $finalizeImportButton = "Import questions";
 ?>

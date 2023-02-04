@@ -28,5 +28,6 @@
     $InsertNewLanguageTitel = "Seleccione su idioma deseado";
     $selectYourTagsHeader = "Seleccione las etiquetas adecuadas para la pregunta";
     $adjustButton = "Ajustar";
+    $finalizeImportButton = "Preguntas frecuentes";
 
 ?>

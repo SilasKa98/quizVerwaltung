@@ -143,7 +143,7 @@
             }
             echo '</div>';
 
-            echo '<button class="btn btn-primary btn-lg btn-block" role="button" onclick="finalizeImport()" id="finalImportBtn">Fragen Importieren</button>';
+            echo '<button class="btn btn-primary btn-lg btn-block" role="button" onclick="finalizeImport()" id="finalImportBtn">'; echo $finalizeImportButton; echo'</button>';
         }
 
         //TODO remove later
