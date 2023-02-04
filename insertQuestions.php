@@ -35,7 +35,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"><?php echo $selectYourTagsHeader; ?></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="ChangeModal-body">
@@ -57,7 +57,9 @@
         include_once "mongoService.php";
 
         if (isset($_POST['import'])) {
-            $allTags = $_POST["allTags"];
+            //get all available Tags
+            $allTagsObj= $mongo->findSingle("tags",[],[]);
+            $allTags = implode(",",(array)$allTagsObj->allTags);
 
             $inputFile = $_POST['inputFile'];
             $question = new QuestionService();
@@ -123,7 +125,7 @@
                                         <h5 class="card-title">'.$key.'</h5>';
                                         if($key == "tags"){
                                             echo'<p class="card-text" id="tagsCard_'.$qObj->id.'">'.$value.'</p>';
-                                            echo'<button onclick="changeTags(this,\''.$allTags.'\',tags_'.$qObj->id.',tagsCard_'.$qObj->id.')" class="btn btn-primary">Anpassen</button>';
+                                            echo'<button onclick="changeTags(this,\''.$allTags.'\',tags_'.$qObj->id.',tagsCard_'.$qObj->id.')" class="btn btn-primary">'; echo $adjustButton; echo'</button>';
                                         }else{
                                             echo'<p class="card-text">'.$value.'</p>';
                                         }
