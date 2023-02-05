@@ -19,6 +19,7 @@
     $navText_insertQuestion = "Insertar pregunta";
     $profileInfoText = "Aquí podría haber alguna información sobre el usuario u otros enlaces a algo.";
     $profileMiniText = "Última actualización hace 3 minutos";
+    $myProfileLink = "Mi Perfil";
 
     //Toast (index.php)
     $toastTimeDisplay = "justo ahora";
@@ -33,4 +34,6 @@
     $adjustButton = "Ajustar";
     $finalizeImportButton = "Preguntas frecuentes";
 
+      //userProfile.php
+      $userHasNoQuestionsYet = "todavía no ha creado ninguna pregunta."
 ?>

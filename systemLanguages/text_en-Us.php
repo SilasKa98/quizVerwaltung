@@ -20,6 +20,8 @@
     $navText_insertQuestion = "Insert Question";
     $profileInfoText = "Here could be some information about the user or other links to something.";
     $profileMiniText = "Last updated 3 mins ago";
+    $myProfileLink = "My Profile";
+
 
     //Toast (index.php)
     $toastTimeDisplay = "just Now";
@@ -33,4 +35,7 @@
     $selectYourTagsHeader = "Select the appropriate tags for the question";
     $adjustButton = "Adjust";
     $finalizeImportButton = "Import questions";
+
+      //userProfile.php
+      $userHasNoQuestionsYet = "hasn't created any questions yet."
 ?>

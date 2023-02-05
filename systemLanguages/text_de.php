@@ -21,6 +21,7 @@
     $navText_insertQuestion = "Frage Hinzufügen";
     $profileInfoText = "Hier könnten Informationen über den Benutzer oder andere Links zu etwas stehen.";
     $profileMiniText = "Zuletzt aktualisiert vor 3 Minuten";
+    $myProfileLink = "Mein Profil";
 
     //Toast (index.php)
     $toastTimeDisplay = "gerade eben";
@@ -34,4 +35,7 @@
     $selectYourTagsHeader = "Wählen Sie die passenden Tags für die Frage";
     $adjustButton = "Anpassen";
     $finalizeImportButton = "Fragen Importieren";
+
+    //userProfile.php
+    $userHasNoQuestionsYet = "hat noch keine Fragen erstellt."
 ?>

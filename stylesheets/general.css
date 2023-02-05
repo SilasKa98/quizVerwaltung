@@ -161,6 +161,7 @@ body{
 
   .selLanguageDropDown{
     margin-top: 10px;
+    min-width: 63px;
   }
 
   .rightOuterMenu{
@@ -176,6 +177,9 @@ body{
     cursor: pointer;
   }
 
+  #noQuestionsYetText{
+    text-align: center;
+  }
 
 
   
