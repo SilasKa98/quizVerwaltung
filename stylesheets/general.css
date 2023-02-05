@@ -166,10 +166,12 @@ body{
   .rightOuterMenu{
     float: right;
     margin-left: 2px;
+    height: 20px;
   }
 
   .outerMenuItems{
     min-width: fit-content !important;
+
   }
 
   .outerMenuItemsListElem{
@@ -195,5 +197,11 @@ body{
     text-decoration: underline;
   }
 
-  
- 
+  .rightOuterMenuToggle{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-right: 11px !important;
+
+    background: #7e7e7e !important;
+    border-radius: 9px !important;
+  }

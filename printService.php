@@ -42,7 +42,7 @@ class Printer{
             print'
                 <div class="container-fluid">
                     <div class="btn-group rightOuterMenu">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle rightOuterMenuToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                            
                         </button>
                         <ul class="dropdown-menu outerMenuItems">
