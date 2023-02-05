@@ -178,8 +178,14 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <?php
-                             foreach ($readyForPrintQuestions as $doc) {
+                            foreach ($readyForPrintQuestions as $doc) {
                                 $printer->printQuestion($doc);
+                            }
+                            ?>
+
+                            <?php
+                            if(count($readyForPrintQuestions) == 0){
+                                echo"<p id='noQuestionsYetText'>".$foundProfile->username." ".$userHasNoQuestionsYet."</p>";
                             }
                             ?>
                         </div>
