@@ -6,16 +6,18 @@
     }
     extract($_SESSION["userData"]);
 
-    //get the selected userLanguage to display the system in the right language
+
     include_once "../mongoService.php";
     include_once "../questionService.php";
     include_once "../printService.php";
 
+    
 
     $mongo = new MongoDBService();
     $question = new QuestionService();
     $printer = new Printer();
 
+    //get the selected userLanguage to display the system in the right language
     $filterQuery = (['userId' => $userId]);
     $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
     $selectedLanguage = $selectedLanguage->userLanguage;
@@ -129,16 +131,16 @@
                 <div class="card-body">
                     <div class="row">
                     <div class="col-sm-3">
-                        <p class="mb-0">Full Name</p>
+                        <p class="mb-0"><?php echo $fullNameField; ?></p>
                     </div>
                     <div class="col-sm-9">
-                        <p class="text-muted mb-0">Maybe take full name @register</p>
+                        <p class="text-muted mb-0"><?php echo $foundProfile->firstname." ".$foundProfile->lastname;?></p>
                     </div>
                     </div>
                     <hr>
                     <div class="row">
                     <div class="col-sm-3">
-                        <p class="mb-0">Email</p>
+                        <p class="mb-0">E-mail</p>
                     </div>
                     <div class="col-sm-9">
                         <p class="text-muted mb-0"><?php echo $foundProfile->mail; ?></p>
@@ -147,10 +149,10 @@
                     <hr>
                     <div class="row">
                     <div class="col-sm-3">
-                        <p class="mb-0">other field</p>
+                        <p class="mb-0"><?php echo $languageField; ?></p>
                     </div>
                     <div class="col-sm-9">
-                        <p class="text-muted mb-0"></p>
+                        <p class="text-muted mb-0"><?php echo $foundProfile->userLanguage; ?></p>
                     </div>
                     </div>
                     <hr>

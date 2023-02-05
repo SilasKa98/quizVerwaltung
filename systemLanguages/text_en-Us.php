@@ -36,6 +36,8 @@
     $adjustButton = "Adjust";
     $finalizeImportButton = "Import questions";
 
-      //userProfile.php
-      $userHasNoQuestionsYet = "hasn't created any questions yet."
+    //userProfile.php
+    $userHasNoQuestionsYet = "hasn't created any questions yet.";
+    $fullNameField = "Name";
+    $languageField = "Main language";
 ?>

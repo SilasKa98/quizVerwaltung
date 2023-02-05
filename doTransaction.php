@@ -135,7 +135,6 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
         $update = ['$set' =>  ['karma'=> $newKarma]];
         $mongo->updateEntry("questions",$filterQueryQuestions,$update); 
     }else{
-        
         $neutralizeKarmaArray = (array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle];
         unset($neutralizeKarmaArray[$isQuestionVoteExisting]);
         $fieldQueryNeutralize = "questionsUserGaveKarmaTo.".$currentHandle;
@@ -158,7 +157,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
     include_once "accountService.php";
     $account = new AccountService();
-    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["language"]);
+    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["language"],$_POST["firstname"],$_POST["lastname"]);
 }
 
 if(isset($_POST["method"]) && $_POST["method"] == "loginAccount"){

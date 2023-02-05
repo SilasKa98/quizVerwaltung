@@ -16,10 +16,10 @@ class AccountService{
      * @param string        $pwd_repeat     given repeated password of the user
      * 
      */
-    function register($username, $mail, $pwd, $pwd_repeat, $language){
+    function register($username, $mail, $pwd, $pwd_repeat, $language, $firstname, $lastname){
 
         //check of errors in the given informations
-        if(empty($username)|| empty($mail) || empty($pwd) || empty($pwd_repeat)|| empty($language)){
+        if(empty($username)|| empty($mail) || empty($pwd) || empty($pwd_repeat)|| empty($language) || empty($firstname) || empty($lastname)){
             header("Location: frontend/registerAccount.php?error=emptyfields&user_id=".$username."&mail=".$mail);
             exit();
         }
@@ -33,8 +33,8 @@ class AccountService{
             header("Location: frontend/registerAccount.php?error=invalidmail&user_id=".$username);
             exit();
         }
-        else if(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
-            header("Location: frontend/registerAccount.php?error=invaliduser_id&mail=".$mail);
+        else if(!preg_match("/^[a-zA-Z0-9]*$/", $username) || !preg_match("/^[a-zA-Z0-9]*$/", $firstname) || !preg_match("/^[a-zA-Z0-9]*$/", $lastname)){
+            header("Location: frontend/registerAccount.php?error=invalidUsernameOrFirstnameOrLastname&mail=".$mail);
             exit();
         }
         else if($pwd !== $pwd_repeat){
@@ -69,7 +69,9 @@ class AccountService{
             "password"=>$hashedPwd,
             "userLanguage"=>$language,
             "questionsUserGaveKarmaTo"=>["up"=>[],"down"=>[]],
-            "questionLangUserRelation"=>[]
+            "questionLangUserRelation"=>[],
+            "firstname"=>$firstname,
+            "lastname"=>$lastname
         ];
 
         //insert the new User

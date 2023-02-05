@@ -37,5 +37,7 @@
     $finalizeImportButton = "Fragen Importieren";
 
     //userProfile.php
-    $userHasNoQuestionsYet = "hat noch keine Fragen erstellt."
+    $userHasNoQuestionsYet = "hat noch keine Fragen erstellt.";
+    $fullNameField = "Name";
+    $languageField = "Muttersprache";
 ?>

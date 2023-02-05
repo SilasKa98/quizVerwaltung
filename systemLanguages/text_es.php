@@ -34,6 +34,8 @@
     $adjustButton = "Ajustar";
     $finalizeImportButton = "Preguntas frecuentes";
 
-      //userProfile.php
-      $userHasNoQuestionsYet = "todavía no ha creado ninguna pregunta."
+    //userProfile.php
+    $userHasNoQuestionsYet = "todavía no ha creado ninguna pregunta.";
+    $fullNameField = "Nombre";
+    $languageField = "Lengua materna";
 ?>

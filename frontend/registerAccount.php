@@ -13,8 +13,10 @@
     <title>Register Account</title>
 </head>
 <body>
-    <form action="../doTransaction.php" method="post">
+    <form action="/quizVerwaltung/doTransaction.php" method="post">
         <input type="text" name="username" placeholder="Username"><br><br>
+        <input type="text" name="firstname" placeholder="Firstname"><br><br>
+        <input type="text" name="lastname" placeholder="Lastname"><br><br>
         <input type="text" name="mail" placeholder="Mail"><br><br>
         <input type="password" name="pwd" placeholder="Password"><br><br>
         <input type="password" name="pwd_repeat" placeholder="Repeat Password"><br><br>

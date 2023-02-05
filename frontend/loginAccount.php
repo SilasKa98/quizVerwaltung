@@ -10,7 +10,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="../doTransaction.php" method="post">
+    <form action="/quizVerwaltung/doTransaction.php" method="post">
 		<input type="text" name="mailuid" placeholder="E-mail/Benutzername...">
 		<input type="password" name="pwd" placeholder="Passwort...">
         <input type="hidden" name="method" value="loginAccount">
