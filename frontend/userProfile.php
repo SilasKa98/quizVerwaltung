@@ -100,16 +100,16 @@
                         <p class="mb-0"><?php echo $userTotalQuestionsSubmitted." <b>".$totalQuestionsSubmitted; ?></b></p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <img src="#" >
-                        <p class="mb-0">Bar</p>
+                        <img src="/quizVerwaltung/media/users.svg" width="23px" >
+                        <p class="mb-0">Follower</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <img src="#" >  
-                        <p class="mb-0">Buz</p>
+                        <img src="/quizVerwaltung/media/users-rays.svg" width="23px" > 
+                        <p class="mb-0">Gefolgt</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <img src="#" >
-                        <p class="mb-0">Tst</p>
+                        <img src="/quizVerwaltung/media/lightbulb.svg" width="18px" > 
+                        <p class="mb-0">Beste Frage</p>
                     </li>
                     </ul>
                 </div>
