@@ -85,7 +85,12 @@ class Printer{
                                 if(isset($questionObject[$i]->options)){
                                     print'<p "card-text">Optionen: ';
                                     for($x=0;$x<count($questionObject[$i]->options->$lang);$x++){
-                                        print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                        if($x == $questionObject[$i]->answer){
+                                            print'<span class="badge rounded-pill text-bg-success" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                        }else{
+                                            print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                        }
+                                        
                                     }
                                     print'</p>';
                                 }
