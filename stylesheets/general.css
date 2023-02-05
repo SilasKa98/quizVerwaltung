@@ -116,9 +116,7 @@ body{
   }
 
   #languageForm{
-    position: absolute;
-    top: 82px;
-    right: 4px;
+    float: right;
   }
 
   .questionCard{
