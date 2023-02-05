@@ -46,7 +46,7 @@ class Printer{
                            
                         </button>
                         <ul class="dropdown-menu outerMenuItems">
-                        <li data-bs-toggle="modal" name="'.$questionObject[$i]->id.'_'.$lang.'" data-bs-target="#changeLangModal" class="outerMenuItemsListElem" onclick="insertNewLanguage(this)"><a class="dropdown-item"><img src="/quizVerwaltung/media/square-plus.svg" width="20px" ></a></li>
+                        <li data-bs-toggle="modal" name="'.$questionObject[$i]->id.'_'.$lang.'" data-bs-target="#changeLangModal" class="outerMenuItemsListElem" onclick="insertNewLanguage(this)"><a class="dropdown-item"><img src="/quizVerwaltung/media/language.svg" width="20px" ></a></li>
                         <li class="outerMenuItemsListElem"><a class="dropdown-item" href="#"><img src="/quizVerwaltung/media/basket-shopping.svg" width="20px"></a></li>
                         </ul>
                     </div>
