@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/quizVerwaltung/index.php">
-            <img src="/quizVerwaltung/media/logo.jpg" alt="Logo" width="60" height="48" class="d-inline-block align-text-top">
-            <p id="headerName">Quiz Verwaltung</p>
+            <img src="/quizVerwaltung/media/logoQuizManagerTransparent.png" alt="Logo" width="80"  class="d-inline-block align-text-top">
+            <p id="headerName">Quiz Manager</p>
         </a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
