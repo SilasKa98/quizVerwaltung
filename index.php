@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
-                <a class="nav-link" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
+                <a class="nav-link active" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
                 <a class="nav-link" href="#">Help</a>
             </div>
         </div>

@@ -188,5 +188,13 @@ body{
   }
 
 
+  .authorPill{
+    transition: 0.2s ease-out;
+  }
+  .authorPill:hover{
+    font-size: 10pt;
+    text-decoration: underline;
+  }
+
   
  
