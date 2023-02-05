@@ -24,21 +24,26 @@
     include "../systemLanguages/text_".$selectedLanguage.".php";
 
 
+    //get the current/visited profile
     $visitedUserprofile = $_GET["profileUsername"];
     $filterQueryUserprofile = (['username' => $visitedUserprofile]);
     $foundProfile= $mongo->findSingle("accounts",$filterQueryUserprofile,[]);
 
 
+    //get all questions of this user
     $filterQuery = ['author' => $foundProfile->username];
     $options = [];
     $usersQuestions = $mongo->read("questions", $filterQuery, $options);
 
     $readyForPrintQuestions = [];
+    $totalKarmaEarned = 0;
     foreach ($usersQuestions as $doc) {
         $fetchedQuestion = $question->parseReadInQuestion($doc);
         array_push($readyForPrintQuestions,$fetchedQuestion);
-    }
 
+        //total Karma calculation
+        $totalKarmaEarned += $doc->karma;
+    }
 
 ?>
 <!DOCTYPE html>
@@ -49,7 +54,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $foundProfile->username;?></title>
 
-    <link rel="stylesheet" href="../stylesheets/general.css">
+    <link rel="stylesheet" href="/quizVerwaltung/stylesheets/general.css">
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -103,8 +108,8 @@
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush rounded-3">
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <img src="#" >
-                        <p class="mb-0">Karma</p>
+                        <img src="/quizVerwaltung/media/arrows-up-down.svg" width="10px">
+                        <p class="mb-0"><?php echo $userTotalKarmaOwned." <b>".$totalKarmaEarned?></b></p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="#" >
@@ -130,65 +135,47 @@
                 <div class="card mb-4">
                 <div class="card-body">
                     <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0"><?php echo $fullNameField; ?></p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p class="text-muted mb-0"><?php echo $foundProfile->firstname." ".$foundProfile->lastname;?></p>
-                    </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">E-mail</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p class="text-muted mb-0"><?php echo $foundProfile->mail; ?></p>
-                    </div>
+                        <div class="col-sm-3">
+                            <p class="mb-0"><?php echo $fullNameField; ?></p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"><?php echo $foundProfile->firstname." ".$foundProfile->lastname;?></p>
+                        </div>
                     </div>
                     <hr>
                     <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0"><?php echo $languageField; ?></p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p class="text-muted mb-0"><?php echo $foundProfile->userLanguage; ?></p>
-                    </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">other field</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p class="text-muted mb-0"></p>
-                    </div>
+                        <div class="col-sm-3">
+                            <p class="mb-0">E-mail</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"><?php echo $foundProfile->mail; ?></p>
+                        </div>
                     </div>
                     <hr>
                     <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">other field</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p class="text-muted mb-0"></p>
-                    </div>
+                        <div class="col-sm-3">
+                            <p class="mb-0"><?php echo $languageField; ?></p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"><?php echo $foundProfile->userLanguage; ?></p>
+                        </div>
                     </div>
                 </div>
-                </div>
+            </div>
 
                 <div class="col-lg-12">
                     <div class="card mb-4">
-                        <div class="card-body">
+                        <div class="card-body" id="userprofileQuestionWrapper">
                             <?php
-                            foreach ($readyForPrintQuestions as $doc) {
-                                $printer->printQuestion($doc);
-                            }
+                                foreach ($readyForPrintQuestions as $doc) {
+                                    $printer->printQuestion($doc);
+                                }
                             ?>
 
                             <?php
-                            if(count($readyForPrintQuestions) == 0){
-                                echo"<p id='noQuestionsYetText'>".$foundProfile->username." ".$userHasNoQuestionsYet."</p>";
-                            }
+                                if(count($readyForPrintQuestions) == 0){
+                                    echo"<p id='noQuestionsYetText'>".$foundProfile->username." ".$userHasNoQuestionsYet."</p>";
+                                }
                             ?>
                         </div>
                     </div>

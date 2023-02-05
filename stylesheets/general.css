@@ -181,6 +181,12 @@ body{
     text-align: center;
   }
 
+  #userprofileQuestionWrapper{
+    max-height: 473px;
+    min-height: 473px;
+    overflow: auto;
+  }
+
 
   
  
