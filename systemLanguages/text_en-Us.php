@@ -39,7 +39,7 @@
     //userProfile.php
     $userHasNoQuestionsYet = "hasn't created any questions yet.";
     $fullNameField = "Name";
-    $languageField = "Main language";
+    $languageField = "Language";
     $userTotalKarmaOwned = "Karma Earned:";
     $userTotalQuestionsSubmitted = "Created Questions:";
     $userJoinDateInfo = "Joined on";

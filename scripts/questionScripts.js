@@ -36,7 +36,8 @@
                 } 
             });
         })
-        let checkFinalSubmit = await submitNewLanguageInsert();
+        
+        await submitNewLanguageInsert();
         return p;
 
     }
@@ -62,12 +63,14 @@
                 id: id
             },
             success: function(response) {
-                $("#response").text(response);
                 console.log(response);
                 console.log("save successfull");
                 toastMsgBody.innerHTML = "New Language added successfully!";
                 $(".toast").toast('show');
-                
+                //currently just reloading the site to display new things, maybe can also be added with js
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
             }
         });
 

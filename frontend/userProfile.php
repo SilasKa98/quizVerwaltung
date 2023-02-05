@@ -92,7 +92,7 @@
             <?php echo $InsertNewLanguageTitel; ?><br>
                 <select class="selLanguageDropDown" id="insertNewLanguageDrpDwn" name="language">
                     <option></option>
-                    <option>DE</option>
+                    <option>de</option>
                     <option>en-Us</option>
                     <option>es</option>
                 </select>
