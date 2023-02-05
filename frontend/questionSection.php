@@ -62,9 +62,9 @@ echo '</div>';
 
 
 ?>
-
+<script src="/quizVerwaltung/scripts/questionScripts.js"></script>
 <script>
-
+/*
 
     //check if the user presses "save" in the insert new Language modal
     function submitNewLanguageInsert(){
@@ -202,6 +202,6 @@ echo '</div>';
         });
 
     }
-
+*/
 
 </script>
