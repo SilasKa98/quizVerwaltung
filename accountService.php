@@ -71,7 +71,8 @@ class AccountService{
             "questionsUserGaveKarmaTo"=>["up"=>[],"down"=>[]],
             "questionLangUserRelation"=>[],
             "firstname"=>$firstname,
-            "lastname"=>$lastname
+            "lastname"=>$lastname,
+            "joinDate"=>date("Y-m-d")
         ];
 
         //insert the new User
