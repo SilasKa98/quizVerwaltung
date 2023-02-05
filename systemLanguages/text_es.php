@@ -38,5 +38,7 @@
     $userHasNoQuestionsYet = "todavía no ha creado ninguna pregunta.";
     $fullNameField = "Nombre";
     $languageField = "Lengua materna";
-    $userTotalKarmaOwned = "Karma total ganada";
+    $userTotalKarmaOwned = "Karma ganada:";
+    $userTotalQuestionsSubmitted = "Preguntas creadas:";
+    $userJoinDateInfo = "Se unió a";
 ?>

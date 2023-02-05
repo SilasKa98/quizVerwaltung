@@ -37,12 +37,16 @@
 
     $readyForPrintQuestions = [];
     $totalKarmaEarned = 0;
+    $totalQuestionsSubmitted = 0;
     foreach ($usersQuestions as $doc) {
         $fetchedQuestion = $question->parseReadInQuestion($doc);
         array_push($readyForPrintQuestions,$fetchedQuestion);
 
         //total Karma calculation
         $totalKarmaEarned += $doc->karma;
+
+        //total Questions calculation
+        $totalQuestionsSubmitted++;
     }
 
 ?>
@@ -112,7 +116,7 @@
                     class="rounded-circle img-fluid" style="width: 150px;">
                     <h5 class="my-3"><?php echo $foundProfile->username;?></h5>
                     <p class="text-muted mb-1">Full Stack Developer</p>
-                    <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                    <p class="text-muted mb-4"><?php echo $userJoinDateInfo." ".$foundProfile->joinDate; ?></p>
                     <div class="d-flex justify-content-center mb-2">
                     <button type="button" class="btn btn-primary">Follow</button>
                     <button type="button" class="btn btn-outline-primary ms-1">Message</button>
@@ -124,11 +128,11 @@
                     <ul class="list-group list-group-flush rounded-3">
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/arrows-up-down.svg" width="10px">
-                        <p class="mb-0"><?php echo $userTotalKarmaOwned." <b>".$totalKarmaEarned?></b></p>
+                        <p class="mb-0"><?php echo $userTotalKarmaOwned." <b>".$totalKarmaEarned; ?></b></p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <img src="#" >
-                        <p class="mb-0">Foo</p>
+                        <img src="/quizVerwaltung/media/comments.svg" width="23px">
+                        <p class="mb-0"><?php echo $userTotalQuestionsSubmitted." <b>".$totalQuestionsSubmitted; ?></b></p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="#" >
