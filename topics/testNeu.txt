@@ -1,0 +1,4 @@
+Options#In welchem Jahr ist Java erschienen?#2#1975#1985#1995#2005#2015
+MultiOptions#Was sind g&uuml;ltige int-Werte (Hexadezimal)?#0,1,2,4,5#0x#0x89ab#-0x89ab#0x-89ab#0XFF#0xFf
+MultiOptions#Was sind g&uuml;ltige int-Werte?#0,2#007#009#011
+Open#Schl&uuml;sselwort Ableitung von Elternklasse#extends
