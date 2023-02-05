@@ -29,21 +29,7 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/quizVerwaltung/index.php">
-            <img src="/quizVerwaltung/media/logo.jpg" alt="Logo" width="60" height="48" class="d-inline-block align-text-top">
-            <p id="headerName">Quiz Verwaltung</p>
-        </a>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/quizVerwaltung/frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
-                <a class="nav-link active" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
-                <a class="nav-link" href="#">Help</a>
-            </div>
-        </div>
-    </div>
-  </nav>
+<?php include_once "frontend/navbar.php";?>
 
   <form  method="post" action="doTransaction.php" id="logoutForm">
     <button class="button-5" type="submit" name="logout" role="button" style="float: right;"><?php echo $text_logout_btn?></button>
@@ -51,7 +37,6 @@
   <form method="post" action="doTransaction.php" id="languageForm">
     <select name="language" onchange="this.form.submit()">
       <?php
-      echo $selectedLanguage;
         foreach($all_languages as $key => $value){
           echo "<option value='".$key."'"; if($key == $selectedLanguage){echo "selected='selected'";}  echo">".$value."</option>";
         }
@@ -84,21 +69,7 @@ include "frontend/questionSection.php";
 
 
 
-
-  <!--notification Toast to show all sorts of notifications, can be called with this: $(".toast").toast('show');-->
-  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="media/logo.jpg" width="20px" class="rounded me-2" alt="our logo">
-        <strong class="me-auto">Quiz-Verwaltung</strong>
-        <small><?php echo $toastTimeDisplay; ?></small>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body" id="toastMsgBody">
-       
-      </div>
-    </div>
-  </div>
+<?php include_once "frontend/notificationToast.php";?>
 
 </body>
 </html>
