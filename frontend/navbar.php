@@ -18,7 +18,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"> 
                     <button 
-                        class="btn btn-outline-light" 
+                        class="btn btn-outline-light shopping-cart" 
                         type="button"
                         data-bs-toggle="offcanvas" 
                         data-bs-target="#offcanvasRight" 
