@@ -74,11 +74,11 @@ class MongoDBService {
      * 
      * @param string        $collection     The collection name of the mongodb
      * @param array[string] $filter         An array of assignments [id => 123, "name" => "xyz] defining filters
-     * @param array[string] $options        An array of assignments defining options
+     * @param array[string] $options        An array of assignments defining options // default value is an empty array
      * 
      * @return object       $result         Returns the first match as a php object
      */
-    public function findSingle($collection, $filter, $options) {
+    public function findSingle($collection, $filter, $options = []) {
         $result = $this->db->$collection->findOne($filter, $options);
 
         return $result;
@@ -89,11 +89,11 @@ class MongoDBService {
      * 
      * @param string        $collection     The collection name of the mongodb
      * @param array[string] $filter         An array of assignments [id => 123, "name" => "xyz] defining filters
-     * @param array[string] $options        An array of assignments defining options
+     * @param array[string] $options        An array of assignments defining options // default value is an empty array
      * 
      * @return object       $documents      Returns an array of php objects matching the criteria
      */
-    public function read($collection, $filter, $options) {
+    public function read($collection, $filter, $options = []) {
         $results = $this->db->$collection->find($filter, $options);
 
         $documents = [];
@@ -109,9 +109,9 @@ class MongoDBService {
      * 
      * @param string        $collection     The collection name of the mongodb
      * @param string        $id             The oid of the entry in the mongodb
-     * @param array[string] $options        An array of assignments defining options
+     * @param array[string] $options        An array of assignments defining options // default value is an empty array
      */
-    public function deleteById($collection, $id, $options){
+    public function deleteById($collection, $id, $options = []){
         $oid = $id;    
         $filter = ["_id" => new MongoDB\BSON\ObjectId($oid)];
 
