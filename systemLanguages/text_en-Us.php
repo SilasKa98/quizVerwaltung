@@ -43,4 +43,8 @@
     $userTotalKarmaOwned = "Karma Earned:";
     $userTotalQuestionsSubmitted = "Created Questions:";
     $userJoinDateInfo = "Joined on";
+    $followedBtnText = "Followed";
+    $notFollowedBtnText = "Follow";
+    $showFollowerText = "Follower";
+    $showFollowingText = "Following";
 ?>

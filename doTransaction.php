@@ -262,4 +262,63 @@ if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
     }
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
+    session_start();
+    $userThatHasBeenFollowed = $_POST["followedUserId"];
+    $currentUserId = $_SESSION["userData"]["userId"];
+
+    /**
+     * Handle the "following" proccess
+     */
+        $searchCurrentUserFilter = (['userId'=>$currentUserId]);
+        $searchCurrentUser = $mongo->findSingle("accounts",$searchCurrentUserFilter,[]);
+
+        $currentUserFollowing = (array)$searchCurrentUser->following;
+
+        //check if user already following, if so delete him to unfollow, if not push the new follower in the array
+        $alreadyFollowing = array_search($userThatHasBeenFollowed,$currentUserFollowing);
+        if($alreadyFollowing === false){
+            $currentUserIsFollowing = true;
+            array_push($currentUserFollowing, $userThatHasBeenFollowed);
+        }else{
+            unset($currentUserFollowing[$alreadyFollowing]);
+        }
+
+        $update = ['$set' =>  ['following'=> $currentUserFollowing]];
+        $mongo->updateEntry("accounts",$searchCurrentUserFilter,$update); 
+    /**
+     * end of handling the "following" proccess
+     */
+
+     
+
+    /**
+     * Handle the "follower" proccess
+     */
+        $searchFollowedUserFilter = (['userId'=>$userThatHasBeenFollowed]);
+        $searchFollowedUser = $mongo->findSingle("accounts",$searchFollowedUserFilter,[]);
+
+        $follwerOftheFollowedUser = (array)$searchFollowedUser->follower;
+
+        //check if user currentUser is already follower of the followedUser, if so delete him to unfollow, if not push the new follower (currentUser) in the array
+        $alreadyFollower = array_search($currentUserId,$follwerOftheFollowedUser);
+        if($alreadyFollower === false){
+            array_push($follwerOftheFollowedUser, $currentUserId);
+        }else{
+            unset($follwerOftheFollowedUser[$alreadyFollower]);
+        }
+
+
+        $update = ['$set' =>  ['follower'=> $follwerOftheFollowedUser]];
+        $mongo->updateEntry("accounts",$searchFollowedUserFilter,$update); 
+    /**
+     * end of handling the "follower" proccess
+     */
+        //echo out following status for frontend update
+        if(isset($currentUserIsFollowing) && $currentUserIsFollowing == true){
+            echo "isFollowing";
+        }else{
+            echo "notFollowing";
+        }
+}
 ?>

@@ -72,7 +72,9 @@ class AccountService{
             "questionLangUserRelation"=>[],
             "firstname"=>$firstname,
             "lastname"=>$lastname,
-            "joinDate"=>date("Y-m-d")
+            "joinDate"=>date("Y-m-d"),
+            "follower"=>[],
+            "following"=>[]
         ];
 
         //insert the new User

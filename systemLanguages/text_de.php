@@ -43,4 +43,8 @@
     $userTotalKarmaOwned = "Verdientes Karma:";
     $userTotalQuestionsSubmitted = "Erstellte Fragen:";
     $userJoinDateInfo = "Beigetreten am";
+    $followedBtnText = "Gefolgt";
+    $notFollowedBtnText = "Folgen";
+    $showFollowerText = "Follower";
+    $showFollowingText = "Gefolgt";
 ?>
