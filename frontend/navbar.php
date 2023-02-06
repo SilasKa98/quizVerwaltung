@@ -42,7 +42,8 @@
                                 <a class="dropdown-item" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
                             </li>
                             <li>
-                                <form method="post" action="doTransaction.php"> <!--id="languageForm"-->
+                                <form method="post" action="/quizVerwaltung/doTransaction.php"> <!--id="languageForm"-->
+                                    <input type="hidden" name="destination" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">
                                     <select name="language" onchange="this.form.submit()">
                                     <?php
                                         foreach($all_languages as $key => $value){
@@ -54,7 +55,7 @@
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <form class="navbar-form navbar-right" method="post" action="doTransaction.php">
+                                <form class="navbar-form navbar-right" method="post" action="/quizVerwaltung/doTransaction.php">
                                     <button class="dropdown-item" type="submit" name="logout"><?php echo $text_logout_btn?></button>
                                 </form>
                             </li>

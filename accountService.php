@@ -154,7 +154,7 @@ class AccountService{
         $filterQuery = (['userId' => $userId]);
         $update = ['$set' =>  ['userLanguage'=> $language]];
         $this->mongo->updateEntry("accounts",$filterQuery,$update);
-        return header("Location: index.php?changeLanguage=success");
+        #return header("Location: index.php?changeLanguage=success");
     }
 
 }
