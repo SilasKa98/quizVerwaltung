@@ -267,6 +267,17 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
     $userThatHasBeenFollowed = $_POST["followedUserId"];
     $currentUserId = $_SESSION["userData"]["userId"];
 
+    //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($userThatHasBeenFollowed))){
+        echo "illegal chars";
+        exit();
+    }
+    $searchUserThatHasBeenFollowed = (['userId'=>$userThatHasBeenFollowed]);
+    $searchUserThatHasBeenFollowed = $mongo->findSingle("accounts",$searchUserThatHasBeenFollowed,[]);
+    if(!isset($searchUserThatHasBeenFollowed)){
+        echo "user is not existing!";
+        exit();
+    }
     /**
      * Handle the "following" proccess
      */

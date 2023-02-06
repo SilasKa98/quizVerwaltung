@@ -204,15 +204,14 @@
                     method: method
                 },
                 success: function(response) {
+                    console.log(response);
                     //change the color of the button without reload for the moment...
                     //the permanent display handling is done above with php inside of the html
                     if(response == "isFollowing"){
-                        console.log("rein! following");
                        document.getElementById("followBtn").style.backgroundColor = "#157347"; 
                        document.getElementById("followBtn").style.borderColor = "#264026"; 
                        document.getElementById("followBtn").innerHTML = <?php echo json_encode($followedBtnText); ?>; 
                     }else{
-                        console.log("rein! not f");
                         document.getElementById("followBtn").style.backgroundColor = "#0d6efd"; 
                         document.getElementById("followBtn").style.borderColor = "#0d6efd"; 
                         document.getElementById("followBtn").innerHTML = <?php echo json_encode($notFollowedBtnText); ?>; 
