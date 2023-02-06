@@ -17,8 +17,10 @@ $('.add-to-cart').on('click', function () {
                     'width': '70px',
                     'z-index': '1000'
             })
+
                 .appendTo($('body'))
                 .animate({
+                    
                     'top': cart.offset().top + 10,
                     'left': cart.offset().left + 10,
                     'width': 35,
@@ -31,7 +33,7 @@ $('.add-to-cart').on('click', function () {
                     distance: 5
                 }, 400);
             }, 1500);
-
+            
             imgclone.animate({
                 'width': 0,
                     'height': 0
