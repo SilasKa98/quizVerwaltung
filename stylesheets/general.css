@@ -203,3 +203,9 @@ body{
   .navbar{
     z-index: 10 !important;
   }
+
+  #changeLangSel{
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 5%;
+  }

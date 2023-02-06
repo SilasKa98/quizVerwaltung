@@ -39,12 +39,9 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li>
-                                <a class="dropdown-item" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
-                            </li>
-                            <li>
                                 <form method="post" action="/quizVerwaltung/doTransaction.php"> <!--id="languageForm"-->
-                                    <input type="hidden" name="destination" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">
-                                    <select name="language" onchange="this.form.submit()">
+                                    <input type="hidden" name="destination" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">             
+                                    <select name="language" class="form-select" id="changeLangSel" onchange="this.form.submit()">
                                     <?php
                                         foreach($all_languages as $key => $value){
                                         echo "<option value='".$key."'"; if($key == $selectedLanguage){echo "selected='selected'";}  echo">".$value."</option>";
@@ -52,6 +49,9 @@
                                     ?>
                                     </select>
                                 </form>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
