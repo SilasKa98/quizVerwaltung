@@ -127,6 +127,8 @@ class AccountService{
             exit();
         }elseif($pwdCheck == true){
             session_start();
+            //check for admin user here and if so set another session that verfiys the user as an admin
+
             $_SESSION["logged_in"] = true;
             $_SESSION["userData"] = [
                 "username"=>$getUserinformation->username,
