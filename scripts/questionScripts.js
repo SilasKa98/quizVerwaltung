@@ -129,9 +129,20 @@
                 method: method
             },
             success: function(response) {
-                //adjust displayed values --> currently only question Titel, others need to be added too (TODO)
+                //in the backend a json is created with all needed return values. Here the json needs to be parsed to use it for displaying changes
+                let jsonResponse = JSON.parse(response);
+
+                //display the changed values --> question
                 let questionText = document.getElementById("headerText_"+questionId);
-                questionText.innerHTML = response;
+                questionText.innerHTML = jsonResponse.question;
+                
+                //display the changed values --> options
+                if (typeof jsonResponse.options !== 'undefined') {
+                    for(let i=0;i<jsonResponse.options.length;i++){
+                        let optionField = document.getElementById("optionField_"+i+"_"+questionId);
+                        optionField.innerHTML = jsonResponse.options[i];
+                    }
+                }
 
                 console.log("language change successfull");
                 toastMsgBody.innerHTML = "Changed the question language successfully!";

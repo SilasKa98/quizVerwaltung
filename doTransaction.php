@@ -49,6 +49,20 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
         $mongo->updateEntry("questions",$filterQuery,$update);
     }
 
+    if(isset($fetchedQuestion[0]->options)){
+        print_r($translatedQuestion);
+        $newOptions = (array)$translatedQuestion[0]->options->$sourceLanguage;
+
+        //first get all question versions that exist
+        $searchDbEntryOptions = $mongo->findSingle("questions",$filterQuery,[]);
+        //cast it to array so the new field can get added
+        $searchDbEntryOptions = (array)$searchDbEntryOptions["options"];
+        //and then add the new language version
+        $searchDbEntryOptions[$targetLanguage] = $newOptions;
+        $updateOptions = ['$set' =>  ['options'=> $searchDbEntryOptions]];
+        $mongo->updateEntry("questions",$filterQuery,$updateOptions);
+    }
+
     //at this point the whole object is translated, now it can be taken apart and only the needed parts can be inserted into the database into the right object (object with id xxxx)
     //same as done obove with the question
 
@@ -224,7 +238,17 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
     $update = ['$set' =>  ['questionLangUserRelation'=> $checkRelationEntrys]];
     $mongo->updateEntry("accounts",$searchUserFilter,$update);
 
-    echo $searchQuestionId["question"][$_POST["questionLang"]];
+    if(isset($searchQuestionId["options"][$_POST["questionLang"]])){
+        $ajaxResponse = [
+            "question"=>$searchQuestionId["question"][$_POST["questionLang"]],
+            "options"=>(array)$searchQuestionId["options"][$_POST["questionLang"]]
+        ];
+    }else{
+        $ajaxResponse = [
+            "question"=>$searchQuestionId["question"][$_POST["questionLang"]]
+        ];
+    }
+    echo json_encode($ajaxResponse);
 }
 
 

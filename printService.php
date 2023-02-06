@@ -92,9 +92,9 @@ class Printer{
                                     for($x=0;$x<count($questionObject[$i]->options->$lang);$x++){
                                         $questionAnswers = explode(",",$questionObject[$i]->answer);
                                         if(in_array($x, $questionAnswers)){
-                                            print'<span class="badge rounded-pill text-bg-success" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                            print'<span id="optionField_'.$x.'_'.$questionObject[$i]->id.'" class="badge rounded-pill text-bg-success" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
                                         }else{
-                                            print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                            print'<span id="optionField_'.$x.'_'.$questionObject[$i]->id.'" class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
                                         }
                                         
                                     }
