@@ -13,6 +13,10 @@
   $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
   $selectedLanguage = $selectedLanguage->userLanguage;
   include "systemLanguages/text_".$selectedLanguage.".php";
+
+  //get all available Tags
+  $allTagsObj = $mongo->findSingle("tags",[],[]);
+  $allTagsArray = (array)$allTagsObj->allTags;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,20 +48,58 @@
     </select>
   </form>
   <div class="container-fluid">
+      
+    <div class="row row-cols-1 row-cols-md-3 g-4">
 
-    <div class="card mb-3" id="profileCard" style="max-width: 540px;">
-      <div class="row g-0 innerProfileDiv">
-          <div class="col-md-4">
-              <img src="media/defaultAvatar.png" class="img-fluid rounded-start" id="profileAvatar" alt="Your Avatar">
-          </div>
-          <div class="col-md-8">
-              <div class="card-body">
-                  <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
-                  <p class="card-text"><?php echo $profileInfoText?></p>
-                  <p class="card-text"><small class="text-muted" id="smallProfileCardText"><?php echo $profileMiniText?></small></p>
+      <div class="col">
+        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
+          <div class="row g-0 innerProfileDiv">
+              <div class="col-md-4">
+                  <img src="media/defaultAvatar.png" class="img-fluid rounded-start" id="profileAvatar" alt="Your Avatar">
+              </div>
+              <div class="col-md-8">
+                  <div class="card-body">
+                      <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
+                      <p class="card-text"><?php echo $profileInfoText?></p>
+                      <p class="card-text"><small class="text-muted" id="smallProfileCardText"><?php echo $profileMiniText?></small></p>
+                  </div>
               </div>
           </div>
+        </div>
       </div>
+
+      <div class="col">
+        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
+          <div class="row g-0">
+              <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">Adjust Landingpage Filters</h5>
+                    <div class="tagsWrapper">
+                      <?php foreach($allTagsArray as $item){ ?>
+                        <span class="badge rounded-pill text-bg-secondary"><?php echo $item;?></span>
+                      <?php } ?>
+                    </div><br>
+                    <h5 class="card-title">Search for Questions</h5>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
+          <div class="row g-0">
+              <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">Search for Users</h5>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
 
 <?php
