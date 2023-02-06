@@ -31,20 +31,7 @@
 
 <?php include_once "frontend/navbar.php";?>
 
-  <form  method="post" action="doTransaction.php" id="logoutForm">
-    <button class="button-5" type="submit" name="logout" role="button" style="float: right;"><?php echo $text_logout_btn?></button>
-  </form>
-  <form method="post" action="doTransaction.php" id="languageForm">
-    <select name="language" onchange="this.form.submit()">
-      <?php
-        foreach($all_languages as $key => $value){
-          echo "<option value='".$key."'"; if($key == $selectedLanguage){echo "selected='selected'";}  echo">".$value."</option>";
-        }
-      ?>
-    </select>
-  </form>
   <div class="container-fluid">
-
     <div class="card mb-3" id="profileCard" style="max-width: 540px;">
       <div class="row g-0 innerProfileDiv">
           <div class="col-md-4">
@@ -60,10 +47,7 @@
       </div>
     </div>
 
-<?php
-include "frontend/questionSection.php";
-?>
-
+<?php include "frontend/questionSection.php";?>
   </div>
 <!--end if container-fluid-->
 
