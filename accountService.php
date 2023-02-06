@@ -74,7 +74,8 @@ class AccountService{
             "lastname"=>$lastname,
             "joinDate"=>date("Y-m-d"),
             "follower"=>[],
-            "following"=>[]
+            "following"=>[],
+            "questionCart"=>[]
         ];
 
         //insert the new User
