@@ -13,8 +13,8 @@ $('.add-to-cart').on('click', function () {
                 .css({
                 'opacity': '0.8',
                     'position': 'absolute',
-                    'height': '70px',
-                    'width': '70px',
+                    'height': '50px',
+                    'width': '50px',
                     'z-index': '1000'
             })
 
@@ -23,8 +23,8 @@ $('.add-to-cart').on('click', function () {
                     
                     'top': cart.offset().top + 10,
                     'left': cart.offset().left + 10,
-                    'width': 35,
-                    'height': 35
+                    'width': 25,
+                    'height': 25
             }, 1000, 'easeInOutExpo');
             
             setTimeout(function () {
