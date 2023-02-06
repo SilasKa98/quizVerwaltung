@@ -48,6 +48,7 @@ class Printer{
                         <ul class="dropdown-menu outerMenuItems">
                             <li data-bs-toggle="modal" name="'.$questionObject[$i]->id.'_'.$lang.'" data-bs-target="#changeLangModal" class="outerMenuItemsListElem" onclick="insertNewLanguage(this)"><a class="dropdown-item"><img src="/quizVerwaltung/media/language.svg" width="20px" ></a></li>
                             <li class="outerMenuItemsListElem"><a class="dropdown-item" href="#"><img src="/quizVerwaltung/media/basket-shopping.svg" width="20px"></a></li>';
+                            //check for admin here later and grant full edit access
                             if($questionObject[$i]->author == $_SESSION["userData"]["username"]){
                                 print'<li class="outerMenuItemsListElem"><a class="dropdown-item" href="#"><img src="/quizVerwaltung/media/pen-to-square.svg" width="17px"></a></li>';
                             }
@@ -91,9 +92,9 @@ class Printer{
                                     for($x=0;$x<count($questionObject[$i]->options->$lang);$x++){
                                         $questionAnswers = explode(",",$questionObject[$i]->answer);
                                         if(in_array($x, $questionAnswers)){
-                                            print'<span class="badge rounded-pill text-bg-success" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                            print'<span id="optionField_'.$x.'_'.$questionObject[$i]->id.'" class="badge rounded-pill text-bg-success" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
                                         }else{
-                                            print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
+                                            print'<span id="optionField_'.$x.'_'.$questionObject[$i]->id.'" class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->options->$lang[$x].'</span>';
                                         }
                                         
                                     }

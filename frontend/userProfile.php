@@ -49,6 +49,19 @@
         $totalQuestionsSubmitted++;
     }
 
+    //check if currentUser is following the visited user
+    $followerOfVisitedProfile = (array)$foundProfile->follower;
+    $currentUserIsFollower = array_search($userId,$followerOfVisitedProfile);
+    $userIsFollowing = false;
+    if($currentUserIsFollower !== false){
+        //currentUser is follower of the visited profile/user
+        $userIsFollowing = true;
+    }
+
+    //get count of the follower/following of the visited Profile
+    $visitedProfileFollowerCount = count((array)$foundProfile->follower);
+    $visitedProfileFollowingCount = count((array)$foundProfile->following);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,8 +96,14 @@
                     <p class="text-muted mb-1">Full Stack Developer</p>
                     <p class="text-muted mb-4"><?php echo $userJoinDateInfo." ".$foundProfile->joinDate; ?></p>
                     <div class="d-flex justify-content-center mb-2">
-                    <button type="button" class="btn btn-primary">Follow</button>
-                    <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                    <?php if($foundProfile->userId != $userId){ ?>
+                        <?php if($userIsFollowing){ ?>
+                            <button type="button" id="followBtn" class="btn btn-success" onclick="follow('<?php echo $foundProfile->userId;?>')"><?php echo $followedBtnText;?></button>
+                        <?php }else{ ?>
+                            <button type="button" id="followBtn" class="btn btn-primary" onclick="follow('<?php echo $foundProfile->userId;?>')"><?php echo $notFollowedBtnText;?></button>
+                        <?php } ?>
+                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                    <?php } ?>
                     </div>
                 </div>
                 </div>
@@ -101,11 +120,11 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/users.svg" width="23px" >
-                        <p class="mb-0">Follower</p>
+                        <p class="mb-0"><?php echo $showFollowerText." ".$visitedProfileFollowerCount; ?></p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/users-rays.svg" width="23px" > 
-                        <p class="mb-0">Gefolgt</p>
+                        <p class="mb-0"><?php echo $showFollowingText." ".$visitedProfileFollowingCount;?></p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/lightbulb.svg" width="18px" > 
@@ -174,5 +193,33 @@
     <?php include_once "notificationToast.php";?>
 
     <script src="/quizVerwaltung/scripts/questionScripts.js"></script>
+    <script>
+        function follow(followedUserId){
+            let method = "changeFollower";
+            $.ajax({
+                type: "POST",
+                url: '/quizVerwaltung/doTransaction.php',
+                data: {
+                    followedUserId: followedUserId,
+                    method: method
+                },
+                success: function(response) {
+                    console.log(response);
+                    //change the color of the button without reload for the moment...
+                    //the permanent display handling is done above with php inside of the html
+                    if(response == "isFollowing"){
+                       document.getElementById("followBtn").style.backgroundColor = "#157347"; 
+                       document.getElementById("followBtn").style.borderColor = "#264026"; 
+                       document.getElementById("followBtn").innerHTML = <?php echo json_encode($followedBtnText); ?>; 
+                    }else{
+                        document.getElementById("followBtn").style.backgroundColor = "#0d6efd"; 
+                        document.getElementById("followBtn").style.borderColor = "#0d6efd"; 
+                        document.getElementById("followBtn").innerHTML = <?php echo json_encode($notFollowedBtnText); ?>; 
+                    }
+                    
+                }
+            });
+        }
+    </script>
 </body>
 </html>

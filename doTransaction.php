@@ -49,6 +49,20 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
         $mongo->updateEntry("questions",$filterQuery,$update);
     }
 
+    if(isset($fetchedQuestion[0]->options)){
+        print_r($translatedQuestion);
+        $newOptions = (array)$translatedQuestion[0]->options->$sourceLanguage;
+
+        //first get all question versions that exist
+        $searchDbEntryOptions = $mongo->findSingle("questions",$filterQuery,[]);
+        //cast it to array so the new field can get added
+        $searchDbEntryOptions = (array)$searchDbEntryOptions["options"];
+        //and then add the new language version
+        $searchDbEntryOptions[$targetLanguage] = $newOptions;
+        $updateOptions = ['$set' =>  ['options'=> $searchDbEntryOptions]];
+        $mongo->updateEntry("questions",$filterQuery,$updateOptions);
+    }
+
     //at this point the whole object is translated, now it can be taken apart and only the needed parts can be inserted into the database into the right object (object with id xxxx)
     //same as done obove with the question
 
@@ -224,7 +238,17 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
     $update = ['$set' =>  ['questionLangUserRelation'=> $checkRelationEntrys]];
     $mongo->updateEntry("accounts",$searchUserFilter,$update);
 
-    echo $searchQuestionId["question"][$_POST["questionLang"]];
+    if(isset($searchQuestionId["options"][$_POST["questionLang"]])){
+        $ajaxResponse = [
+            "question"=>$searchQuestionId["question"][$_POST["questionLang"]],
+            "options"=>(array)$searchQuestionId["options"][$_POST["questionLang"]]
+        ];
+    }else{
+        $ajaxResponse = [
+            "question"=>$searchQuestionId["question"][$_POST["questionLang"]]
+        ];
+    }
+    echo json_encode($ajaxResponse);
 }
 
 
@@ -262,4 +286,74 @@ if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
     }
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
+    session_start();
+    $userThatHasBeenFollowed = $_POST["followedUserId"];
+    $currentUserId = $_SESSION["userData"]["userId"];
+
+    //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($userThatHasBeenFollowed))){
+        echo "illegal chars";
+        exit();
+    }
+    $searchUserThatHasBeenFollowed = (['userId'=>$userThatHasBeenFollowed]);
+    $searchUserThatHasBeenFollowed = $mongo->findSingle("accounts",$searchUserThatHasBeenFollowed,[]);
+    if(!isset($searchUserThatHasBeenFollowed)){
+        echo "user is not existing!";
+        exit();
+    }
+    /**
+     * Handle the "following" proccess
+     */
+        $searchCurrentUserFilter = (['userId'=>$currentUserId]);
+        $searchCurrentUser = $mongo->findSingle("accounts",$searchCurrentUserFilter,[]);
+
+        $currentUserFollowing = (array)$searchCurrentUser->following;
+
+        //check if user already following, if so delete him to unfollow, if not push the new follower in the array
+        $alreadyFollowing = array_search($userThatHasBeenFollowed,$currentUserFollowing);
+        if($alreadyFollowing === false){
+            $currentUserIsFollowing = true;
+            array_push($currentUserFollowing, $userThatHasBeenFollowed);
+        }else{
+            unset($currentUserFollowing[$alreadyFollowing]);
+        }
+
+        $update = ['$set' =>  ['following'=> $currentUserFollowing]];
+        $mongo->updateEntry("accounts",$searchCurrentUserFilter,$update); 
+    /**
+     * end of handling the "following" proccess
+     */
+
+     
+
+    /**
+     * Handle the "follower" proccess
+     */
+        $searchFollowedUserFilter = (['userId'=>$userThatHasBeenFollowed]);
+        $searchFollowedUser = $mongo->findSingle("accounts",$searchFollowedUserFilter,[]);
+
+        $follwerOftheFollowedUser = (array)$searchFollowedUser->follower;
+
+        //check if user currentUser is already follower of the followedUser, if so delete him to unfollow, if not push the new follower (currentUser) in the array
+        $alreadyFollower = array_search($currentUserId,$follwerOftheFollowedUser);
+        if($alreadyFollower === false){
+            array_push($follwerOftheFollowedUser, $currentUserId);
+        }else{
+            unset($follwerOftheFollowedUser[$alreadyFollower]);
+        }
+
+
+        $update = ['$set' =>  ['follower'=> $follwerOftheFollowedUser]];
+        $mongo->updateEntry("accounts",$searchFollowedUserFilter,$update); 
+    /**
+     * end of handling the "follower" proccess
+     */
+        //echo out following status for frontend update
+        if(isset($currentUserIsFollowing) && $currentUserIsFollowing == true){
+            echo "isFollowing";
+        }else{
+            echo "notFollowing";
+        }
+}
 ?>
