@@ -191,6 +191,7 @@ if(isset($_POST["language"])){
     $account = new AccountService();
     session_start();
     $account->changeLanguage($_POST["language"], $_SESSION["userData"]["userId"]);
+    header("Location: ".$_POST["destination"]);
 }
 
 
