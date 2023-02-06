@@ -1,0 +1,75 @@
+<?php
+include_once "mongoService.php";
+
+class Catalog{
+    public $author;
+    public $questions = [];
+    public $creationDate;
+    public $modificationDate;
+    public $status;
+
+
+    function __construct($author, $questions, $creationDate, $modificationDate, $status){
+        $this->author = $author;
+        $this->questions = $questions;
+        $this->creationDate = $creationDate;
+        $this->modificationDate = $modificationDate;
+        $this->status = $status;
+    }
+}
+
+class CartService{
+
+    private $mongo;
+
+    function __construct() {
+        $this->mongo = new MongoDBService();
+    }
+
+    function addItem($questionId, $userId){
+        $filterQuery = (['userId' => $userId]);
+        
+        //get current questionCart
+        $result = $this->mongo->findSingle("accounts", $filterQuery);
+        //fetch as array
+        $cart = (array)$result["questionCart"];
+        
+        //check if id is in the cart already
+        if (in_array($questionId, $cart)){
+            echo "Frage ist schon vorhanden";
+            //TODO Toast hier um mitzuteilen das die Frage schon im Warenkorb ist!!
+        }else{
+            $update = ['$push' => ['questionCart' => $questionId]];
+            $this->mongo->updateEntry("accounts", $filterQuery, $update);
+        }
+    }
+
+    function removeItem($questionId, $userId){
+        $filterQuery = (['userId' => $userId]);
+        $update = ['$pull' => ['questionCart' => $questionId]];
+        $this->mongo->updateEntry("accounts", $filterQuery, $update);
+    }
+
+    function createCatalog($userId){
+        $filterQuery = (['userId' => $userId]);
+        //get all questions currently in the cart
+        $result = $this->mongo->findSingle("accounts", $filterQuery);
+        $cart = (array)$result["questionCart"];
+
+        //check if cart is not emtpy 
+        if (!empty($cart)){
+            //clean the cart
+            $update = ['$set' => ['questionCart' => []]];
+            $this->mongo->updateEntry("accounts", $filterQuery, $update);
+
+            $catalog = new Catalog($result["username"], $cart, "TODO", "TODO", "public"); //TODO rest des Katalogs noch machen !!!
+
+            //create a new entry in catalogs with the userId
+            $this->mongo->insertSingle("catalog", $catalog);
+        }else{
+            //TODO Toast wenn empty !!!!!
+            echo "cart ist leer !!!!";
+        }
+    }
+}
+?>
