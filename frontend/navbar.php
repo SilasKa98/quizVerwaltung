@@ -33,10 +33,14 @@
                     </form>
                 </li>
 
-                <li class="nav-item dropdown">
-                        <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="rounded-circle" src="/quizVerwaltung/media/defaultAvatar.png" alt="mdo" width="40" height="40">
-                        </button>
+                <li class="nav-item dropdown" id="navOpenDrpDwnBtn">
+                        <a id="ankerWrapUserLink" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>">
+                            <p id="usernameLink">
+                                <?php echo $username; ?>
+                            </p>
+                            <img class="rounded-circle" src="/quizVerwaltung/media/defaultAvatar.png" alt="mdo" width="40" height="40">
+                        </a>      
+                        <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li>
                                 <form method="post" action="/quizVerwaltung/doTransaction.php"> <!--id="languageForm"-->

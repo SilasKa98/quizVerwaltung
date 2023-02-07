@@ -209,3 +209,19 @@ body{
     margin: 0 auto;
     margin-bottom: 5%;
   }
+
+  #usernameLink{
+    display: inline;
+    margin-right: 11px;
+    color: black;
+    margin-bottom: -34px !important;
+    font-weight: bold;
+  }
+
+  #ankerWrapUserLink{
+    text-decoration: none;
+  }
+
+  #navOpenDrpDwnBtn{
+    margin-top: 8px;
+  }
