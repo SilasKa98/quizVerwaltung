@@ -2,7 +2,9 @@
 $('.add-to-cart').on('click', function () {
         var cart = $('.shopping-cart');
         //var imgtodrag = $(this).parent('.item').find("img").eq(0);
-		var imgtodrag = $(this).find("img").eq(0);
+		var imgtodrag = $(this).parent().parent().parent().next();
+        var imgtodragWidth = $(this).parent().parent().parent().next().width();
+        console.log(imgtodrag);
 		console.log(imgtodrag);
         if (imgtodrag) {
             var imgclone = imgtodrag.clone()
@@ -12,27 +14,30 @@ $('.add-to-cart').on('click', function () {
             })
                 .css({
                 'opacity': '0.8',
-                    'position': 'absolute',
-                    'height': '50px',
-                    'width': '50px',
+                    'position': 'absolute',     
+                    'width': imgtodragWidth,        
                     'z-index': '1000'
             })
 
+                imgclone.css({
+                    
+                })
                 .appendTo($('body'))
                 .animate({
-                    
                     'top': cart.offset().top + 10,
                     'left': cart.offset().left + 10,
-                    'width': 25,
-                    'height': 25
+                    'width': 50,
+                    'height': 50
             }, 1000, 'easeInOutExpo');
-            
+
             setTimeout(function () {
                 cart.effect("shake", {
                     times: 2,
-                    distance: 5
+                    distance: 10
                 }, 400);
             }, 1500);
+            
+            
             
             imgclone.animate({
                 'width': 0,
