@@ -18,13 +18,13 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"> 
                     <button 
-                        class="btn btn-outline-light shopping-cart  position-relative" 
+                        class="btn btn-outline-light shopping-cart" 
                         type="button"
                         data-bs-toggle="offcanvas" 
                         data-bs-target="#offcanvasRight" 
                         aria-controls="offcanvasRight">
                         <img src="/quizVerwaltung/media/catalogIcon.png" width="40px"/>
-                        <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
+                        <span class="position-absolute start-10 translate-middle badge rounded-pill bg-danger shoppingCartCount">
                             3
                             <span class="visually-hidden">unread messages</span>
                         </span>
@@ -32,9 +32,15 @@
                 </li>
                 
                 <li class="nav-item">
-                    <form class="d-flex" role="search" style="margin: .5rem"> <!-- //TODO hier irgenwie anders centern -->
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    </form>
+                    <div class="d-flex" role="search" style="margin: .5rem"> <!-- //TODO hier irgenwie anders centern -->
+                        <input class="form-control me-2" id="searchInSystem" type="search" placeholder="Search" aria-label="Search">
+                        <div class="list-group" id="searchResultsFound_users">
+                            
+                        </div>
+                        <div class="list-group" id="searchResultsFound_questions">
+                            
+                        </div>
+                    </div>
                 </li>
 
                 <li class="nav-item dropdown" id="navOpenDrpDwnBtn">

@@ -47,4 +47,8 @@
     $notFollowedBtnText = "Folgen";
     $showFollowerText = "Follower";
     $showFollowingText = "Gefolgt";
+
+
+    //searchResult (navbar.php) but used in a script
+    $noSearchMatches = "Keine passenden Treffer";
 ?>

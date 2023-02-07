@@ -357,4 +357,75 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
             echo "notFollowing";
         }
 }
+
+if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
+    $userEntry = $_POST["value"];
+
+     //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
+     if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
+        echo "illegal chars";
+        exit();
+    }
+
+    $getAllQuestions = $mongo->read("questions",[]);
+    $getAllQuestions = (array)$getAllQuestions;
+    $allMatchingIds = [];
+    $authorsOfTheMatches = [];
+    $KarmaOfTheMatches = [];
+    $allMatchingQuestionStrings = [];
+    for($i=0;$i<count($getAllQuestions);$i++){
+        $questionStringsArray = (array)$getAllQuestions[$i]["question"];
+        $questionId = $getAllQuestions[$i]->id;
+        $questionAuthor = $getAllQuestions[$i]->author;
+        $questionKarma = $getAllQuestions[$i]->karma;
+        foreach($questionStringsArray as $questionString){
+            $foundMatch = str_contains(strtolower($questionString), strtolower($userEntry));
+            if($foundMatch && $userEntry!= "" && $userEntry != " "){
+                if (!in_array($questionId, $allMatchingIds)){
+                    array_push($allMatchingQuestionStrings, $questionString);
+                    array_push($allMatchingIds, $questionId);
+                    array_push($authorsOfTheMatches, $questionAuthor);
+                    array_push($KarmaOfTheMatches, $questionKarma);
+                }
+            }
+        }
+    }
+
+    $ajaxResponse = [
+        "allMatchingIds"=> $allMatchingIds,
+        "allMatchingQuestionStrings"=> $allMatchingQuestionStrings,
+        "authorsOfTheMatches"=> $authorsOfTheMatches,
+        "KarmaOfTheMatches"=> $KarmaOfTheMatches
+    ];
+    echo json_encode($ajaxResponse);
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
+    $userEntry = $_POST["value"];
+
+    //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
+    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
+       echo "illegal chars";
+       exit();
+   }
+
+   $getAllUsers= $mongo->read("accounts",[]);
+   $getAllUsersArray = (array)$getAllUsers;
+   $allMatchingUsers = [];
+   for($i=0;$i<count($getAllUsersArray);$i++){
+        $username = $getAllUsersArray[$i]["username"];
+        $foundMatch = str_contains(strtolower($username), strtolower($userEntry));
+        if($foundMatch && $userEntry!= "" && $userEntry != " "){
+            if (!in_array($username, $allMatchingUsers)){
+                array_push($allMatchingUsers, $username);
+            }
+        }
+   }
+
+   $ajaxResponse = [
+       "allMatchingUsers"=> $allMatchingUsers
+   ];
+   echo json_encode($ajaxResponse);
+}
+
 ?>

@@ -31,7 +31,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
 <body>
-
 <?php include_once "frontend/navbar.php";?>
   <!--//TODO vom letzen merge konflikt hier nochmal genauer anschauen wie wir das machen !!!!-->
   <div class="container-fluid">
@@ -65,22 +64,7 @@
                       <?php foreach($allTagsArray as $item){ ?>
                         <span class="badge rounded-pill text-bg-secondary"><?php echo $item;?></span>
                       <?php } ?>
-                    </div><br>
-                    <h5 class="card-title">Search for Questions</h5>
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
-          <div class="row g-0">
-              <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Search for Users</h5>
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </div>
                   </div>
               </div>
           </div>
@@ -101,8 +85,55 @@
 <!-- fly to card animation scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="/quizVerwaltung/scripts/flyToCartAnimation.js"></script>
+<script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
 </body>
 
+<script>
+  /*
+  $(document).ready(function(e) {
+    var timeout;
+    var delay = 800;   // 800ms
+
+    $('#searchInSystem').keyup(function(e) {
+      if(timeout) {
+          clearTimeout(timeout);
+      }
+      timeout = setTimeout(function() {
+          searchInSystem(e);
+      }, delay);
+    });
+
+    function searchInSystem(e) {
+      let method = "searchInSystem";
+      $.ajax({
+        type: "POST",
+        url: '/quizVerwaltung/doTransaction.php',
+        data: {
+            value: e.target.value,
+            method: method
+        },
+        success: function(response) {
+          console.log("response:");
+          console.log(response);
+          let jsonResponse = JSON.parse(response);
+          console.log(jsonResponse);
+          console.log("save successfull");
+          let searchResultList = document.getElementById("searchResultsFound");
+          let allMatchingIdsArray = jsonResponse.allMatchingIds;
+          console.log(allMatchingIdsArray);
+          searchResultList.innerHTML = "";
+          for(let i=0;i<allMatchingIdsArray.length;i++){
+            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+jsonResponse.authorsOfTheMatches[i]+'&searchedQuestionId='+jsonResponse.allMatchingIds[i]+'#searchFocus" class="list-group-item list-group-item-action">'+jsonResponse.allMatchingQuestionStrings[i]+'<span class="badge rounded-pill bg-primary searchInnerKarmaPill">'+jsonResponse.KarmaOfTheMatches[i]+'</span></a>';
+          }
+          if(allMatchingIdsArray.length == 0){
+            searchResultList.innerHTML += '<span class="list-group-item list-group-item-action"><?php echo json_encode($noSearchMatches); ?></span>';
+          }
+        }
+      });
+    }
+  });
+  */
+</script>
 
 
 </html>

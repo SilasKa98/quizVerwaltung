@@ -230,3 +230,34 @@ body{
   .shopping-cart{
     margin-right: 30px;
   }
+
+  .shoppingCartCount{
+    top: 19px !important;
+  }
+
+  #searchResultsFound_questions{
+    position: absolute;
+    top: 63px;
+    max-height: 206px;
+    overflow: auto;
+    width: 225px;
+    right: 50px;
+  }
+
+  #searchResultsFound_users{
+    position: absolute;
+    top: 63px;
+    right: 275px;
+    max-height: 206px;
+    overflow: auto;
+    width: 225px;
+  }
+
+  .searchInnerKarmaPill{
+    float: right;
+  }
+
+  .headerSearchResults{
+    margin: 0;
+    font-size: 18pt;
+  }

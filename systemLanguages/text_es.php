@@ -45,4 +45,7 @@
     $notFollowedBtnText = "Seguir";
     $showFollowerText = "Seguidor";
     $showFollowingText = "Siguiente";
+
+    //searchResult (navbar.php) but used in a script
+    $noSearchMatches = "Ninguna coincidencia adecuada";
 ?>

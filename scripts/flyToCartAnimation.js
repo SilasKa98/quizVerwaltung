@@ -19,9 +19,6 @@ $('.add-to-cart').on('click', function () {
                     'z-index': '1000'
             })
 
-                imgclone.css({
-                    
-                })
                 .appendTo($('body'))
                 .animate({
                     'top': cart.offset().top + 10,
@@ -33,7 +30,7 @@ $('.add-to-cart').on('click', function () {
             setTimeout(function () {
                 cart.effect("shake", {
                     times: 2,
-                    distance: 10
+                    distance: 20
                 }, 400);
             }, 1500);
             
