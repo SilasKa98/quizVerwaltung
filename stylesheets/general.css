@@ -235,29 +235,29 @@ body{
     top: 19px !important;
   }
 
-  #searchResultsFound_questions{
-    position: absolute;
-    top: 63px;
-    max-height: 206px;
-    overflow: auto;
-    width: 225px;
-    right: 50px;
-  }
 
-  #searchResultsFound_users{
+  #searchResultAccordion{
     position: absolute;
-    top: 63px;
-    right: 275px;
+    top: 65px;
     max-height: 206px;
     overflow: auto;
     width: 225px;
+    right: 168px;
   }
 
   .searchInnerKarmaPill{
     float: right;
   }
 
-  .headerSearchResults{
-    margin: 0;
-    font-size: 18pt;
+  #searchResults_questions_body,#searchResults_users_body{
+    padding: inherit !important;
+  }
+
+  #searchResultsWrapper{
+    display: none;
+  }
+
+  #searchResults_questions_header,#searchResults_users_header{
+    font-weight: bold;
+    color: black;
   }

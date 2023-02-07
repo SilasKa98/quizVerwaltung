@@ -34,11 +34,38 @@
                 <li class="nav-item">
                     <div class="d-flex" role="search" style="margin: .5rem"> <!-- //TODO hier irgenwie anders centern -->
                         <input class="form-control me-2" id="searchInSystem" type="search" placeholder="Search" aria-label="Search">
-                        <div class="list-group" id="searchResultsFound_users">
-                            
-                        </div>
-                        <div class="list-group" id="searchResultsFound_questions">
-                            
+                        <div class="list-group" id="searchResultsWrapper">
+
+                            <div class="accordion" id="searchResultAccordion">
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" id="searchResults_questions_header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuestions" aria-expanded="true" aria-controls="collapseOne">
+                                           Questions
+                                        </button>
+                                    </h2>
+                                    <div id="collapseQuestions" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#searchResultAccordion">
+                                        <div class="accordion-body" id="searchResults_questions_body">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingtwo">
+                                        <button class="accordion-button collapsed" id="searchResults_users_header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseOne">
+                                            Users
+                                        </button>
+                                    </h2>
+                                    <div id="collapseUsers" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#searchResultAccordion">
+                                        <div class="accordion-body" id="searchResults_users_body">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </li>

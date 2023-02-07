@@ -7,6 +7,8 @@ $(document).ready(function(e) {
           clearTimeout(timeout);
       }
       timeout = setTimeout(function() {
+        //show the div where the results accordion is rendered in
+        document.getElementById("searchResultsWrapper").style.display = "block";
         searchInSystemForQuestions(e);
         searchInSystemForUsers(e);
       }, delay);
@@ -29,10 +31,10 @@ $(document).ready(function(e) {
           console.log("save successfull");
 
           //Handle Search result for questions
-          let searchResultList = document.getElementById("searchResultsFound_questions");
+          let searchResultList = document.getElementById("searchResults_questions_body");
+          console.log(searchResultList);
           let allMatchingIdsArray = jsonResponse.allMatchingIds;
           searchResultList.innerHTML = "";
-          searchResultList.innerHTML = "<h1 class='list-group-item headerSearchResults'>Questions</h1>";
           for(let i=0;i<allMatchingIdsArray.length;i++){
             searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+jsonResponse.authorsOfTheMatches[i]+'&searchedQuestionId='+jsonResponse.allMatchingIds[i]+'#searchFocus" class="list-group-item list-group-item-action">'+jsonResponse.allMatchingQuestionStrings[i]+'<span class="badge rounded-pill bg-primary searchInnerKarmaPill">'+jsonResponse.KarmaOfTheMatches[i]+'</span></a>';
           }
@@ -58,14 +60,13 @@ $(document).ready(function(e) {
             let jsonResponse = JSON.parse(response);
             console.log(jsonResponse);
             console.log("save successfull");
-  
+
             //Handle Search result for questions
-            let searchResultList = document.getElementById("searchResultsFound_users");
+            let searchResultList = document.getElementById("searchResults_users_body");
             let allMatchingUsers = jsonResponse.allMatchingUsers;
             console.log(allMatchingUsers);
             
             searchResultList.innerHTML = "";
-            searchResultList.innerHTML = "<h1 class='list-group-item headerSearchResults'>Users</h1>";
             for(let i=0;i<allMatchingUsers.length;i++){
               searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+allMatchingUsers[i]+'" class="list-group-item list-group-item-action">'+allMatchingUsers[i]+'</a>';
             }
@@ -75,4 +76,5 @@ $(document).ready(function(e) {
           }
         });
       }
+
   });
