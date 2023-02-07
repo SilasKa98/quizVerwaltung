@@ -18,12 +18,16 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"> 
                     <button 
-                        class="btn btn-outline-light shopping-cart" 
+                        class="btn btn-outline-light shopping-cart  position-relative" 
                         type="button"
                         data-bs-toggle="offcanvas" 
                         data-bs-target="#offcanvasRight" 
                         aria-controls="offcanvasRight">
                         <img src="/quizVerwaltung/media/catalogIcon.png" width="40px"/>
+                        <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
+                            3
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
                     </button>
                 </li>
                 
