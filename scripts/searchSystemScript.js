@@ -77,4 +77,16 @@ $(document).ready(function(e) {
         });
       }
 
+
+      $('#searchInSystem').on('blur', function() {
+        $(document).click(function(event) {
+          const illegalStrings = ["searchResultAccordion","headingOne","searchResults_questions_header","searchResults_users_header","headingTwo"];
+          if($.inArray(event.target.id, illegalStrings) === -1) {
+           $("#searchResultsWrapper").css({
+              "display": "none"
+            });
+          }
+        });
+      });
+        
   });
