@@ -238,11 +238,11 @@ body{
 
   #searchResultAccordion{
     position: absolute;
-    top: 65px;
+    margin-top: 39px;
     max-height: 206px;
     overflow: auto;
     width: 225px;
-    right: 168px;
+    right: 177px;
   }
 
   .searchInnerKarmaPill{
@@ -260,4 +260,39 @@ body{
   #searchResults_questions_header,#searchResults_users_header{
     font-weight: bold;
     color: black;
+  }
+
+
+
+  @media only screen and (max-width: 991px) {
+    #navOpenDrpDwnBtn {
+      margin-left: 0 !important;
+    }
+
+    .shopping-cart{
+      padding: 0 !important;
+      margin-bottom: 10px !important;
+      margin-top: 10px !important;
+    }
+
+    .d-flex{
+      margin: 0 !important;
+      margin-bottom: 10px !important;
+      margin-top: 10px !important;
+    }
+
+    #searchResultAccordion{
+      z-index: 1;
+      position: absolute;
+      margin-top: 39px;
+      max-height: 206px;
+      overflow: auto;
+      width: 92%;
+      right: 4%;
+    }
+
+    #allQuestionWrapper {
+      width: 100%;
+      padding: 0 !important;
+    }
   }

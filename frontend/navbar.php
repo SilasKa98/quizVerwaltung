@@ -1,5 +1,7 @@
 <?php include_once "catalogCart.php";?>
 
+
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/quizVerwaltung/index.php">
@@ -7,14 +9,15 @@
             <p id="headerName">Quiz Manager</p>
         </a>
         
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarRight" aria-controls="navbarRight" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarRight">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="/quizVerwaltung/frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
                 <a class="nav-link" href="#">Help</a>
             </div>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbarRight">
+            
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"> 
                     <button 
@@ -24,10 +27,7 @@
                         data-bs-target="#offcanvasRight" 
                         aria-controls="offcanvasRight">
                         <img src="/quizVerwaltung/media/catalogIcon.png" width="40px"/>
-                        <span class="position-absolute start-10 translate-middle badge rounded-pill bg-danger shoppingCartCount">
-                            3
-                            <span class="visually-hidden">unread messages</span>
-                        </span>
+                        <span class="badge text-bg-secondary">4</span>
                     </button>
                 </li>
                 

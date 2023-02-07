@@ -30,7 +30,7 @@ $('.add-to-cart').on('click', function () {
             setTimeout(function () {
                 cart.effect("shake", {
                     times: 2,
-                    distance: 20
+                    distance: 2
                 }, 400);
             }, 1500);
             
