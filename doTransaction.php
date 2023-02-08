@@ -364,7 +364,12 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     $id = $_POST["questionId"];
     $cart = new CartService();
     $cart->addItem($id);
+
+    $questionFilter = (['id'=>$id]);
+    $questionObject = $mongo->findSingle("question",$questionFilter);
 }
+
+
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
     $userEntry = $_POST["value"];
 

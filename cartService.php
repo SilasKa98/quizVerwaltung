@@ -90,15 +90,27 @@ class CartService{
                 ";
         }else{
             foreach ($cart as $questionId) {
-                $usedLanguage = "de"; //TODO hier sollte das ganze dann in der sprache gemaht werden die der user auch ausgewählt hatte als er die frage hinzugefügt hat
-                
+                $lang = "de";
+
+                $searchUserFilter = (['userId'=>$this->userId]);
+                $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+                $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
+
+                $lang = array_search($questionId,$questionLanguageRelation);
+
                 //get the questions from the ids
                 $filterQuery = ["id" => $questionId];
                 $questionObject = $this->mongo->findSingle("questions", $filterQuery);
                 $question = $questionObject["question"];
+
+                if(!$lang){
+                    //get the first key of the question so it can be used to set it as the default language
+                    $lang = array_key_first((array)$question);
+                }
+
                 print   "  <div class='card' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
                             <div class='card-body'>
-                                $question[$usedLanguage]
+                                $question[$lang]
                             </div>
                         </div>
                         ";
