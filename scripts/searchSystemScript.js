@@ -133,6 +133,13 @@ $(document).ready(function(e) {
         }
       }
 
+      //if no matches at all show "no Matches found" for both and return to stop executing
+      if(userSearchChilds == 0 && questionSearchChilds == 0){
+        $("#collapseQuestions").addClass("show");
+        $("#collapseUsers").addClass("show");
+        return;
+      }
+
       if(questionSearchChilds > userSearchChilds){
         $("#collapseQuestions").addClass("show");
         $("#collapseUsers").removeClass("show");
