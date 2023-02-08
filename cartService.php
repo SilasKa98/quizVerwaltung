@@ -75,5 +75,36 @@ class CartService{
             echo "cart ist leer !!!!";
         }
     }
+
+    function printCart(){
+        $filterQuery = (['userId' => $this->userId]);
+
+        $result = $this->mongo->findSingle("accounts", $filterQuery);
+        $cart = (array)$result["questionCart"];
+
+        if (empty($cart)){
+            print"
+                Du hast aktuell keine Fragen in deinem Korb. <br>
+                Füge einfach eine Frage hinzu indem du neben einer Frage
+                das Dropdown Menü öffnest und den Warenkorb anklicks.
+                ";
+        }else{
+            foreach ($cart as $questionId) {
+                $usedLanguage = "de"; //TODO hier sollte das ganze dann in der sprache gemaht werden die der user auch ausgewählt hatte als er die frage hinzugefügt hat
+                
+                //get the questions from the ids
+                $filterQuery = ["id" => $questionId];
+                $questionObject = $this->mongo->findSingle("questions", $filterQuery);
+                $question = $questionObject["question"];
+                print   "  <div class='card' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
+                            <div class='card-body'>
+                                $question[$usedLanguage]
+                            </div>
+                        </div>
+                        ";
+            }
+        }
+    }
+
 }
 ?>
