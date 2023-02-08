@@ -19,8 +19,7 @@
     $text_logout_btn = "Abmelden";
     $welcomeTitel = "Hallo";
     $navText_insertQuestion = "Frage Hinzufügen";
-    $profileInfoText = "Hier könnten Informationen über den Benutzer oder andere Links zu etwas stehen.";
-    $profileMiniText = "Zuletzt aktualisiert vor 3 Minuten";
+    $profileInfoText = "Wähle deine lieblings Kategorien und sehe immer was dich interessiert.";
     $myProfileLink = "Mein Profil";
 
     //Toast (index.php)
@@ -47,4 +46,11 @@
     $notFollowedBtnText = "Folgen";
     $showFollowerText = "Follower";
     $showFollowingText = "Gefolgt";
+
+    //navbar.php
+    $searchResultUsersHeader = "Nutzer";
+    $searchResultQuestionsHeader = "Fragen";
+
+    //searchResult (navbar.php) but used in a script
+    $noSearchMatches = "Keine passenden Treffer";
 ?>

@@ -171,7 +171,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
     include_once "accountService.php";
     $account = new AccountService();
-    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["language"],$_POST["firstname"],$_POST["lastname"]);
+    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["languageInput"],$_POST["firstname"],$_POST["lastname"]);
 }
 
 if(isset($_POST["method"]) && $_POST["method"] == "loginAccount"){
@@ -358,7 +358,6 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
         }
 }
 
-
 if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     include_once "cartService.php";
     session_start();
@@ -366,4 +365,134 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     $cart = new CartService();
     $cart->addItem($id);
 }
+if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
+    $userEntry = $_POST["value"];
+
+     //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
+     if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
+        echo "illegal chars";
+        exit();
+    }
+
+    $getAllQuestions = $mongo->read("questions",[]);
+    $getAllQuestions = (array)$getAllQuestions;
+    $allMatchingIds = [];
+    $authorsOfTheMatches = [];
+    $KarmaOfTheMatches = [];
+    $allMatchingQuestionStrings = [];
+    for($i=0;$i<count($getAllQuestions);$i++){
+        $questionStringsArray = (array)$getAllQuestions[$i]["question"];
+        $questionId = $getAllQuestions[$i]->id;
+        $questionAuthor = $getAllQuestions[$i]->author;
+        $questionKarma = $getAllQuestions[$i]->karma;
+        $questionTags= $getAllQuestions[$i]->tags;
+        foreach($questionStringsArray as $questionString){
+
+            //Filter for tags
+            foreach($questionTags as $tag){
+                $foundMatch_tag = str_contains(strtolower($tag), strtolower($userEntry));
+                if($foundMatch_tag && $userEntry!= "" && $userEntry != " "){
+                    if (!in_array($questionId, $allMatchingIds)){
+                        array_push($allMatchingQuestionStrings, $questionString);
+                        array_push($allMatchingIds, $questionId);
+                        array_push($authorsOfTheMatches, $questionAuthor);
+                        array_push($KarmaOfTheMatches, $questionKarma);
+                    }
+                }
+            }
+            //filter for question titel
+            $foundMatch = str_contains(strtolower($questionString), strtolower($userEntry));
+            if($foundMatch && $userEntry!= "" && $userEntry != " "){
+                if (!in_array($questionId, $allMatchingIds)){
+                    array_push($allMatchingQuestionStrings, $questionString);
+                    array_push($allMatchingIds, $questionId);
+                    array_push($authorsOfTheMatches, $questionAuthor);
+                    array_push($KarmaOfTheMatches, $questionKarma);
+                }
+            }
+
+            //maybe later also filter for answers and options? 
+
+        }
+    }
+
+    $ajaxResponse = [
+        "allMatchingIds"=> $allMatchingIds,
+        "allMatchingQuestionStrings"=> $allMatchingQuestionStrings,
+        "authorsOfTheMatches"=> $authorsOfTheMatches,
+        "KarmaOfTheMatches"=> $KarmaOfTheMatches
+    ];
+    echo json_encode($ajaxResponse);
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
+    $userEntry = $_POST["value"];
+
+    //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
+    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
+       echo "illegal chars";
+       exit();
+   }
+
+   $getAllUsers= $mongo->read("accounts",[]);
+   $getAllUsersArray = (array)$getAllUsers;
+   $allMatchingUsers = [];
+   $allMatchingFirstnames= [];
+   $allMatchingLastnames= [];
+   for($i=0;$i<count($getAllUsersArray);$i++){
+        $username = $getAllUsersArray[$i]["username"];
+        $firstname = $getAllUsersArray[$i]["firstname"];
+        $lastname = $getAllUsersArray[$i]["lastname"];
+
+        $foundMatch = str_contains(strtolower($username), strtolower($userEntry));
+        $foundMatch2 = str_contains(strtolower($firstname), strtolower($userEntry));
+        $foundMatch3 = str_contains(strtolower($lastname), strtolower($userEntry));
+        if(($foundMatch || $foundMatch2 || $foundMatch3) && $userEntry!= "" && $userEntry != " "){
+            if (!in_array($username, $allMatchingUsers)){
+                array_push($allMatchingUsers, $username);
+                array_push($allMatchingFirstnames, $firstname);
+                array_push($allMatchingLastnames, $lastname);
+            }
+        }
+   }
+
+   $ajaxResponse = [
+       "allMatchingUsers"=> $allMatchingUsers,
+       "allMatchingFirstnames"=> $allMatchingFirstnames,
+       "allMatchingLastnames"=> $allMatchingLastnames
+   ];
+   echo json_encode($ajaxResponse);
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
+
+    //check if the given tag isnt containing any illegal chars (catch exploits)
+    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($_POST["selectedTag"]))){
+        echo "illegal chars";
+        exit();
+    }
+
+    //check if the given tag is even existing in the system (catch faulty given inputs)
+    session_start();
+    $searchUserFilter = (['userId'=>$_SESSION["userData"]["userId"]]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+    $userTags = (array)$searchUser->favoritTags;
+
+    $checkIfTagExists = array_search($_POST["selectedTag"],$userTags);
+
+    //if it doesnt exist push it and insert it else drop it
+    if($checkIfTagExists === false){
+        array_push($userTags, $_POST["selectedTag"]);
+    }else{
+        unset($userTags[$checkIfTagExists]);
+    }
+
+    //reindexing the array so its always starting from 0. Thats importent for further usage of the filters
+    $userTags = array_values($userTags);
+
+    //after editing the array $set it to the mongodb
+    $update = ['$set' =>  ['favoritTags'=> $userTags]];
+    $mongo->updateEntry("accounts",$searchUserFilter,$update); 
+}
+
 ?>

@@ -16,11 +16,24 @@ include_once "./translationService.php";
 $question = new QuestionService();
 $printer = new Printer();
 $mongoRead = new MongoDBService();
-#$filterQuery = ['id' => '639baa04deacd'];
-$filterQuery = [];
-$options = [];
-$mongoData = $mongoRead->read("questions", $filterQuery, $options);
 
+//implementation of the users Favorit tags filter system.
+//dynamically building the $filterQueryQuestionPrint filter with the favoritTags 
+$searchUserFavTagsFilter = (['userId'=>$_SESSION["userData"]["userId"]]);
+$searchUserFavTags = $mongoRead->findSingle("accounts",$searchUserFavTagsFilter);
+$userFavTags = (array)$searchUserFavTags->favoritTags;
+
+//limit the max shown questions on the lading page
+//TODO needs to be randomized in some sort of way... maybe also look for new created questions, highly upvoted questions etc.
+$favTagsOptions = ['limit' => 15];
+
+
+if(!empty($userFavTags)){
+    $filterQueryQuestionPrint = ['tags' => ['$in' => $userFavTags]];
+}else{
+    $filterQueryQuestionPrint = [];
+}
+$mongoData = $mongoRead->read("questions", $filterQueryQuestionPrint, $favTagsOptions);
 
 
 $readyForPrintObjects = [];

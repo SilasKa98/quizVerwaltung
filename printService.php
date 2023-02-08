@@ -23,6 +23,7 @@ class Printer{
         $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
         $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
 
+
         for($i=0;$i<count($questionObject);$i++){
             
             $lang = array_search($questionObject[$i]->id,$questionLanguageRelation);
@@ -65,8 +66,8 @@ class Printer{
                    print'</ul>
                     </div>
                     <div class="card questionCard">
-                        <div class="card-header">
-                            <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$questionObject[$i]->id.'" >
+                        <div class="card-header"'; if(isset($_GET["searchedQuestionId"]) && $_GET["searchedQuestionId"] == $questionObject[$i]->id ){ print "style=\"background-color: #fbf5bf\""; } print'>
+                            <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$questionObject[$i]->id.'" '; if(isset($_GET["searchedQuestionId"]) && $_GET["searchedQuestionId"] == $questionObject[$i]->id ){ print "id=\"searchFocus\""; } print'>
                                 <span id="headerText_'.$questionObject[$i]->id.'">'.$questionObject[$i]->question->$lang.'</span>
                             </a>
                             <div class="rightInnerMenuWrapper">
@@ -116,7 +117,7 @@ class Printer{
                                 
                                 if(isset($questionObject[$i]->tags)){
     
-                                    print'<p "card-text">Tags: ';
+                                    print'<p "card-text" class="questionTagsWrapper">Tags: ';
                                     for($x=0;$x<count($questionObject[$i]->tags);$x++){
                                         print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->tags[$x].'</span>';
                                     }

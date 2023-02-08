@@ -17,8 +17,7 @@
     $text_logout_btn = "Cerrar sesión";
     $welcomeTitel = "Hola";
     $navText_insertQuestion = "Insertar pregunta";
-    $profileInfoText = "Aquí podría haber alguna información sobre el usuario u otros enlaces a algo.";
-    $profileMiniText = "Última actualización hace 3 minutos";
+    $profileInfoText = "Elija sus categorías favoritas y vea siempre lo que le interesa.";
     $myProfileLink = "Mi Perfil";
 
     //Toast (index.php)
@@ -45,4 +44,11 @@
     $notFollowedBtnText = "Seguir";
     $showFollowerText = "Seguidor";
     $showFollowingText = "Siguiente";
+
+    //navbar.php
+    $searchResultUsersHeader = "Usuarias";
+    $searchResultQuestionsHeader = "Preguntas";
+
+    //searchResult (navbar.php) but used in a script
+    $noSearchMatches = "Ninguna coincidencia adecuada";
 ?>

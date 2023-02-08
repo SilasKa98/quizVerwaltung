@@ -1,4 +1,3 @@
-!Elementare Fragen zu Java Swing
 YesNo#Swing ist ein GUI-Toolkit fuer die Programmiersprache Java#true
 YesNo#Abstract Window Toolkit (AWT) ist ein aelteres GUI-Toolkit fuer die Programmiersprache Java#true
 YesNo#Jeder ActionListener ist fuer genau ein GUI-Element (z. B. JButton) zustaendig.#false

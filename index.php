@@ -10,13 +10,16 @@
   include_once "mongoService.php";
   $mongo = new MongoDBService();
   $filterQuery = (['userId' => $userId]);
-  $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
-  $selectedLanguage = $selectedLanguage->userLanguage;
+  $getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);
+  $selectedLanguage = $getAccountInfos->userLanguage;
   include "systemLanguages/text_".$selectedLanguage.".php";
 
   //get all available Tags
-  $allTagsObj = $mongo->findSingle("tags",[],[]);
+  $allTagsObj = $mongo->findSingle("tags",[]);
   $allTagsArray = (array)$allTagsObj->allTags;
+
+  //get the user FavoritTags
+  $usersFavTagsArray = (array)$getAccountInfos->favoritTags;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,64 +34,40 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
 <body>
-
 <?php include_once "frontend/navbar.php";?>
   <!--//TODO vom letzen merge konflikt hier nochmal genauer anschauen wie wir das machen !!!!-->
   <div class="container-fluid">
-      
-    <div class="row row-cols-1 row-cols-md-3 g-4">
 
-      <div class="col">
-        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
-          <div class="row g-0 innerProfileDiv">
-              <div class="col-md-4">
-                  <img src="media/defaultAvatar.png" class="img-fluid rounded-start" id="profileAvatar" alt="Your Avatar">
-              </div>
-              <div class="col-md-8">
-                  <div class="card-body">
-                      <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
-                      <p class="card-text"><?php echo $profileInfoText?></p>
-                      <p class="card-text"><small class="text-muted" id="smallProfileCardText"><?php echo $profileMiniText?></small></p>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
-          <div class="row g-0">
-              <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Adjust Landingpage Filters</h5>
+    <div class="col">
+      <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
+        <div class="row g-0 innerProfileDiv">
+            <div class="col-md-4">
+                <img src="media/defaultAvatar.png" class="img-fluid rounded-start" id="profileAvatar" alt="Your Avatar">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
+                    <p class="card-text infoAboutTags"><?php echo $profileInfoText?></p>
                     <div class="tagsWrapper">
-                      <?php foreach($allTagsArray as $item){ ?>
-                        <span class="badge rounded-pill text-bg-secondary"><?php echo $item;?></span>
-                      <?php } ?>
-                    </div><br>
-                    <h5 class="card-title">Search for Questions</h5>
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  </div>
-              </div>
-          </div>
+                      <div class="btn-group" role="group" id="tags_holder" aria-label="Basic checkbox toggle button group">
+                        <?php 
+                          $counter = 0;
+                          foreach($allTagsArray as $item){ 
+                        ?>
+                          <input type="checkbox" name="<?php echo $item;?>" class="btn-check" onclick="changeTagFilter(this)" id="btncheck<?php echo $counter;?>">
+                          <label class="btn btn-outline-secondary tagsBtn <?php if(in_array($item,$usersFavTagsArray)){ echo "tagIsSelected" ;} ?> " for="btncheck<?php echo $counter;?>"><?php echo $item;?></label>
+                        <?php
+                          $counter++;
+                          } 
+                        ?>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
-
-      <div class="col">
-        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
-          <div class="row g-0">
-              <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Search for Users</h5>
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-      
     </div>
-
+ 
 <?php include "frontend/questionSection.php";?>
   </div>
 <!--end if container-fluid-->
@@ -101,10 +80,29 @@
 <!-- fly to card animation scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="/quizVerwaltung/scripts/flyToCartAnimation.js"></script>
+<script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
 </body>
 
-
-
+<script>
+  function changeTagFilter(e){
+    console.log(e);
+    console.log(e.checked);
+    let selectedTag = e.name;
+    let method = "changeFavoritTags";
+    $.ajax({
+      type: "POST",
+      url: '/quizVerwaltung/doTransaction.php',
+      data: {
+          selectedTag: selectedTag,
+          method: method
+      },
+      success: function(response) {
+        //reload needed to refresh the filter
+        location.reload();
+      }
+    });
+  }
+</script>
 </html>
 
 

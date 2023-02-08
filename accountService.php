@@ -75,7 +75,8 @@ class AccountService{
             "joinDate"=>date("Y-m-d"),
             "follower"=>[],
             "following"=>[],
-            "questionCart"=>[]
+            "questionCart"=>[],
+            "favoritTags"=>[]
         ];
 
         //insert the new User
