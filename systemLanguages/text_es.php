@@ -46,6 +46,10 @@
     $showFollowerText = "Seguidor";
     $showFollowingText = "Siguiente";
 
+    //navbar.php
+    $searchResultUsersHeader = "Usuarias";
+    $searchResultQuestionsHeader = "Preguntas";
+
     //searchResult (navbar.php) but used in a script
     $noSearchMatches = "Ninguna coincidencia adecuada";
 ?>

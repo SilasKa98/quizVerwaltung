@@ -30,7 +30,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button" id="searchResults_questions_header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuestions" aria-expanded="true" aria-controls="collapseOne">
-                                           Questions
+                                           <?php echo $searchResultQuestionsHeader; ?>
                                         </button>
                                     </h2>
                                     <div id="collapseQuestions" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#searchResultAccordion">
@@ -43,7 +43,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingtwo">
                                         <button class="accordion-button" id="searchResults_users_header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="true" aria-controls="collapseOne">
-                                            Users
+                                            <?php echo $searchResultUsersHeader; ?>
                                         </button>
                                     </h2>
                                     <div id="collapseUsers" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#searchResultAccordion">

@@ -48,6 +48,10 @@
     $showFollowerText = "Follower";
     $showFollowingText = "Following";
 
+    //navbar.php
+    $searchResultUsersHeader = "Users";
+    $searchResultQuestionsHeader = "Questions";
+
     //searchResult (navbar.php) but used in a script
     $noSearchMatches = "No matches";
 ?>

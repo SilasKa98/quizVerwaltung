@@ -4,8 +4,6 @@ $('.add-to-cart').on('click', function () {
         //var imgtodrag = $(this).parent('.item').find("img").eq(0);
 		var imgtodrag = $(this).parent().parent().parent().next();
         var imgtodragWidth = $(this).parent().parent().parent().next().width();
-        console.log(imgtodrag);
-		console.log(imgtodrag);
         if (imgtodrag) {
             var imgclone = imgtodrag.clone()
                 .offset({

@@ -48,6 +48,9 @@
     $showFollowerText = "Follower";
     $showFollowingText = "Gefolgt";
 
+    //navbar.php
+    $searchResultUsersHeader = "Nutzer";
+    $searchResultQuestionsHeader = "Fragen";
 
     //searchResult (navbar.php) but used in a script
     $noSearchMatches = "Keine passenden Treffer";
