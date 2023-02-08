@@ -88,53 +88,6 @@
 <script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
 </body>
 
-<script>
-  /*
-  $(document).ready(function(e) {
-    var timeout;
-    var delay = 800;   // 800ms
-
-    $('#searchInSystem').keyup(function(e) {
-      if(timeout) {
-          clearTimeout(timeout);
-      }
-      timeout = setTimeout(function() {
-          searchInSystem(e);
-      }, delay);
-    });
-
-    function searchInSystem(e) {
-      let method = "searchInSystem";
-      $.ajax({
-        type: "POST",
-        url: '/quizVerwaltung/doTransaction.php',
-        data: {
-            value: e.target.value,
-            method: method
-        },
-        success: function(response) {
-          console.log("response:");
-          console.log(response);
-          let jsonResponse = JSON.parse(response);
-          console.log(jsonResponse);
-          console.log("save successfull");
-          let searchResultList = document.getElementById("searchResultsFound");
-          let allMatchingIdsArray = jsonResponse.allMatchingIds;
-          console.log(allMatchingIdsArray);
-          searchResultList.innerHTML = "";
-          for(let i=0;i<allMatchingIdsArray.length;i++){
-            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+jsonResponse.authorsOfTheMatches[i]+'&searchedQuestionId='+jsonResponse.allMatchingIds[i]+'#searchFocus" class="list-group-item list-group-item-action">'+jsonResponse.allMatchingQuestionStrings[i]+'<span class="badge rounded-pill bg-primary searchInnerKarmaPill">'+jsonResponse.KarmaOfTheMatches[i]+'</span></a>';
-          }
-          if(allMatchingIdsArray.length == 0){
-            searchResultList.innerHTML += '<span class="list-group-item list-group-item-action"><?php echo json_encode($noSearchMatches); ?></span>';
-          }
-        }
-      });
-    }
-  });
-  */
-</script>
-
 
 </html>
 
