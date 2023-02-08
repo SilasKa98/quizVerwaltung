@@ -2,7 +2,7 @@
 
 
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+<nav class="navbar navbar-expand-xl bg-body-tertiary sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/quizVerwaltung/index.php">
             <img src="/quizVerwaltung/media/logoQuizManagerTransparent2.png" alt="Logo" width="80"  class="d-inline-block align-text-top">
@@ -19,17 +19,6 @@
             </div>
             
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"> 
-                    <button 
-                        class="btn btn-outline-light shopping-cart" 
-                        type="button"
-                        data-bs-toggle="offcanvas" 
-                        data-bs-target="#offcanvasRight" 
-                        aria-controls="offcanvasRight">
-                        <img src="/quizVerwaltung/media/catalogIcon.png" width="40px"/>
-                        <span class="badge text-bg-secondary">4</span>
-                    </button>
-                </li>
                 
                 <li class="nav-item">
                     <div class="d-flex" role="search" style="margin: .5rem"> <!-- //TODO hier irgenwie anders centern -->
@@ -68,6 +57,17 @@
 
                         </div>
                     </div>
+                </li>
+                <li class="nav-item"> 
+                    <button 
+                        class="btn btn-outline-light shopping-cart" 
+                        type="button"
+                        data-bs-toggle="offcanvas" 
+                        data-bs-target="#offcanvasRight" 
+                        aria-controls="offcanvasRight">
+                        <img src="/quizVerwaltung/media/catalogIcon.png" width="40px"/>
+                        <span class="badge text-bg-secondary">4</span>
+                    </button>
                 </li>
 
                 <li class="nav-item dropdown" id="navOpenDrpDwnBtn">

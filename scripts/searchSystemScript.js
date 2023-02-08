@@ -77,15 +77,34 @@ $(document).ready(function(e) {
         });
       }
 
+      $('#searchInSystem').focus(function(){
+        let currentWindowWith = $( window ).width();
+        if(currentWindowWith > 1199){
+          $("#searchInSystem").css({
+            "width"      : "425px",
+            "transition" : '0.5s ease-in-out'
+          });
+        }
+      });
+
 
       $('#searchInSystem').on('blur', function() {
         $(document).click(function(event) {
+
           const illegalStrings = ["searchResultAccordion","headingOne","searchResults_questions_header","searchResults_users_header","headingTwo"];
           if($.inArray(event.target.id, illegalStrings) === -1) {
-           $("#searchResultsWrapper").css({
+            $("#searchResultsWrapper").css({
               "display": "none"
             });
           }
+
+          const illegalStrings_inputTransition = ["searchInSystem","searchResultAccordion","headingOne","searchResults_questions_header","searchResults_users_header","headingTwo"];
+          if($.inArray(event.target.id, illegalStrings_inputTransition) === -1) {
+            $("#searchInSystem").css({
+              "width": ""
+            });
+          }
+
         });
       });
         
