@@ -35,7 +35,7 @@
 </head>
 <body>
 <?php include_once "frontend/navbar.php";?>
-  <!--//TODO vom letzen merge konflikt hier nochmal genauer anschauen wie wir das machen !!!!-->
+
   <div class="container-fluid">
 
     <div class="col">
