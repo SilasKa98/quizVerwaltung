@@ -479,6 +479,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
     }else{
         unset($userTags[$checkIfTagExists]);
     }
+
+    //reindexing the array so its always starting from 0. Thats importent for further usage of the filters
+    $userTags = array_values($userTags);
+
     //after editing the array $set it to the mongodb
     $update = ['$set' =>  ['favoritTags'=> $userTags]];
     $mongo->updateEntry("accounts",$searchUserFilter,$update); 

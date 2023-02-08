@@ -27,11 +27,11 @@ $userFavTags = (array)$searchUserFavTags->favoritTags;
 //TODO needs to be randomized in some sort of way... maybe also look for new created questions, highly upvoted questions etc.
 $favTagsOptions = ['limit' => 15];
 
-$filterQueryQuestionPrint = [];
-if(isset($userFavTags)){
-    foreach($userFavTags as $tag){
-        $filterQueryQuestionPrint['tags'] = $tag; 
-    }
+
+if(!empty($userFavTags)){
+    $filterQueryQuestionPrint = ['tags' => ['$in' => $userFavTags]];
+}else{
+    $filterQueryQuestionPrint = [];
 }
 $mongoData = $mongoRead->read("questions", $filterQueryQuestionPrint, $favTagsOptions);
 
