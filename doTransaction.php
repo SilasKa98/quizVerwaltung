@@ -378,7 +378,22 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
         $questionId = $getAllQuestions[$i]->id;
         $questionAuthor = $getAllQuestions[$i]->author;
         $questionKarma = $getAllQuestions[$i]->karma;
+        $questionTags= $getAllQuestions[$i]->tags;
         foreach($questionStringsArray as $questionString){
+
+            //Filter for tags
+            foreach($questionTags as $tag){
+                $foundMatch_tag = str_contains(strtolower($tag), strtolower($userEntry));
+                if($foundMatch_tag && $userEntry!= "" && $userEntry != " "){
+                    if (!in_array($questionId, $allMatchingIds)){
+                        array_push($allMatchingQuestionStrings, $questionString);
+                        array_push($allMatchingIds, $questionId);
+                        array_push($authorsOfTheMatches, $questionAuthor);
+                        array_push($KarmaOfTheMatches, $questionKarma);
+                    }
+                }
+            }
+            //filter for question titel
             $foundMatch = str_contains(strtolower($questionString), strtolower($userEntry));
             if($foundMatch && $userEntry!= "" && $userEntry != " "){
                 if (!in_array($questionId, $allMatchingIds)){
@@ -388,6 +403,9 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
                     array_push($KarmaOfTheMatches, $questionKarma);
                 }
             }
+
+            //maybe later also filter for answers and options? 
+
         }
     }
 
@@ -414,8 +432,13 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
    $allMatchingUsers = [];
    for($i=0;$i<count($getAllUsersArray);$i++){
         $username = $getAllUsersArray[$i]["username"];
+        $firstname = $getAllUsersArray[$i]["firstname"];
+        $lastname = $getAllUsersArray[$i]["lastname"];
+
         $foundMatch = str_contains(strtolower($username), strtolower($userEntry));
-        if($foundMatch && $userEntry!= "" && $userEntry != " "){
+        $foundMatch2 = str_contains(strtolower($firstname), strtolower($userEntry));
+        $foundMatch3 = str_contains(strtolower($lastname), strtolower($userEntry));
+        if(($foundMatch || $foundMatch2 || $foundMatch3) && $userEntry!= "" && $userEntry != " "){
             if (!in_array($username, $allMatchingUsers)){
                 array_push($allMatchingUsers, $username);
             }

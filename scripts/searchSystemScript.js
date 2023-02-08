@@ -98,8 +98,8 @@ $(document).ready(function(e) {
             });
           }
 
-          const illegalStrings_inputTransition = ["searchInSystem","searchResultAccordion","headingOne","searchResults_questions_header","searchResults_users_header","headingTwo"];
-          if($.inArray(event.target.id, illegalStrings_inputTransition) === -1) {
+          const illegalStrings_inputTransition = ["searchInSystemWrapper","searchInSystem","searchResultAccordion","headingOne","searchResults_questions_header","searchResults_users_header","headingTwo"];
+          if($.inArray(event.target.id, illegalStrings_inputTransition) === -1 && $(window.getSelection().anchorNode).attr('id') !== 'searchInSystemWrapper') {
             $("#searchInSystem").css({
               "width": ""
             });
