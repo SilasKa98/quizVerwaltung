@@ -1,4 +1,3 @@
-!Fragen zu OOP in Java, Version Juli 2020.
 MultiOptions#Was sind Klassen fuer eine THM-Software?#0,1,4#Professor#Student#SWE2#Medieninformatik#Fachbereich#IEM
 Options#Welche Beziehung sollte zwischen Kind- und Eltern-Klasse gelten?#1#Geh&ouml;rt zu#Ist ein#Wird benutzt
 Options#Wie kann eine Klasse verhindern, dass Kind-Klassen direkt auf ein Eltern-Attribut zugreifen k&ouml;nnen?#1#garnicht#mit dem Zugriffsmodifikator private#mit dem Zugriffsmodifikator protected

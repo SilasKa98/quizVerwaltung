@@ -1,4 +1,3 @@
-!Ein Fragenset zu Grundlagen von Java
 YesNo#Java ist OOP#true
 YesNo#Java ist &auml;lter als die Programmiersprache C#false
 Options#Wonach wurde die Java-Technologie benannt?#1#Der gleichnamigen Insel#Einer Kaffee-Sorte#Einem  Gesellschaftstanz im 3/4-Takt aus den 1920er-Jahren 
