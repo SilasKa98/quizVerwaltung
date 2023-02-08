@@ -4,12 +4,12 @@
     <button type="button" class="btn btn-light" style="--bs-btn-font-size: 1.25rem;">Fragenkorb</button>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body">
+  <div class="offcanvas-body" id="canvas-body">
     <?php
     //to declar an absolut path
-    $path = $_SERVER['DOCUMENT_ROOT'];
-    $path .= "/quizVerwaltung/cartService.php";
-    include_once($path);
+    $catalogCart = $_SERVER['DOCUMENT_ROOT'];
+    $catalogCart .= "/quizVerwaltung/cartService.php";
+    include_once($catalogCart);
     $service = new CartService();
     $service->printCart();
     ?>

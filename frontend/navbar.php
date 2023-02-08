@@ -1,4 +1,13 @@
-<?php include_once "catalogCart.php";?>
+<?php
+$navbar = $_SERVER['DOCUMENT_ROOT'];
+include_once ($navbar."/quizVerwaltung/frontend/catalogCart.php");
+include_once ($navbar."/quizVerwaltung/mongoService.php");
+$mongo = new MongoDBService();
+$filterQuery = (['userId' => $userId]);
+$getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);
+$cartCount = count((array)$getAccountInfos->questionCart);
+if (!isset($cartCount)){$cartCount = 0;}
+?>
 
 
 
@@ -66,7 +75,9 @@
                         data-bs-target="#offcanvasRight" 
                         aria-controls="offcanvasRight">
                         <img src="/quizVerwaltung/media/catalogIcon.png" width="40px"/>
-                        <span class="badge text-bg-secondary">4</span>
+                        <span class="badge text-bg-secondary" id="cartCount">
+                            <?php echo $cartCount;?>
+                        </span>
                     </button>
                 </li>
 
