@@ -21,13 +21,17 @@ class Catalog{
 class CartService{
 
     private $mongo;
+    private $userId;
 
     function __construct() {
+        extract($_SESSION["userData"]);
         $this->mongo = new MongoDBService();
+        $this->userId = $userId;
+
     }
 
-    function addItem($questionId, $userId){
-        $filterQuery = (['userId' => $userId]);
+    function addItem($questionId){
+        $filterQuery = (['userId' => $this->userId]);
         
         //get current questionCart
         $result = $this->mongo->findSingle("accounts", $filterQuery);
@@ -44,14 +48,14 @@ class CartService{
         }
     }
 
-    function removeItem($questionId, $userId){
-        $filterQuery = (['userId' => $userId]);
+    function removeItem($questionId){
+        $filterQuery = (['userId' => $this->userId]);
         $update = ['$pull' => ['questionCart' => $questionId]];
         $this->mongo->updateEntry("accounts", $filterQuery, $update);
     }
 
-    function createCatalog($userId){
-        $filterQuery = (['userId' => $userId]);
+    function createCatalog(){
+        $filterQuery = (['userId' => $this->userId]);
         //get all questions currently in the cart
         $result = $this->mongo->findSingle("accounts", $filterQuery);
         $cart = (array)$result["questionCart"];
