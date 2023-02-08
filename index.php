@@ -37,32 +37,17 @@
 <?php include_once "frontend/navbar.php";?>
   <!--//TODO vom letzen merge konflikt hier nochmal genauer anschauen wie wir das machen !!!!-->
   <div class="container-fluid">
-      
-    <div class="row row-cols-1 row-cols-md-3 g-4">
 
-      <div class="col">
-        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
-          <div class="row g-0 innerProfileDiv">
-              <div class="col-md-4">
-                  <img src="media/defaultAvatar.png" class="img-fluid rounded-start" id="profileAvatar" alt="Your Avatar">
-              </div>
-              <div class="col-md-8">
-                  <div class="card-body">
-                      <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
-                      <p class="card-text"><?php echo $profileInfoText?></p>
-                      <p class="card-text"><small class="text-muted" id="smallProfileCardText"><?php echo $profileMiniText?></small></p>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
-          <div class="row g-0">
-              <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Adjust Landingpage Filters</h5>
+    <div class="col">
+      <div class="card mb-3" id="profileCard" style="max-width: 540px;min-height: 200px;">
+        <div class="row g-0 innerProfileDiv">
+            <div class="col-md-4">
+                <img src="media/defaultAvatar.png" class="img-fluid rounded-start" id="profileAvatar" alt="Your Avatar">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $welcomeTitel." ".$username ?></h5>
+                    <p class="card-text infoAboutTags"><?php echo $profileInfoText?></p>
                     <div class="tagsWrapper">
                       <div class="btn-group" role="group" id="tags_holder" aria-label="Basic checkbox toggle button group">
                         <?php 
@@ -77,14 +62,12 @@
                         ?>
                       </div>
                     </div>
-                  </div>
-              </div>
-          </div>
+                </div>
+            </div>
         </div>
       </div>
-      
     </div>
-
+ 
 <?php include "frontend/questionSection.php";?>
   </div>
 <!--end if container-fluid-->
