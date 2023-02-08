@@ -357,4 +357,13 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
             echo "notFollowing";
         }
 }
+
+
+if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
+    include_once "cartService.php";
+    session_start();
+    $id = $_POST["questionId"];
+    $cart = new CartService();
+    $cart->addItem($id);
+}
 ?>
