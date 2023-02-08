@@ -40,12 +40,14 @@ class CartService{
         
         //check if id is in the cart already
         if (in_array($questionId, $cart)){
-            echo "Frage ist schon vorhanden";
-            //TODO Toast hier um mitzuteilen das die Frage schon im Warenkorb ist!!
+            // Question already in cart
+            return "ItemExists";
+            exit();
         }else{
             $update = ['$push' => ['questionCart' => $questionId]];
             $this->mongo->updateEntry("accounts", $filterQuery, $update);
         }
+        return "Success";
     }
 
     function removeItem($questionId){
@@ -84,16 +86,14 @@ class CartService{
 
         if (empty($cart)){
             print"
-                Du hast aktuell keine Fragen in deinem Korb. <br>
+                <p id='cartInfoText'>Du hast aktuell keine Fragen in deinem Korb.
                 Füge einfach eine Frage hinzu indem du neben einer Frage
-                das Dropdown Menü öffnest und den Warenkorb anklicks.
+                das Dropdown Menü öffnest und den Warenkorb anklicks.</p>
                 ";
         }else{
             foreach ($cart as $questionId) {
-                $lang = "de";
-
                 $searchUserFilter = (['userId'=>$this->userId]);
-                $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+                $searchUser = $this->mongo->findSingle("accounts",$searchUserFilter);
                 $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
 
                 $lang = array_search($questionId,$questionLanguageRelation);
