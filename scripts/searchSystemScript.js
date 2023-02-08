@@ -67,10 +67,12 @@ $(document).ready(function(e) {
           //Handle Search result for users
           let searchResultList = document.getElementById("searchResults_users_body");
           let allMatchingUsers = jsonResponse.allMatchingUsers;
+          let allMatchingFirstnames = jsonResponse.allMatchingFirstnames;
+          let allMatchingLastnames = jsonResponse.allMatchingLastnames;
           searchResultList.innerHTML = "";
 
           for(let i=0;i<allMatchingUsers.length;i++){
-            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+allMatchingUsers[i]+'" class="list-group-item list-group-item-action">'+allMatchingUsers[i]+'</a>';
+            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+allMatchingUsers[i]+'" class="list-group-item list-group-item-action">'+allMatchingFirstnames[i]+" "+allMatchingLastnames[i]+' <span class="text-muted">@'+allMatchingUsers[i]+'</span><img class="searchResultMiniPicture" src="/quizVerwaltung/media/defaultAvatar.png" width=20px></a>';
           }
           if(allMatchingUsers.length == 0){
             searchResultList.innerHTML += '<span id="noMatches" class="list-group-item list-group-item-action">No Matches found</span>';

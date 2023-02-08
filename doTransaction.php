@@ -430,6 +430,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
    $getAllUsers= $mongo->read("accounts",[]);
    $getAllUsersArray = (array)$getAllUsers;
    $allMatchingUsers = [];
+   $allMatchingFirstnames= [];
+   $allMatchingLastnames= [];
    for($i=0;$i<count($getAllUsersArray);$i++){
         $username = $getAllUsersArray[$i]["username"];
         $firstname = $getAllUsersArray[$i]["firstname"];
@@ -441,12 +443,16 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
         if(($foundMatch || $foundMatch2 || $foundMatch3) && $userEntry!= "" && $userEntry != " "){
             if (!in_array($username, $allMatchingUsers)){
                 array_push($allMatchingUsers, $username);
+                array_push($allMatchingFirstnames, $firstname);
+                array_push($allMatchingLastnames, $lastname);
             }
         }
    }
 
    $ajaxResponse = [
-       "allMatchingUsers"=> $allMatchingUsers
+       "allMatchingUsers"=> $allMatchingUsers,
+       "allMatchingFirstnames"=> $allMatchingFirstnames,
+       "allMatchingLastnames"=> $allMatchingLastnames
    ];
    echo json_encode($ajaxResponse);
 }
