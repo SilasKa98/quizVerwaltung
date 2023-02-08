@@ -89,7 +89,7 @@ $(document).ready(function(e) {
       if(currentWindowWith > 1199){
         $("#searchInSystem").css({
           "width"      : "425px",
-          "transition" : '0.5s ease-in-out'
+          "transition" : '0.4s ease-in-out'
         });
       }
     });
