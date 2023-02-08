@@ -90,7 +90,6 @@ function parseLine( $line ) {
 	$parts = str_replace( "&num;", "#", $parts );
   $questionType = $parts[0];
 
-
   //language needs to be set here!!
   #$language = "de";
   //language is automatically detected with the deepL Api
@@ -127,10 +126,10 @@ function parseLine( $line ) {
 		if( method_exists( "Dyn", $func ) ) {
 			return Dyn::{$func}();
 		} else {
-			return new Question( "-", "", "", "", "", "", "");
+			return new Question( "-", "", "", "", "", "", "", "");
 		}
 	} else {
-		return new Question( "-", "", "", "", "", "", "");
+		return new Question( "-", "", "", "", "", "", "", "");
 	}
 }
 
