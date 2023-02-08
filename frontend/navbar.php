@@ -39,7 +39,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li>
-                                <form method="post" action="/quizVerwaltung/doTransaction.php"> <!--id="languageForm"-->
+                                <form method="post" action="/quizVerwaltung/doTransaction.php">
                                     <input type="hidden" name="destination" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">             
                                     <select name="language" class="form-select" id="changeLangSel" onchange="this.form.submit()">
                                     <?php
