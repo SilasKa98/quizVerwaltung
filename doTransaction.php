@@ -457,4 +457,31 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
    echo json_encode($ajaxResponse);
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
+
+    //check if the given tag isnt containing any illegal chars (catch exploits)
+    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($_POST["selectedTag"]))){
+        echo "illegal chars";
+        exit();
+    }
+
+    //check if the given tag is even existing in the system (catch faulty given inputs)
+    session_start();
+    $searchUserFilter = (['userId'=>$_SESSION["userData"]["userId"]]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+    $userTags = (array)$searchUser->favoritTags;
+
+    $checkIfTagExists = array_search($_POST["selectedTag"],$userTags);
+
+    //if it doesnt exist push it and insert it else drop it
+    if($checkIfTagExists === false){
+        array_push($userTags, $_POST["selectedTag"]);
+    }else{
+        unset($userTags[$checkIfTagExists]);
+    }
+    //after editing the array $set it to the mongodb
+    $update = ['$set' =>  ['favoritTags'=> $userTags]];
+    $mongo->updateEntry("accounts",$searchUserFilter,$update); 
+}
+
 ?>

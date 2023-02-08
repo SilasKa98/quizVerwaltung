@@ -16,11 +16,23 @@ include_once "./translationService.php";
 $question = new QuestionService();
 $printer = new Printer();
 $mongoRead = new MongoDBService();
-#$filterQuery = ['id' => '639baa04deacd'];
-$filterQuery = [];
-$options = [];
-$mongoData = $mongoRead->read("questions", $filterQuery, $options);
 
+//implementation of the users Favorit tags filter system.
+//dynamically building the $filterQueryQuestionPrint filter with the favoritTags 
+$searchUserFavTagsFilter = (['userId'=>$_SESSION["userData"]["userId"]]);
+$searchUserFavTags = $mongoRead->findSingle("accounts",$searchUserFavTagsFilter);
+$userFavTags = (array)$searchUserFavTags->favoritTags;
+
+//limit the max shown questions on the lading page
+$favTagsOptions = ['limit' => 15];
+
+$filterQueryQuestionPrint = [];
+if(isset($userFavTags)){
+    foreach($userFavTags as $tag){
+        $filterQueryQuestionPrint['tags'] = $tag; 
+    }
+}
+$mongoData = $mongoRead->read("questions", $filterQueryQuestionPrint, $favTagsOptions);
 
 
 $readyForPrintObjects = [];

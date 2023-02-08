@@ -13,3 +13,10 @@
     text-align: center;
     padding: 1%;
 }
+
+.tagsBtn{
+    border-radius: 10px !important;
+    margin-right: 2%;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }

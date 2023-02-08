@@ -10,13 +10,16 @@
   include_once "mongoService.php";
   $mongo = new MongoDBService();
   $filterQuery = (['userId' => $userId]);
-  $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
-  $selectedLanguage = $selectedLanguage->userLanguage;
+  $getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);
+  $selectedLanguage = $getAccountInfos->userLanguage;
   include "systemLanguages/text_".$selectedLanguage.".php";
 
   //get all available Tags
-  $allTagsObj = $mongo->findSingle("tags",[],[]);
+  $allTagsObj = $mongo->findSingle("tags",[]);
   $allTagsArray = (array)$allTagsObj->allTags;
+
+  //get the user FavoritTags
+  $usersFavTagsArray = (array)$getAccountInfos->favoritTags;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,9 +64,18 @@
                   <div class="card-body">
                     <h5 class="card-title">Adjust Landingpage Filters</h5>
                     <div class="tagsWrapper">
-                      <?php foreach($allTagsArray as $item){ ?>
-                        <span class="badge rounded-pill text-bg-secondary"><?php echo $item;?></span>
-                      <?php } ?>
+                      <div class="btn-group" role="group" id="tags_holder" aria-label="Basic checkbox toggle button group">
+                        <?php 
+                          $counter = 0;
+                          foreach($allTagsArray as $item){ 
+                        ?>
+                          <input type="checkbox" name="<?php echo $item;?>" class="btn-check" onclick="changeTagFilter(this)" id="btncheck<?php echo $counter;?>">
+                          <label class="btn btn-outline-secondary tagsBtn <?php if(in_array($item,$usersFavTagsArray)){ echo "tagIsSelected" ;} ?> " for="btncheck<?php echo $counter;?>"><?php echo $item;?></label>
+                        <?php
+                          $counter++;
+                          } 
+                        ?>
+                      </div>
                     </div>
                   </div>
               </div>
@@ -88,7 +100,26 @@
 <script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
 </body>
 
-
+<script>
+  function changeTagFilter(e){
+    console.log(e);
+    console.log(e.checked);
+    let selectedTag = e.name;
+    let method = "changeFavoritTags";
+    $.ajax({
+      type: "POST",
+      url: '/quizVerwaltung/doTransaction.php',
+      data: {
+          selectedTag: selectedTag,
+          method: method
+      },
+      success: function(response) {
+        //reload needed to refresh the filter
+        location.reload();
+      }
+    });
+  }
+</script>
 </html>
 
 

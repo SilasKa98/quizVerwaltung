@@ -108,7 +108,7 @@ class Printer{
                                 
                                 if(isset($questionObject[$i]->tags)){
     
-                                    print'<p "card-text">Tags: ';
+                                    print'<p "card-text" class="questionTagsWrapper">Tags: ';
                                     for($x=0;$x<count($questionObject[$i]->tags);$x++){
                                         print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->tags[$x].'</span>';
                                     }

@@ -167,7 +167,7 @@
             $('#tags_holder').html("");
             for(let i=0;i<allTags.length;i++){
                 let inputElement = '<input type="checkbox" name="'+allTags[i]+'" class="btn-check" id="btncheck'+i+'" autocomplete="off">';
-                let labelElement = '<label class="btn btn-outline-primary" for="btncheck'+i+'">'+allTags[i]+'</label>';
+                let labelElement = '<label class="btn btn-outline-secondary tagsBtn" for="btncheck'+i+'">'+allTags[i]+'</label>';
                 $('#tags_holder').append(inputElement);
                 $('#tags_holder').append(labelElement);
             }
