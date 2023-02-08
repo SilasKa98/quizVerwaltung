@@ -20,7 +20,7 @@
         <input type="text" name="mail" placeholder="Mail"><br><br>
         <input type="password" name="pwd" placeholder="Password"><br><br>
         <input type="password" name="pwd_repeat" placeholder="Repeat Password"><br><br>
-        <select name="language">
+        <select name="languageInput">
             <?php foreach($all_languages as $key => $value){ ?>
                 <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
             <?php } ?>

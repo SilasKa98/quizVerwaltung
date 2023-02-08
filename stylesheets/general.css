@@ -228,7 +228,7 @@ body{
   }
 
   .shopping-cart{
-    margin-right: 30px;
+    margin-left: 30px;
   }
 
   .shoppingCartCount{
@@ -273,6 +273,7 @@ body{
       padding: 0 !important;
       margin-bottom: 10px !important;
       margin-top: 10px !important;
+      margin-left: 0;
     }
 
     .d-flex{
@@ -287,8 +288,11 @@ body{
       margin-top: 39px;
       max-height: 206px;
       overflow: auto;
-      width: 92%;
-      right: 4%;
+      width: 90%;
+      right: 9%;
+    }
+    .form-control{
+      width: 92% !important;
     }
 
     #allQuestionWrapper {

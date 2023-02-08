@@ -171,7 +171,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
     include_once "accountService.php";
     $account = new AccountService();
-    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["language"],$_POST["firstname"],$_POST["lastname"]);
+    $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["languageInput"],$_POST["firstname"],$_POST["lastname"]);
 }
 
 if(isset($_POST["method"]) && $_POST["method"] == "loginAccount"){
