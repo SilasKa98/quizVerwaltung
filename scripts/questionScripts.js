@@ -149,7 +149,32 @@
                 $(".toast").toast('show');
             }
         });
+    }
 
+    function addToCart(e){
+        let questionId = e.getAttribute("name");
+        let method = "addToCart";
+
+        $.ajax({
+            type: 'post',
+            url: '/quizVerwaltung/doTransaction.php',
+            data: {
+                questionId: questionId,
+                method: method
+            },
+            success: function(response) {
+                console.log(response);
+                console.log("save successfull");
+                toastMsgBody.innerHTML = "Question added to cart";
+                $(".toast").toast('show');
+                //currently just reloading the site to display new things, maybe can also be added with js
+                /*
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+                */ //TODO wird der reload hier gebraucht ?????
+            }
+        });
     }
 
 
