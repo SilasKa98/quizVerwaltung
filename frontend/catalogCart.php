@@ -1,11 +1,18 @@
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <!--<h5 class="offcanvas-title" id="offcanvasRightLabel">Fragenkatalog</h5>-->
-    <button type="button" class="btn btn-light" style="--bs-btn-font-size: 1.25rem;">Fragenkatalog</button>
+    <button type="button" class="btn btn-light" style="--bs-btn-font-size: 1.25rem;">Fragenkorb</button>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <p>TODO Hier kommen dann die einzelnen Fragen rein die der user in seinem Warenkorb hat.</p> <!-- //TODO das was da steht -->
+    <?php
+    //to declar an absolut path
+    $path = $_SERVER['DOCUMENT_ROOT'];
+    $path .= "/quizVerwaltung/cartService.php";
+    include_once($path);
+    $service = new CartService();
+    $service->printCart();
+    ?>
   </div>
 
   <div class="container-fluid" align="center" style="margin-bottom: 10px;" id=catalogButtons>
