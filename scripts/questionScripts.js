@@ -163,19 +163,33 @@
                 method: method
             },
             success: function(response) {
-                console.log(response);
-                console.log("save successfull");
+                let jsonResponse = JSON.parse(response);
+                
+                if (jsonResponse.addResult === "ItemExists"){
+                    toastMsgBody.innerHTML = "Question already in cart";
+                    $(".toast").toast('show');
+                    return;
+                }
+
+                let canvasBody = document.getElementById("canvas-body");
+                let cartCount = document.getElementById("cartCount");
+                let cartInfoText = document.getElementById("cartInfoText");
+                if (cartInfoText != undefined){
+                    cartInfoText.remove();
+                }
+
+                canvasBody.innerHTML += "<div class='card' style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
+                                            "<div class='card-body'>" + 
+                                                jsonResponse.questionObject.question[jsonResponse.lang] + 
+                                            "</div>" +
+                                        "</div>";
+                cartCount.innerHTML = jsonResponse.cartLength;
+
                 toastMsgBody.innerHTML = "Question added to cart";
                 $(".toast").toast('show');
-                //currently just reloading the site to display new things, maybe can also be added with js
-                /*
-                setTimeout(function() {
-                    location.reload();
-                }, 3000);
-                */ //TODO wird der reload hier gebraucht ?????
             }
         });
     }
-    
+
 
 

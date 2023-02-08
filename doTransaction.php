@@ -363,10 +363,31 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     session_start();
     $id = $_POST["questionId"];
     $cart = new CartService();
-    $cart->addItem($id);
+    $addResult = $cart->addItem($id);
 
     $questionFilter = (['id'=>$id]);
-    $questionObject = $mongo->findSingle("question",$questionFilter);
+    $questionObject = $mongo->findSingle("questions",$questionFilter);
+
+    $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+    $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
+    $cartLength = count((array)$searchUser->questionCart);
+    $lang = array_search($id,$questionLanguageRelation);
+
+    if(!$lang){
+        //get the first key of the question so it can be used to set it as the default language
+        $lang = array_key_first((array)$questionObject->question);
+    }
+
+
+
+    $ajaxResponse = [
+        "addResult"=> $addResult,
+        "questionObject"=> $questionObject,
+        "lang"=> $lang,
+        "cartLength" => $cartLength
+    ];
+    echo json_encode($ajaxResponse);
 }
 
 
