@@ -18,8 +18,7 @@
     $text_logout_btn = "Logout";
     $welcomeTitel = "Hello";
     $navText_insertQuestion = "Insert Question";
-    $profileInfoText = "Here could be some information about the user or other links to something.";
-    $profileMiniText = "Last updated 3 mins ago";
+    $profileInfoText = "Choose your favorite categories and always see what interests you.";
     $myProfileLink = "My Profile";
 
 

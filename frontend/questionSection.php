@@ -24,6 +24,7 @@ $searchUserFavTags = $mongoRead->findSingle("accounts",$searchUserFavTagsFilter)
 $userFavTags = (array)$searchUserFavTags->favoritTags;
 
 //limit the max shown questions on the lading page
+//TODO needs to be randomized in some sort of way... maybe also look for new created questions, highly upvoted questions etc.
 $favTagsOptions = ['limit' => 15];
 
 $filterQueryQuestionPrint = [];
