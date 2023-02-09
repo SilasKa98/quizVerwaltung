@@ -33,6 +33,12 @@ $(document).ready(function(e) {
           method: method
       },
       success: function(response) {
+        if(response == "Illegal chars detected!"){
+          toastMsgBody.innerHTML = response;
+          $(".toast").toast('show');
+          return;
+        }
+
         let jsonResponse = JSON.parse(response);
 
         //Handle Search result for questions
@@ -62,6 +68,11 @@ $(document).ready(function(e) {
             method: method
         },
         success: function(response) {
+          if(response == "Illegal chars detected!"){
+            toastMsgBody.innerHTML = response;
+            $(".toast").toast('show');
+            return;
+          }
           let jsonResponse = JSON.parse(response);
 
           //Handle Search result for users
