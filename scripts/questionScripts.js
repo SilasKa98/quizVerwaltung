@@ -63,6 +63,11 @@
                 id: id
             },
             success: function(response) {
+                if(response == "Translation already exists!" || response == "Illegal target language!"){
+                    toastMsgBody.innerHTML = response;
+                    $(".toast").toast('show');
+                    return;
+                }
                 console.log(response);
                 console.log("save successfull");
                 toastMsgBody.innerHTML = "New Language added successfully!";
@@ -129,6 +134,11 @@
                 method: method
             },
             success: function(response) {
+                if(response == "Illegal language given!"){
+                    toastMsgBody.innerHTML = response;
+                    $(".toast").toast('show');
+                    return;
+                }
                 console.log(response);
                 //in the backend a json is created with all needed return values. Here the json needs to be parsed to use it for displaying changes
                 let jsonResponse = JSON.parse(response);
@@ -207,6 +217,7 @@
         let method = "createCatalog";
 
         $.ajax({
+
             type: 'post',
             url: '/quizVerwaltung/doTransaction.php',
             data: {
@@ -229,8 +240,9 @@
 
                 toastMsgBody.innerHTML = "Catalog created. See profile to look at your catalogs";
                 $(".toast").toast('show');
-        }
-    });
+            }
+
+        });
     }
 
     function removeCartItem(e){
@@ -266,6 +278,30 @@
         //submitting the form to redirect with the id given in the form
         e.children[0].submit();
     }
+
+    function changeTagFilter(e){
+        console.log(e);
+        console.log(e.checked);
+        let selectedTag = e.name;
+        let method = "changeFavoritTags";
+        $.ajax({
+          type: "POST",
+          url: '/quizVerwaltung/doTransaction.php',
+          data: {
+              selectedTag: selectedTag,
+              method: method
+          },
+          success: function(response) {
+            //reload needed to refresh the filter
+            if(response == "Illegal chars detected!"){
+                toastMsgBody.innerHTML = response;
+                $(".toast").toast('show');
+                return;
+            }
+            location.reload();
+          }
+        });
+      }
 
 
 

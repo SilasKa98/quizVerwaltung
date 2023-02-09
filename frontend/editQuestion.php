@@ -75,6 +75,7 @@ if(isset($isAdmin) && $isAdmin == true){
 <body>
 
     <?php include_once "navbar.php";?>
+    <?php include_once "notificationToast.php";?>
 
     <div class="modal fade" id="changeActionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -178,5 +179,6 @@ if(isset($isAdmin) && $isAdmin == true){
     </div>
 
     <script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
+    
 </body>
 </html>

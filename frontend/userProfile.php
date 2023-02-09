@@ -204,6 +204,11 @@
                     method: method
                 },
                 success: function(response) {
+                    if(response == "Illegal chars detected!" || response == "User is not existing!"){
+                        toastMsgBody.innerHTML = response;
+                        $(".toast").toast('show');
+                        return;
+                    }
                     console.log(response);
                     //change the color of the button without reload for the moment...
                     //the permanent display handling is done above with php inside of the html

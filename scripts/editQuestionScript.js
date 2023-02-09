@@ -45,6 +45,11 @@ function sendAjax(method, selectedTags, id){
             id: id
         },
         success: function(response) {
+            if(response == "Illegal chars detected!" || response == "Illegal id given!" || response == "You are not allowed to edit this question!"){
+                toastMsgBody.innerHTML = response;
+                $(".toast").toast('show');
+                return;
+            }
             console.log(response);
             location.reload();
         }

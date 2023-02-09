@@ -83,26 +83,6 @@
 <script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
 </body>
 
-<script>
-  function changeTagFilter(e){
-    console.log(e);
-    console.log(e.checked);
-    let selectedTag = e.name;
-    let method = "changeFavoritTags";
-    $.ajax({
-      type: "POST",
-      url: '/quizVerwaltung/doTransaction.php',
-      data: {
-          selectedTag: selectedTag,
-          method: method
-      },
-      success: function(response) {
-        //reload needed to refresh the filter
-        location.reload();
-      }
-    });
-  }
-</script>
 </html>
 
 

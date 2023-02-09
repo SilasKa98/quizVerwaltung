@@ -20,7 +20,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 
     //maybe later fetch it from somewhere?
     #$allSupportedLanguages = ["de","en-Us","es"];
-    
+
     $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
 
     //catching falsly given values from the user 
@@ -38,6 +38,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
         $fetchedQuestion = $question -> parseReadInQuestion($doc);
     }
     
+    //check if question is already translated in this language
+    if(array_key_exists($_POST["selLanguage"],$fetchedQuestion[0]->question)){
+        echo "Translation already exists!";
+        exit();
+    }
 
     if(isset($fetchedQuestion[0]->question)){
         $newQuestion = [$sourceLanguage => $fetchedQuestion[0]->question->$sourceLanguage];
@@ -215,6 +220,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
         $searchQuestionIdFilter = (['id'=>$_POST["questionId"]]);
         $searchQuestionId = $mongo->findSingle("questions",$searchQuestionIdFilter,[]);
         if(!isset($searchQuestionId)){
+            echo "Illegal Id given!";
             exit();
         }
 
@@ -224,6 +230,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
         $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
 
         if(!in_array($_POST["questionLang"],$allSupportedLanguages)){
+            echo "Illegal language given!";
             exit();
         }
     /*
@@ -303,13 +310,13 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
 
     //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
     if(!preg_match("/^[a-zA-Z0-9]*$/", strval($userThatHasBeenFollowed))){
-        echo "illegal chars";
+        echo "Illegal chars detected!";
         exit();
     }
     $searchUserThatHasBeenFollowed = (['userId'=>$userThatHasBeenFollowed]);
     $searchUserThatHasBeenFollowed = $mongo->findSingle("accounts",$searchUserThatHasBeenFollowed,[]);
     if(!isset($searchUserThatHasBeenFollowed)){
-        echo "user is not existing!";
+        echo "User is not existing!";
         exit();
     }
     /**
@@ -372,7 +379,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
 
      //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
      if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
-        echo "illegal chars";
+        echo "Illegal chars detected!";
         exit();
     }
 
@@ -434,7 +441,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
 
     //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
     if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
-       echo "illegal chars";
+       echo "Illegal chars detected!";
        exit();
    }
 
@@ -472,7 +479,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
 
     //check if the given tag isnt containing any illegal chars (catch exploits)
     if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($_POST["selectedTag"]))){
-        echo "illegal chars";
+        echo "Illegal chars detected!";
         exit();
     }
 
@@ -574,7 +581,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
     $questionId = $_POST["id"];
 
     if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
-        echo "illegal chars";
+        echo "Illegal id given!";
         exit();
     }
 
@@ -586,16 +593,20 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
     //check if one of the give tags contains illegal chars (catch exploits)
     foreach($selectedTags as $tag){
         if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($tag))){
-            echo "illegal chars";
+            echo "Illegal chars detected!";
             exit();
         }
     }
     
-
-    //reindexing the array so its always starting from 0. Thats importent for further usage of the filters
     $searchQuestionFilter = (['id'=>$questionId]);
     $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
     $questionTags = (array)$searchQuestion->tags;
+    $questionAuthor = $searchQuestion->author;
+    session_start();
+    if($questionAuthor != $_SESSION["userData"]["username"]){
+        echo "You are not allowed to edit this question!";
+        exit();
+    } 
 
     $update = ['$set' =>  ['tags'=> $selectedTags]];
     $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
