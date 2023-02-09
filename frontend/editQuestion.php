@@ -52,6 +52,7 @@ if(isset($selectedQuestion->options)){
     $options = $selectedQuestion->options;
 }
 
+
 if(isset($isAdmin) && $isAdmin == true){
     $verification = $selectedQuestion->verification;
 }
@@ -107,72 +108,72 @@ if(isset($isAdmin) && $isAdmin == true){
             <h3 class="card-title"></h3>
         </div>
         <div class="card-body">
-        <div class="row row-cols-1 row-cols-md-2 g-1">
-
-            <div class="card mb-3 innerImportCard" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Question</h5>               
-                    <p class="card-text"><?php echo $question;?></p>
-                    <button class="btn btn-primary"><?php echo $adjustButton;?></button>
-                </div>
-            </div>
-            
-            <div class="card mb-3 innerImportCard" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Sprache</h5>               
-                    <p class="card-text"><?php echo $_GET["language"];?></p>
-                    <button class="btn btn-primary"><?php echo $adjustButton;?></button>
-                </div>
-            </div>
-
-            <div class="card mb-3 innerImportCard" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Antworten</h5>               
-                    <p class="card-text"><?php echo $answer;?></p>
-                    <button class="btn btn-primary"><?php echo $adjustButton;?></button>
-                </div>
-            </div>
-
-            <div class="card mb-3 innerImportCard" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Tags</h5>
-                    <p class="card-text">
-                        <?php if(empty($tags)){?>   
-                            <span id="selectedTagsZone">-</span>
-                        <?php }?>     
-                        <?php  foreach ($tags as $value) {?>       
-                            <span class="badge rounded-pill text-bg-secondary" id="selectedTagsZone"><?php echo $value." ";?></span>
-                        <?php }?>
-                    </p>
-                    <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_GET['questionId']; ?>')">Anpassen</button>
-                </div>
-            </div>
-
-            <?php if(isset($selectedQuestion->options)){?>
+            <div class="row row-cols-1 row-cols-md-5 g-1">
                 <div class="card mb-3 innerImportCard" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Optionen</h5>
+                        <h5 class="card-title">Question</h5>               
+                        <p class="card-text"><?php echo $question;?></p>
+                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                    </div>
+                </div>
+                
+                <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Sprache</h5>               
+                        <p class="card-text"><?php echo $_GET["language"];?></p>
+                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                    </div>
+                </div>
+
+                <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Antwort</h5>               
+                        <p class="card-text"><?php echo $answer;?></p>
+                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                    </div>
+                </div>
+
+                <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Tags</h5>
                         <p class="card-text">
-                            <?php  foreach($options[$_GET["language"]] as $value) {?>                  
-                                <span class="badge rounded-pill text-bg-secondary"><?php echo $value;?></span>
+                            <?php if(empty($tags)){?>   
+                                <span id="selectedTagsZone">-</span>
+                            <?php }?>     
+                            <?php  foreach ($tags as $value) {?>       
+                                <span class="badge rounded-pill text-bg-secondary" id="selectedTagsZone"><?php echo $value." ";?></span>
                             <?php }?>
                         </p>
-                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                        <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
-            <?php }?>
 
-
-
-            <?php if(isset($isAdmin) && $isAdmin == true){?>
-                <div class="card mb-3 innerImportCard" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Verification</h5>         
-                        <p class="card-text"><?php echo $verification;?></p>
-                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                <?php if(isset($selectedQuestion->options)){?>
+                    <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Optionen</h5>
+                            <p class="card-text">
+                                <?php  foreach($options[$_GET["language"]] as $value) {?>                  
+                                    <span class="badge rounded-pill text-bg-secondary"><?php echo $value;?></span>
+                                <?php }?>
+                            </p>
+                            <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                        </div>
                     </div>
-                </div>
-            <?php }?>
+                <?php }?>
+
+
+
+                <?php if(isset($isAdmin) && $isAdmin == true){?>
+                    <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Verification</h5>         
+                            <p class="card-text"><?php echo $verification;?></p>
+                            <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                        </div>
+                    </div>
+                <?php }?>
+
             </div>
         </div>
     </div>
