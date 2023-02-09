@@ -29,3 +29,7 @@
     padding: 1%;
     display: block !important;
 }
+
+#editQuestionHeader{
+    text-align: center;
+}

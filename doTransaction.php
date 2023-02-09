@@ -13,13 +13,19 @@ include_once "questionService.php";
 $question = new QuestionService();
 $mongo = new MongoDBService();
 
+//hardcoding "de" as targetLanguage, because its not needed for this case..but it must be set
+$getQuestionsTranslator = new TranslationService("de");
+
 if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 
     //maybe later fetch it from somewhere?
-    $allSupportedLanguages = ["de","en-Us","es"];
+    #$allSupportedLanguages = ["de","en-Us","es"];
+    
+    $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
 
     //catching falsly given values from the user 
     if(!in_array($_POST["selLanguage"],$allSupportedLanguages)){
+        echo "Illegal target language!";
         exit();
     }
 
@@ -213,7 +219,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
         }
 
         //maybe later fetch it from somewhere?
-        $allSupportedLanguages = ["de","en-Us","es"];
+        #$allSupportedLanguages = ["de","en-Us","es"];
+
+        $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
+
         if(!in_array($_POST["questionLang"],$allSupportedLanguages)){
             exit();
         }
@@ -418,6 +427,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
     echo json_encode($ajaxResponse);
 }
 
+
+
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
     $userEntry = $_POST["value"];
 
@@ -520,6 +531,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     echo json_encode($ajaxResponse);
 }
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
     include_once "cartService.php";
     session_start();
@@ -554,6 +566,39 @@ if(isset($_POST["method"]) && $_POST["method"] == "removeCartItem"){
         "cartLength" => $cartLength
     ];
     echo json_encode($ajaxResponse);
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
+
+    $selectedTags = $_POST["selectedTags"];
+    $questionId = $_POST["id"];
+
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
+        echo "illegal chars";
+        exit();
+    }
+
+    //added catch if the question has no tags / if all tags get removed
+    if(empty($selectedTags)){
+        $selectedTags = [];
+    }
+    
+    //check if one of the give tags contains illegal chars (catch exploits)
+    foreach($selectedTags as $tag){
+        if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($tag))){
+            echo "illegal chars";
+            exit();
+        }
+    }
+    
+
+    //reindexing the array so its always starting from 0. Thats importent for further usage of the filters
+    $searchQuestionFilter = (['id'=>$questionId]);
+    $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
+    $questionTags = (array)$searchQuestion->tags;
+
+    $update = ['$set' =>  ['tags'=> $selectedTags]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
 }
 
 ?>

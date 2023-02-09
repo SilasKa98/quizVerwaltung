@@ -1,3 +1,16 @@
+
+<?php
+
+$newLanguageModal = $_SERVER['DOCUMENT_ROOT'];
+include_once ($newLanguageModal."/quizVerwaltung/translationService.php");
+
+
+//hardcoding "de" as targetLanguage, because its not needed for this case..but it must be set
+$translator = new TranslationService("de");
+$allLanguages = $translator->getAllTargetLanguages();
+
+?>
+
 <div class="modal fade" id="changeLangModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -9,9 +22,9 @@
         <?php echo $InsertNewLanguageTitel; ?><br>
             <select class="selLanguageDropDown" id="insertNewLanguageDrpDwn" name="language">
                 <option></option>
-                <option>de</option>
-                <option>en-Us</option>
-                <option>es</option>
+                <?php foreach($allLanguages as $language){?>
+                    <option value="<?php echo strtolower($language->code); ?>"><?php echo $language->name;?></option>
+                <?php } ?>
             </select>
         </div>
         <div class="modal-footer">

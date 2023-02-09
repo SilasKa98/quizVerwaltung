@@ -60,7 +60,16 @@ class Printer{
                             ';
                             //check for admin here later and grant full edit access
                             if($questionObject[$i]->author == $_SESSION["userData"]["username"]){
-                                print'<li class="outerMenuItemsListElem"><a class="dropdown-item" href="#"><img src="/quizVerwaltung/media/pen-to-square.svg" width="17px"></a></li>';
+                                print'
+                                <li class="outerMenuItemsListElem" onclick="editQuestion(this)">
+                                    <form action="/quizVerwaltung/frontend/editQuestion.php" method="GET">
+                                        <input type="hidden" name="questionId" value="'.$questionObject[$i]->id.'">
+                                    </form>
+                                    <a class="dropdown-item">
+                                        <img src="/quizVerwaltung/media/pen-to-square.svg" width="17px">
+                                    </a>
+                                </li>
+                                ';
                             }
                             
                    print'</ul>
