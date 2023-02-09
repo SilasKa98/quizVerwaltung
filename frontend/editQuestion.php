@@ -141,7 +141,7 @@ if(isset($isAdmin) && $isAdmin == true){
                             <span id="selectedTagsZone">-</span>
                         <?php }?>     
                         <?php  foreach ($tags as $value) {?>       
-                            <span id="selectedTagsZone"><?php echo $value." ";?></span>
+                            <span class="badge rounded-pill text-bg-secondary" id="selectedTagsZone"><?php echo $value." ";?></span>
                         <?php }?>
                     </p>
                     <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_GET['questionId']; ?>')">Anpassen</button>
