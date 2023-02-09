@@ -1,5 +1,5 @@
 
-
+    var toastMsgBody = document.getElementById("toastMsgBody");
 
     //check if the user presses "save" in the insert new Language modal
     function submitNewLanguageInsert(){
@@ -257,11 +257,10 @@
                 id: id
             },
             success: function(response){
-                console.log(response);
                 let jsonResponse = JSON.parse(response);
-
-                if(jsonResponse.removeResult != "successfullRemove"){
-                    return;
+                if(jsonResponse.removeResult == "successfullRemove"){
+                    toastMsgBody.innerHTML = "Item removed successfully!";
+                    $(".toast").toast('show');
                 }
 
                 let question = document.getElementById(jsonResponse.id);

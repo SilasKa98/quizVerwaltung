@@ -1,4 +1,6 @@
 
+var toastMsgBody = document.getElementById("toastMsgBody");
+
 $('.add-to-cart').on('click', function () {
         var cart = $('.shopping-cart');
         //var imgtodrag = $(this).parent('.item').find("img").eq(0);

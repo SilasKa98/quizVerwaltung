@@ -30,6 +30,7 @@
 <body>
 
     <?php include_once "navbar.php";?>
+    <?php include_once "notificationToast.php";?>
 
     <div class="container-fluid">
         <div class="container">
@@ -43,5 +44,6 @@
         </div>
     </div>
 
+    <script src="/quizVerwaltung/scripts/questionScripts.js"></script>
 </body>
 </html>

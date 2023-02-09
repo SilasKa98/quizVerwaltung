@@ -1,3 +1,5 @@
+var toastMsgBody = document.getElementById("toastMsgBody");
+
 async function changeQuestionTags(id){
     console.log(id);
 

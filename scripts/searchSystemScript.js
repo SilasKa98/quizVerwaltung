@@ -1,5 +1,5 @@
 $(document).ready(function(e) {
-
+  var toastMsgBody = document.getElementById("toastMsgBody");
 
   var timeout;
   var delay = 800;   // 800ms
