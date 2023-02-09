@@ -13,13 +13,19 @@ include_once "questionService.php";
 $question = new QuestionService();
 $mongo = new MongoDBService();
 
+//hardcoding "de" as targetLanguage, because its not needed for this case..but it must be set
+$getQuestionsTranslator = new TranslationService("de");
+
 if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 
     //maybe later fetch it from somewhere?
-    $allSupportedLanguages = ["de","en-Us","es"];
+    #$allSupportedLanguages = ["de","en-Us","es"];
+    
+    $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
 
     //catching falsly given values from the user 
     if(!in_array($_POST["selLanguage"],$allSupportedLanguages)){
+        echo "Illegal target language!";
         exit();
     }
 
@@ -213,7 +219,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
         }
 
         //maybe later fetch it from somewhere?
-        $allSupportedLanguages = ["de","en-Us","es"];
+        #$allSupportedLanguages = ["de","en-Us","es"];
+
+        $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
+
         if(!in_array($_POST["questionLang"],$allSupportedLanguages)){
             exit();
         }

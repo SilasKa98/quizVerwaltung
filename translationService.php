@@ -29,6 +29,23 @@ class TranslationService{
         return $result->detectedSourceLang;
     }
 
+    function getAllTargetLanguageCodes(){
+        $translator = new \DeepL\Translator($this->authKey);
+        $targetLanguages = $translator->getTargetLanguages();
+
+        $allLangCodes = [];
+        foreach($targetLanguages as $language){
+            array_push($allLangCodes,strtolower($language->code));
+        }
+        return $allLangCodes;
+    }
+
+    function getAllTargetLanguages(){
+        $translator = new \DeepL\Translator($this->authKey);
+        $targetLanguages = $translator->getTargetLanguages();
+        return $targetLanguages;
+    }
+
     function translateObject($inputObject,$sourceLanguage){
         for($i=0;$i<count($inputObject);$i++){
             $questionValues = get_object_vars($inputObject[$i]);

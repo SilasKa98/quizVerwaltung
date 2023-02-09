@@ -70,7 +70,7 @@
                 //currently just reloading the site to display new things, maybe can also be added with js
                 setTimeout(function() {
                     location.reload();
-                }, 3000);
+                }, 2000);
             }
         });
 
@@ -129,6 +129,7 @@
                 method: method
             },
             success: function(response) {
+                console.log(response);
                 //in the backend a json is created with all needed return values. Here the json needs to be parsed to use it for displaying changes
                 let jsonResponse = JSON.parse(response);
 
