@@ -152,9 +152,11 @@ if(isset($isAdmin) && $isAdmin == true){
                 <div class="card mb-3 innerImportCard" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Optionen</h5>
-                        <?php  foreach($options[$_GET["language"]] as $value) {?>                  
-                            <p class="card-text"><?php echo $value;?></p>
-                        <?php }?>
+                        <p class="card-text">
+                            <?php  foreach($options[$_GET["language"]] as $value) {?>                  
+                                <span class="badge rounded-pill text-bg-secondary"><?php echo $value;?></span>
+                            <?php }?>
+                        </p>
                         <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
