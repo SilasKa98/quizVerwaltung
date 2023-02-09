@@ -44,9 +44,6 @@ $question = $selectedQuestion->question[$_GET["language"]];
 $answer = $selectedQuestion->answer;
 $tags = $selectedQuestion->tags;
 
-if(empty($tags)){
-    $tags = [];
-}
 
 if(isset($selectedQuestion->options)){
     $options = $selectedQuestion->options;
@@ -137,7 +134,7 @@ if(isset($isAdmin) && $isAdmin == true){
                     <div class="card-body">
                         <h5 class="card-title">Tags</h5>
                         <p class="card-text">
-                            <?php if(empty($tags)){?>   
+                            <?php if(count($tags) == 0){?>   
                                 <span id="selectedTagsZone">-</span>
                             <?php }?>     
                             <?php  foreach ($tags as $value) {?>       
