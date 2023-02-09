@@ -56,6 +56,8 @@ class CartService{
         $filterQuery = (['userId' => $this->userId]);
         $update = ['$pull' => ['questionCart' => $questionId]];
         $this->mongo->updateEntry("accounts", $filterQuery, $update);
+
+        return "successfullRemove";
     }
 
     function createCatalog(){
@@ -112,12 +114,22 @@ class CartService{
                     $lang = array_key_first((array)$question);
                 }
 
-                print   "  <div class='card' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
+                print   "  <div class='card' id=$questionId style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
                             <div class='card-body'>
-                                $question[$lang]
+                             <div class='row'>
+                                <div class='col question' name='$questionId'>    
+                                    $question[$lang]
+                                </div>
+                                <div class='col-1 d-flex flex-column cancel' style='justify-content: center;'>
+                                    <button type='button' class='btn-close' aria-label='Close' name='$questionId'
+                                        onclick='removeCartItem(this)'
+                                        style='width: .4rem; height: .4rem; float: right;'>
+                                    </button>
+                                </div>
+                             </div>
                             </div>
                         </div>
-                        ";
+                        ";               
             }
         }
     }
