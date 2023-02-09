@@ -36,8 +36,6 @@ function submitTagSelection(){
 
 
 function sendAjax(method, selectedTags, id){
-    console.log(method);
-    console.log(selectedTags);
     $.ajax({
         type: "POST",
         url: '/quizVerwaltung/doTransaction.php',

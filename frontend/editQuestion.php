@@ -22,16 +22,6 @@ $allTagsObj= $mongo->findSingle("tags",[],[]);
 $allTags = implode(",",(array)$allTagsObj->allTags);
 
 
-//get language of the edited question
-$questionLanguageRelation = (array)$userInfo["questionLangUserRelation"];
-$lang = array_search($_GET["questionId"],$questionLanguageRelation);
-//check if there is no language set for this question by the user
-if(!$lang){
-    //get the first key of the question so it can be used to set it as the default language
-    $lang = array_key_first((array)$questionObject[$i]->question);
-}
-   
-
 //get the selected question
 $questionFilterQuery = (['id' => $_GET["questionId"]]);
 $selectedQuestion= $mongo->findSingle("questions",$questionFilterQuery,[]);
@@ -41,6 +31,16 @@ if(!isset($selectedQuestion)){
     echo " <a href='../index.php'>Back to Home</a>";
     exit();
 }
+
+//get language of the edited question
+$questionLanguageRelation = (array)$userInfo["questionLangUserRelation"];
+$lang = array_search($_GET["questionId"],$questionLanguageRelation);
+//check if there is no language set for this question by the user
+if(!$lang){
+    //get the first key of the question so it can be used to set it as the default language
+    $lang = array_key_first((array)$selectedQuestion->question);
+}
+   
 
 $question = $selectedQuestion->question[$lang];
 $answer = $selectedQuestion->answer;
@@ -143,7 +143,7 @@ if(isset($isAdmin) && $isAdmin == true){
                                 <span class="badge rounded-pill text-bg-secondary" id="selectedTagsZone"><?php echo $value." ";?></span>
                             <?php }?>
                         </p>
-                        <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $lang; ?>')"><?php echo $adjustButton;?></button>
+                        <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
 
