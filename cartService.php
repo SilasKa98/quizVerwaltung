@@ -3,14 +3,16 @@ include_once "mongoService.php";
 
 class Catalog{
     public $author;
+    public $id;
     public $questions = [];
     public $creationDate;
     public $modificationDate;
     public $status;
 
 
-    function __construct($author, $questions, $creationDate, $modificationDate, $status){
+    function __construct($author, $id, $questions, $creationDate, $modificationDate, $status){
         $this->author = $author;
+        $this->id = $id;
         $this->questions = $questions;
         $this->creationDate = $creationDate;
         $this->modificationDate = $modificationDate;
@@ -68,13 +70,15 @@ class CartService{
             $update = ['$set' => ['questionCart' => []]];
             $this->mongo->updateEntry("accounts", $filterQuery, $update);
 
-            $catalog = new Catalog($result["username"], $cart, "TODO", "TODO", "public"); //TODO rest des Katalogs noch machen !!!
+            $dateNow = date("Y-m-d");
+            $id = uniqid();
+            $catalog = new Catalog($result["username"], $id, $cart, $dateNow, $dateNow, "public"); //TODO noch machen das ein popup fragt ob public oder private
 
             //create a new entry in catalogs with the userId
             $this->mongo->insertSingle("catalog", $catalog);
+            return "catalogCreated";
         }else{
-            //TODO Toast wenn empty !!!!!
-            echo "cart ist leer !!!!";
+            return "cartEmpty";
         }
     }
 

@@ -358,39 +358,6 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
         }
 }
 
-if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
-    include_once "cartService.php";
-    session_start();
-    $id = $_POST["questionId"];
-    $cart = new CartService();
-    $addResult = $cart->addItem($id);
-
-    $questionFilter = (['id'=>$id]);
-    $questionObject = $mongo->findSingle("questions",$questionFilter);
-
-    $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
-    $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
-    $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
-    $cartLength = count((array)$searchUser->questionCart);
-    $lang = array_search($id,$questionLanguageRelation);
-
-    if(!$lang){
-        //get the first key of the question so it can be used to set it as the default language
-        $lang = array_key_first((array)$questionObject->question);
-    }
-
-
-
-    $ajaxResponse = [
-        "addResult"=> $addResult,
-        "questionObject"=> $questionObject,
-        "lang"=> $lang,
-        "cartLength" => $cartLength
-    ];
-    echo json_encode($ajaxResponse);
-}
-
-
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
     $userEntry = $_POST["value"];
 
@@ -519,6 +486,56 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
     //after editing the array $set it to the mongodb
     $update = ['$set' =>  ['favoritTags'=> $userTags]];
     $mongo->updateEntry("accounts",$searchUserFilter,$update); 
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
+    include_once "cartService.php";
+    session_start();
+    $id = $_POST["questionId"];
+    $cart = new CartService();
+    $addResult = $cart->addItem($id);
+
+    $questionFilter = (['id'=>$id]);
+    $questionObject = $mongo->findSingle("questions",$questionFilter);
+
+    $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+    $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
+    $cartLength = count((array)$searchUser->questionCart);
+    $lang = array_search($id,$questionLanguageRelation);
+
+    if(!$lang){
+        //get the first key of the question so it can be used to set it as the default language
+        $lang = array_key_first((array)$questionObject->question);
+    }
+
+
+
+    $ajaxResponse = [
+        "addResult"=> $addResult,
+        "questionObject"=> $questionObject,
+        "lang"=> $lang,
+        "cartLength" => $cartLength
+    ];
+    echo json_encode($ajaxResponse);
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
+    include_once "cartService.php";
+    session_start();
+    $cartService = new CartService();
+    $createResult = $cartService->createCatalog();
+
+    $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+    //$questionLanguageRelation = (array)$searchUser["questionLangUserRelation"]; //TODO hier muss dann noch darauf geachtet werden das auch die richtige sprache in dem catalog dann vorhanden ist !!!
+    $cartLength = count((array)$searchUser->questionCart);
+
+    $ajaxResponse = [
+        "createResult" => $createResult,
+        "cartLength" => $cartLength
+    ];
+    echo json_encode($ajaxResponse);
 }
 
 ?>
