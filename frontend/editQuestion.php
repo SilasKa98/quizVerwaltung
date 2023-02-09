@@ -38,6 +38,10 @@ $question = $selectedQuestion->question[$_POST["language"]];
 $answer = $selectedQuestion->answer;
 $tags = $selectedQuestion->tags;
 
+if(empty($tags)){
+    $tags = [];
+}
+
 if(isset($selectedQuestion->options)){
     $options = $selectedQuestion->options;
 }
@@ -124,8 +128,11 @@ if(isset($isAdmin) && $isAdmin == true){
                 <div class="card-body">
                     <h5 class="card-title">Tags</h5>
                     <p class="card-text">
-                        <?php  foreach ($tags as $value) {?>               
-                            <span id="selectedTagsZone"><?php echo $value.", ";?></span>
+                        <?php if(empty($tags)){?>   
+                            <span id="selectedTagsZone">-</span>
+                        <?php }?>     
+                        <?php  foreach ($tags as $value) {?>       
+                            <span id="selectedTagsZone"><?php echo $value." ";?></span>
                         <?php }?>
                     </p>
                     <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_POST['questionId']; ?>')">Anpassen</button>
