@@ -191,5 +191,37 @@
         });
     }
 
+    function createCatalog(e){
+        let method = "createCatalog";
+
+    $.ajax({
+
+        type: 'post',
+        url: '/quizVerwaltung/doTransaction.php',
+        data: {
+            method: method
+        },
+        success: function(response){
+            let jsonResponse = JSON.parse(response)
+
+            if (jsonResponse.createResult === "cartEmpty"){
+                toastMsgBody.innerHTML = "Can't create catalog of Empty Cart. Please add some questions to be able to create a catalog.";
+                $(".toast").toast('show');
+                return;
+            }
+
+            let canvasBody = document.getElementById("canvas-body");
+            let cartCount = document.getElementById("cartCount");
+
+            cartCount.innerHTML = jsonResponse.cartLength;
+            canvasBody.innerHTML = "";
+
+            toastMsgBody.innerHTML = "Catalog created. See profile to look at your catalogs";
+            $(".toast").toast('show');
+        }
+
+    });
+    }
+
 
 

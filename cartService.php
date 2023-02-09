@@ -68,13 +68,15 @@ class CartService{
             $update = ['$set' => ['questionCart' => []]];
             $this->mongo->updateEntry("accounts", $filterQuery, $update);
 
-            $catalog = new Catalog($result["username"], $cart, "TODO", "TODO", "public"); //TODO rest des Katalogs noch machen !!!
+            $dateNow = date("Y-m-d");
+            $catalog = new Catalog($result["username"], $cart, $dateNow, $dateNow, "public"); //TODO noch machen das ein popup fragt ob public oder private
 
             //create a new entry in catalogs with the userId
             $this->mongo->insertSingle("catalog", $catalog);
+            return "catalogCreated";
         }else{
-            //TODO Toast wenn empty !!!!!
             echo "cart ist leer !!!!";
+            return "cartEmpty";
         }
     }
 
