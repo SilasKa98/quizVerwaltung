@@ -232,5 +232,33 @@
     });
     }
 
+    function removeCartItem(e){
+        let method = "removeCartItem";
+        let id = e.getAttribute("name");
+
+        $.ajax({
+            type: 'post',
+            url: '/quizVerwaltung/doTransaction.php',
+            data: {
+                method: method,
+                id: id
+            },
+            success: function(response){
+                console.log(response);
+                let jsonResponse = JSON.parse(response);
+
+                if(jsonResponse.removeResult != "successfullRemove"){
+                    return;
+                }
+
+                let question = document.getElementById(jsonResponse.id);
+                let cartCount = document.getElementById("cartCount");
+
+                cartCount.innerHTML = jsonResponse.cartLength;
+                question.remove();
+            }
+        })
+    }
+
 
 
