@@ -178,11 +178,22 @@
                     cartInfoText.remove();
                 }
 
-                canvasBody.innerHTML += "<div class='card' style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
+                canvasBody.innerHTML += "<div class='card' id=" + jsonResponse.questionObject.id + " style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
                                             "<div class='card-body'>" + 
-                                                jsonResponse.questionObject.question[jsonResponse.lang] + 
+                                                "<div class='row'>" + 
+                                                    "<div class='col question' name=" + jsonResponse.questionObject.id + ">" +
+                                                        jsonResponse.questionObject.question[jsonResponse.lang] + 
+                                                    "</div>" + 
+                                                "<div class='col-1 d-flex flex-column cancel' style='justify-content: center;'>" + 
+                                                    "<button type='button' class='btn-close' aria-label='Close' name=" + jsonResponse.questionObject.id + " " + 
+                                                        "onclick='removeCartItem(this)'" + 
+                                                        "style='width: .4rem; height: .4rem; float: right;'>" +
+                                                    "</button>" + 
+                                                "</div>" + 
+                                            "</div>" + 
                                             "</div>" +
                                         "</div>";
+
                 cartCount.innerHTML = jsonResponse.cartLength;
 
                 toastMsgBody.innerHTML = "Question added to cart";
