@@ -528,11 +528,29 @@ if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
 
     $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
     $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
-    //$questionLanguageRelation = (array)$searchUser["questionLangUserRelation"]; //TODO hier muss dann noch darauf geachtet werden das auch die richtige sprache in dem catalog dann vorhanden ist !!!
     $cartLength = count((array)$searchUser->questionCart);
 
     $ajaxResponse = [
         "createResult" => $createResult,
+        "cartLength" => $cartLength
+    ];
+    echo json_encode($ajaxResponse);
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "removeCartItem"){
+    include_once "cartService.php";
+    session_start();
+    $cartService = new CartService();
+    $id = $_POST["id"];
+    $removeResult = $cartService->removeItem($id);
+
+    $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
+    $cartLength = count((array)$searchUser->questionCart);
+
+    $ajaxResponse = [
+        "id" => $id,
+        "removeResult" => $removeResult,
         "cartLength" => $cartLength
     ];
     echo json_encode($ajaxResponse);
