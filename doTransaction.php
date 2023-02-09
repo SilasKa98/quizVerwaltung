@@ -520,6 +520,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     echo json_encode($ajaxResponse);
 }
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
     include_once "cartService.php";
     session_start();
@@ -536,6 +537,35 @@ if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
         "cartLength" => $cartLength
     ];
     echo json_encode($ajaxResponse);
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
+
+    $selectedTags = $_POST["selectedTags"];
+    $questionId = $_POST["id"];
+
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
+        echo "illegal chars";
+        exit();
+    }
+
+    //check if one of the give tags contains illegal chars (catch exploits)
+    foreach($selectedTags as $tag){
+        if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($tag))){
+            echo "illegal chars";
+            exit();
+        }
+    }
+    
+    
+    //reindexing the array so its always starting from 0. Thats importent for further usage of the filters
+
+    $searchQuestionFilter = (['id'=>$questionId]);
+    $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
+    $questionTags = (array)$searchQuestion->tags;
+
+    $update = ['$set' =>  ['tags'=> $selectedTags]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
 }
 
 ?>

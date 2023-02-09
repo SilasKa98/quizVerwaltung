@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(!$_SESSION["logged_in"]){
-        header("Location: frontend/loginAccount.php");
+        header("Location: loginAccount.php");
         exit();
     }
     extract($_SESSION["userData"]);
