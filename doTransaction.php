@@ -418,6 +418,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
     echo json_encode($ajaxResponse);
 }
 
+
+
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
     $userEntry = $_POST["value"];
 
@@ -549,6 +551,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
         exit();
     }
 
+    //added catch if the question has no tags / if all tags get removed
+    if(empty($selectedTags)){
+        $selectedTags = [];
+    }
+    
     //check if one of the give tags contains illegal chars (catch exploits)
     foreach($selectedTags as $tag){
         if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($tag))){
@@ -557,9 +564,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
         }
     }
     
-    
-    //reindexing the array so its always starting from 0. Thats importent for further usage of the filters
 
+    //reindexing the array so its always starting from 0. Thats importent for further usage of the filters
     $searchQuestionFilter = (['id'=>$questionId]);
     $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
     $questionTags = (array)$searchQuestion->tags;
