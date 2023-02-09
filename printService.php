@@ -62,7 +62,7 @@ class Printer{
                             if($questionObject[$i]->author == $_SESSION["userData"]["username"]){
                                 print'
                                 <li class="outerMenuItemsListElem" onclick="editQuestion(this)">
-                                    <form action="/quizVerwaltung/frontend/editQuestion.php" method="POST">
+                                    <form action="/quizVerwaltung/frontend/editQuestion.php" method="GET">
                                         <input type="hidden" name="questionId" value="'.$questionObject[$i]->id.'">
                                         <input type="hidden" name="language" value="'.$lang.'">
                                     </form>

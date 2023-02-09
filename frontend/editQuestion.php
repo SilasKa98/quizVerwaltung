@@ -31,10 +31,16 @@ btn-check
 */
 
 //get the selected question
-$questionFilterQuery = (['id' => $_POST["questionId"]]);
+$questionFilterQuery = (['id' => $_GET["questionId"]]);
 $selectedQuestion= $mongo->findSingle("questions",$questionFilterQuery,[]);
 
-$question = $selectedQuestion->question[$_POST["language"]];
+if(!isset($selectedQuestion)){
+    echo "Illegal Parameters";
+    echo " <a href='../index.php'>Back to Home</a>";
+    exit();
+}
+
+$question = $selectedQuestion->question[$_GET["language"]];
 $answer = $selectedQuestion->answer;
 $tags = $selectedQuestion->tags;
 
@@ -59,6 +65,7 @@ if(isset($isAdmin) && $isAdmin == true){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/quizVerwaltung/stylesheets/importQuestionCheck.css">
+    <link rel="stylesheet" href="/quizVerwaltung/stylesheets/general.css">
     <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -66,6 +73,8 @@ if(isset($isAdmin) && $isAdmin == true){
     <title>Document</title>
 </head>
 <body>
+
+    <?php include_once "navbar.php";?>
 
     <div class="modal fade" id="changeActionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -92,7 +101,7 @@ if(isset($isAdmin) && $isAdmin == true){
 
 
 
-    <h1>Frage bearbeiten</h1>
+    <h1 id="editQuestionHeader">Frage bearbeiten</h1>
     <div class="card text-center allCardsWrapper">
         <div class="card-header">
             <h3 class="card-title"></h3>
@@ -104,15 +113,15 @@ if(isset($isAdmin) && $isAdmin == true){
                 <div class="card-body">
                     <h5 class="card-title">Question</h5>               
                     <p class="card-text"><?php echo $question;?></p>
-                    <button class="btn btn-primary">Anpassen</button>
+                    <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                 </div>
             </div>
             
             <div class="card mb-3 innerImportCard" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Sprache</h5>               
-                    <p class="card-text"><?php echo $_POST["language"];?></p>
-                    <button class="btn btn-primary">Anpassen</button>
+                    <p class="card-text"><?php echo $_GET["language"];?></p>
+                    <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                 </div>
             </div>
 
@@ -120,7 +129,7 @@ if(isset($isAdmin) && $isAdmin == true){
                 <div class="card-body">
                     <h5 class="card-title">Antworten</h5>               
                     <p class="card-text"><?php echo $answer;?></p>
-                    <button class="btn btn-primary">Anpassen</button>
+                    <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                 </div>
             </div>
 
@@ -135,7 +144,7 @@ if(isset($isAdmin) && $isAdmin == true){
                             <span id="selectedTagsZone"><?php echo $value." ";?></span>
                         <?php }?>
                     </p>
-                    <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_POST['questionId']; ?>')">Anpassen</button>
+                    <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_GET['questionId']; ?>')">Anpassen</button>
                 </div>
             </div>
 
@@ -143,10 +152,10 @@ if(isset($isAdmin) && $isAdmin == true){
                 <div class="card mb-3 innerImportCard" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Optionen</h5>
-                        <?php  foreach($options[$_POST["language"]] as $value) {?>                  
+                        <?php  foreach($options[$_GET["language"]] as $value) {?>                  
                             <p class="card-text"><?php echo $value;?></p>
                         <?php }?>
-                        <button class="btn btn-primary">Anpassen</button>
+                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
             <?php }?>
@@ -158,7 +167,7 @@ if(isset($isAdmin) && $isAdmin == true){
                     <div class="card-body">
                         <h5 class="card-title">Verification</h5>         
                         <p class="card-text"><?php echo $verification;?></p>
-                        <button class="btn btn-primary">Anpassen</button>
+                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
             <?php }?>
@@ -166,5 +175,6 @@ if(isset($isAdmin) && $isAdmin == true){
         </div>
     </div>
 
+    <script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
 </body>
 </html>
