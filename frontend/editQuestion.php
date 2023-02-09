@@ -12,8 +12,8 @@ $mongo = new MongoDBService();
 
 //get the selected userLanguage to display the system in the right language
 $filterQuery = (['userId' => $userId]);
-$selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
-$selectedLanguage = $selectedLanguage->userLanguage;
+$userInfo= $mongo->findSingle("accounts",$filterQuery,[]);
+$selectedLanguage = $userInfo->userLanguage;
 include "../systemLanguages/text_".$selectedLanguage.".php";
 
 
@@ -22,13 +22,15 @@ $allTagsObj= $mongo->findSingle("tags",[],[]);
 $allTags = implode(",",(array)$allTagsObj->allTags);
 
 
-//highlite all tags (check checkboxes) that are already in the db
-
-/*foreach((array)$allTagsObj->allTags as $tag){
-
+//get language of the edited question
+$questionLanguageRelation = (array)$userInfo["questionLangUserRelation"];
+$lang = array_search($_GET["questionId"],$questionLanguageRelation);
+//check if there is no language set for this question by the user
+if(!$lang){
+    //get the first key of the question so it can be used to set it as the default language
+    $lang = array_key_first((array)$questionObject[$i]->question);
 }
-btn-check
-*/
+   
 
 //get the selected question
 $questionFilterQuery = (['id' => $_GET["questionId"]]);
@@ -40,7 +42,7 @@ if(!isset($selectedQuestion)){
     exit();
 }
 
-$question = $selectedQuestion->question[$_GET["language"]];
+$question = $selectedQuestion->question[$lang];
 $answer = $selectedQuestion->answer;
 $tags = $selectedQuestion->tags;
 
@@ -117,7 +119,7 @@ if(isset($isAdmin) && $isAdmin == true){
                 <div class="card mb-3 innerImportCard" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Sprache</h5>               
-                        <p class="card-text"><?php echo $_GET["language"];?></p>
+                        <p class="card-text"><?php echo $lang;?></p>
                         <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
@@ -141,7 +143,7 @@ if(isset($isAdmin) && $isAdmin == true){
                                 <span class="badge rounded-pill text-bg-secondary" id="selectedTagsZone"><?php echo $value." ";?></span>
                             <?php }?>
                         </p>
-                        <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
+                        <button class="btn btn-primary" onclick="changeQuestionTags('<?php echo $lang; ?>')"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
 
@@ -150,7 +152,7 @@ if(isset($isAdmin) && $isAdmin == true){
                         <div class="card-body">
                             <h5 class="card-title">Optionen</h5>
                             <p class="card-text">
-                                <?php  foreach($options[$_GET["language"]] as $value) {?>                  
+                                <?php  foreach($options[$lang] as $value) {?>                  
                                     <span class="badge rounded-pill text-bg-secondary"><?php echo $value;?></span>
                                 <?php }?>
                             </p>

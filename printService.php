@@ -64,7 +64,6 @@ class Printer{
                                 <li class="outerMenuItemsListElem" onclick="editQuestion(this)">
                                     <form action="/quizVerwaltung/frontend/editQuestion.php" method="GET">
                                         <input type="hidden" name="questionId" value="'.$questionObject[$i]->id.'">
-                                        <input type="hidden" name="language" value="'.$lang.'">
                                     </form>
                                     <a class="dropdown-item">
                                         <img src="/quizVerwaltung/media/pen-to-square.svg" width="17px">
