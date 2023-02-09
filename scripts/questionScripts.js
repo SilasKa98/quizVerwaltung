@@ -192,4 +192,10 @@
     }
 
 
+    function editQuestion(e){
+        //submitting the form to redirect with the id given in the form
+        e.children[0].submit();
+    }
+
+
 
