@@ -3,8 +3,8 @@ var toastMsgBody = document.getElementById("toastMsgBody");
 async function changeQuestionTags(id){
     console.log(id);
 
-    $('#changeActionModal').modal('toggle');
-    await submitTagSelection();
+    $('#changeTagsModal').modal('toggle');
+    await submitTagSelection("submitTagSelectionBtn");
 
     //select the choosen tags when the save button is pressed and procceed with the steps to save them
     var selectedTags = [];
@@ -21,9 +21,29 @@ async function changeQuestionTags(id){
 }
 
 
-function submitTagSelection(){
+
+async function changeQuestion(id){
+    console.log(id);
+
+    $('#changeQuestionModal').modal('toggle');
+    await submitTagSelection("submitQuestionChangeBtn");
+
+    //select the choosen tags when the save button is pressed and procceed with the steps to save them
+    let questionText = document.getElementById("changeQuestionTextarea").value;
+    let questionLanguage = document.getElementById("changeQuestionLanguage").value;
+
+    let payload = {
+        "questionText":questionText,
+        "questionLanguage":questionLanguage
+    };
+    console.log(payload);
+    sendAjax("editQuestionText", payload, id);
+}
+
+
+function submitTagSelection(saveBtn){
     subCheck =  new Promise(function (resolve, reject) {
-        var submitTagSel = document.getElementById("submitTagSelectionBtn");
+        var submitTagSel = document.getElementById(saveBtn);
         submitTagSel.addEventListener('click', (event) => {
             if(event){
                 resolve(event);
@@ -37,23 +57,30 @@ function submitTagSelection(){
 }
 
 
-function sendAjax(method, selectedTags, id){
+
+
+function sendAjax(method, payload, id){
     $.ajax({
         type: "POST",
         url: '/quizVerwaltung/doTransaction.php',
         data: {
-            selectedTags: selectedTags,
+            payload: payload,
             method: method,
             id: id
         },
         success: function(response) {
-            if(response == "Illegal chars detected!" || response == "Illegal id given!" || response == "You are not allowed to edit this question!"){
+            if(response == "Illegal chars detected!" || response == "Illegal id given!" || response == "Illegal target language!" || response == "You are not allowed to edit this question!"){
                 toastMsgBody.innerHTML = response;
                 $(".toast").toast('show');
                 return;
             }
+
+            toastMsgBody.innerHTML = response;
+            $(".toast").toast('show');
             console.log(response);
-            location.reload();
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
         }
     });
 }

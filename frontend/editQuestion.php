@@ -76,7 +76,9 @@ if(isset($isAdmin) && $isAdmin == true){
     <?php include_once "navbar.php";?>
     <?php include_once "notificationToast.php";?>
 
-    <div class="modal fade" id="changeActionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- modal for tag changes-->
+    <div class="modal fade" id="changeTagsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header">
@@ -99,6 +101,28 @@ if(isset($isAdmin) && $isAdmin == true){
         </div>
     </div>
 
+    <!-- modal for Question change-->
+    <div class="modal fade" id="changeQuestionModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel2"><?php echo $selectYourTagsHeader; ?></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"  id="question_holder" >
+                <p id="ChangeModal-body">
+                    <textarea id="changeQuestionTextarea" id="changeQuestionText" name="questionText"><?php echo $question; ?></textarea>
+                    <input type="hidden"  id="changeQuestionLanguage" name="questionLanguage" value="<?php echo $lang;?>">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="submitQuestionChangeBtn"  data-bs-dismiss="modal" class="btn btn-primary">Save</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <h1 id="editQuestionHeader">Frage bearbeiten</h1>
@@ -112,7 +136,7 @@ if(isset($isAdmin) && $isAdmin == true){
                     <div class="card-body">
                         <h5 class="card-title">Question</h5>               
                         <p class="card-text"><?php echo $question;?></p>
-                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                        <button class="btn btn-primary" onclick="changeQuestion('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
                 

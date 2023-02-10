@@ -577,7 +577,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "removeCartItem"){
 
 if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
 
-    $selectedTags = $_POST["selectedTags"];
+    $selectedTags = $_POST["payload"];
     $questionId = $_POST["id"];
 
     if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
@@ -610,6 +610,64 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
 
     $update = ['$set' =>  ['tags'=> $selectedTags]];
     $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
+
+    echo "Edit successfull!";
 }
+
+if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
+    $questionId = $_POST["id"];
+    $questionText = $_POST["payload"]["questionText"];
+    $questionLanguage = $_POST["payload"]["questionLanguage"];
+
+
+    /**
+     * Catching all possible exploit values to protect the database
+     */
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
+        echo "Illegal id given!";
+        exit();
+    }
+
+    /*
+    //maybe the regex needs to be adjusted here to allow more --> its too limiting with that 
+    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($questionText))){
+        echo "Illegal chars in Question given!";
+        exit();
+    }
+    */
+
+    $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
+    //catching falsly given languages from the user 
+    if(!in_array($questionLanguage,$allSupportedLanguages)){
+        echo "Illegal target language!";
+        exit();
+    }
+
+    //get all currentLanguage versions of the question to create new translation with the new text for each language
+    $searchQuestionFilter = (['id'=>$questionId]);
+    $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
+    $question_keys = array_keys((array)$searchQuestion->question);
+    $questionAuthor = $searchQuestion->author;
+
+    session_start();
+    if($questionAuthor != $_SESSION["userData"]["username"]){
+        echo "You are not allowed to edit this question!";
+        exit();
+    } 
+
+    $newQuestionArray = [];
+    foreach($question_keys as $questionLangVersion){
+        $translation = new TranslationService($questionLangVersion);
+        $newQuestion = $translation->translateText($questionText);
+        $newQuestionArray[$questionLangVersion] = $newQuestion;
+    }
+
+
+    $update = ['$set' =>  ['question'=> $newQuestionArray]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
+    
+    echo "Edit successfull!";
+}
+
 
 ?>
