@@ -16,6 +16,7 @@ $mongo = new MongoDBService();
 //hardcoding "de" as targetLanguage, because its not needed for this case..but it must be set
 $getQuestionsTranslator = new TranslationService("de");
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 
     //maybe later fetch it from somewhere?
@@ -185,17 +186,20 @@ if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
     $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["languageInput"],$_POST["firstname"],$_POST["lastname"]);
 }
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "loginAccount"){
     include_once "accountService.php";
     $account = new AccountService();
     $account->login($_POST["mailuid"],$_POST["pwd"]);
 }
 
+
 if(isset($_POST["logout"])){
     include_once "accountService.php";
     $account = new AccountService();
     $account->logout();
 }
+
 
 if(isset($_POST["language"])){
     include_once "accountService.php";
@@ -303,6 +307,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
     }
 }
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
     session_start();
     $userThatHasBeenFollowed = $_POST["followedUserId"];
@@ -373,6 +378,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
             echo "notFollowing";
         }
 }
+
 
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
     $userEntry = $_POST["value"];
@@ -475,6 +481,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
    echo json_encode($ajaxResponse);
 }
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
 
     //check if the given tag isnt containing any illegal chars (catch exploits)
@@ -505,6 +512,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
     $update = ['$set' =>  ['favoritTags'=> $userTags]];
     $mongo->updateEntry("accounts",$searchUserFilter,$update); 
 }
+
 
 if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     include_once "cartService.php";
@@ -556,6 +564,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
     echo json_encode($ajaxResponse);
 }
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "removeCartItem"){
     include_once "cartService.php";
     session_start();
@@ -574,6 +583,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "removeCartItem"){
     ];
     echo json_encode($ajaxResponse);
 }
+
 
 if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
 
@@ -613,6 +623,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
 
     echo "Edit successfull!";
 }
+
 
 if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
     $questionId = $_POST["id"];
@@ -682,6 +693,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
 
     echo "Edit successfull!";
 }
+
 
 if(isset($_POST["method"]) && $_POST["method"] == "deleteQuestion"){
 
