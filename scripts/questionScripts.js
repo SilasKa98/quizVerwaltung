@@ -312,7 +312,6 @@
                 method: method
             },
             success: function(response) {
-              console.log(response);
               let jsonResponse = JSON.parse(response);
               let followedQuestionsArray = jsonResponse.followedQuestionsArray;
               let followedUsersArray = jsonResponse.followedUsersArray;
