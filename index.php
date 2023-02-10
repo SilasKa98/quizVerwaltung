@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card mb-3" id="profileCard" style="min-height: 200px;">
+        <div class="card mb-3" id="profileCard" style="min-height: 267px;">
           <div class="row g-0 innerProfileDiv">         
             <h5 class="card-title"><?php echo $latestQuestionsFollowing; ?></h5>
               <div class="card-body" id="showRecentBody">

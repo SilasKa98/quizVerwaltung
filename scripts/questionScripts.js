@@ -318,6 +318,15 @@
               let followedUsersArray = jsonResponse.followedUsersArray;
               let followedCreationDateArray = jsonResponse.followedCreationDateArray;
               let cardHolder = document.getElementById("cardHolder");
+              cardHolder.innerHTML = "";
+              if(followedQuestionsArray.length == 0){
+                cardHolder.innerHTML +=
+                    '<div class="card recentQuestionWrapper">'+
+                        '<div class="card-body">'+
+                            '<p class="recentQuestionText"><br><br><br><br></p>'+
+                        '</div>'+
+                    '</div>'
+              }
               for(let i=0;i<followedQuestionsArray.length;i++){
                     cardHolder.innerHTML +=
                     '<div class="card recentQuestionWrapper">'+
