@@ -389,7 +389,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
         exit();
     }
 
-    $getAllQuestions = $mongo->read("questions",[]);
+    $options = ['sort' => ['karma' => -1]];
+    $getAllQuestions = $mongo->read("questions",[], $options);
     $getAllQuestions = (array)$getAllQuestions;
     $allMatchingIds = [];
     $authorsOfTheMatches = [];
