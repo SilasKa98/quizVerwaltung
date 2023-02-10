@@ -124,6 +124,7 @@ body{
     border-radius: 74px !important;
     border: 3px solid black;
     margin-left: 2%;
+    width: 77%;
   }
 
   .innerProfileDiv{
@@ -328,6 +329,27 @@ body{
   #showFollowerBtn,#showFollowingBtn{
     background: none;
     border: none;
+  }
+
+  #showRecentBody{
+    max-height: 196px;
+    overflow: auto;
+  }
+
+  .recentQuestionWrapper{
+    margin-bottom: 1%;
+  }
+
+  .recentUserPill, .recentDatePill{
+    float: right;
+  }
+
+  .recentDatePill{
+    margin-right: 3%;
+  }
+
+  .recentQuestionText{
+    margin-bottom: 1% !important;
   }
 
   @media only screen and (max-width: 1199px) {

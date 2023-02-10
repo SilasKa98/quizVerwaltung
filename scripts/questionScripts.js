@@ -300,7 +300,37 @@
             location.reload();
           }
         });
-      }
+    }
+
+    //get latest question of the people the user is following
+    function getLatestQuestionsOfFollowedUsers(){
+        let method = "getLatestQuestionsOfFollowedUsers";
+        $.ajax({
+            type: "POST",
+            url: '/quizVerwaltung/doTransaction.php',
+            data: {
+                method: method
+            },
+            success: function(response) {
+              console.log(response);
+              let jsonResponse = JSON.parse(response);
+              let followedQuestionsArray = jsonResponse.followedQuestionsArray;
+              let followedUsersArray = jsonResponse.followedUsersArray;
+              let followedCreationDateArray = jsonResponse.followedCreationDateArray;
+              let cardHolder = document.getElementById("cardHolder");
+              for(let i=0;i<followedQuestionsArray.length;i++){
+                    cardHolder.innerHTML +=
+                    '<div class="card recentQuestionWrapper">'+
+                        '<div class="card-body">'+
+                            '<p class="recentQuestionText">'+followedQuestionsArray[i]+'</p>'+
+                            '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+followedUsersArray[i]+'"><span class="badge rounded-pill text-bg-primary recentUserPill">@'+followedUsersArray[i]+'</span></a>'+
+                            '<span class="badge text-bg-secondary recentDatePill">'+followedCreationDateArray[i]+'</span>'+
+                        '</div>'+
+                    '</div>'
+              }
+            }
+        });
+    }
 
 
 

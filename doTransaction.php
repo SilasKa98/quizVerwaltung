@@ -870,4 +870,40 @@ if(isset($_POST["method"]) && $_POST["method"] == "deleteQuestion"){
 }
 
 
+if(isset($_POST["method"]) && $_POST["method"] == "getLatestQuestionsOfFollowedUsers"){
+    session_start();
+    $userId = $_SESSION["userData"]["userId"];
+
+    $searchUserFilter = (['userId'=>$userId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+    $usersFollowing = (array)$searchUser->following;
+
+    $followedQuestionsArray = [];
+    $followedUsersArray = [];
+    $followedCreationDateArray = [];
+    foreach($usersFollowing as $foundId){
+        $searchUserFilterFollowing = (['userId'=>$foundId]);
+        $searchUserFollowing = $mongo->findSingle("accounts",$searchUserFilterFollowing,[]);
+        $followedUser = $searchUserFollowing->username;
+
+        $searchOption = ['sort' => ['creationDate' => -1] , 'limit' => 2];
+        $searchQuestionOfFollowedUserFilter = (['author'=>$followedUser]);
+        $searchQuestionOfFollowedUser = $mongo->read("questions",$searchQuestionOfFollowedUserFilter, $searchOption);
+        foreach((array)$searchQuestionOfFollowedUser as $innerQuestion){
+            array_push($followedQuestionsArray, (array)$innerQuestion->question[array_key_first((array)$innerQuestion->question)]);
+            array_push($followedUsersArray, $innerQuestion->author);
+            array_push($followedCreationDateArray, $innerQuestion->creationDate);
+        }
+    }
+
+
+    $ajaxResponse = [
+        "followedQuestionsArray" => $followedQuestionsArray,
+        "followedUsersArray" => $followedUsersArray,
+        "followedCreationDateArray" => $followedCreationDateArray
+    ];
+    echo json_encode($ajaxResponse);
+}
+
+
 ?>
