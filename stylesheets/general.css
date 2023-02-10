@@ -300,7 +300,7 @@ body{
   }
 
 
-  #followerModalBody{
+  #followerModalBody, #followingModalBody{
     max-height: 300px;
     min-height: 300px;
     overflow: auto;
