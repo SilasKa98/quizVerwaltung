@@ -683,5 +683,112 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
     echo "Edit successfull!";
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "deleteQuestion"){
+
+    $questionId = $_POST["id"];
+    //check for illegal chars in id
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
+        echo "Illegal id given!";
+        exit();
+    }
+
+    //check if id even exists
+    $searchQuestionFilter = (['id'=>$questionId]);
+    $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
+
+    if(!isset($searchQuestion)){
+        echo "No Question found for this Id!";
+        exit();
+    }
+
+    $questionAuthor = $searchQuestion->author;
+
+    session_start();
+    if($questionAuthor != $_SESSION["userData"]["username"]){
+        echo "You are not allowed to edit this question!";
+        exit();
+    } 
+
+
+    //remove the question from all catalogs
+    $allCatalogs = $mongo->read("catalog",[]);
+    $allQuestionsOfCatalogs = (array)$allCatalogs;
+    $allCatalogQuestions =  [];
+    $allCatalogIds =  [];
+    foreach($allQuestionsOfCatalogs as $catalog){
+        array_push($allCatalogQuestions, (array)$catalog->questions);
+        array_push($allCatalogIds, $catalog->id);
+    }
+
+    foreach($allCatalogQuestions as $catalogKey =>$catalogQuestionsArray){
+        $checkIfInCatalog = array_search($questionId, $catalogQuestionsArray);
+        if($checkIfInCatalog !== false){
+            unset($catalogQuestionsArray[$checkIfInCatalog]);
+            $searchCatalogFilter = (['id'=>$allCatalogIds[$catalogKey]]);
+            $updateCatalog = ['$set' =>  ['questions'=> $catalogQuestionsArray]];
+            $mongo->updateEntry("catalog",$searchCatalogFilter,$updateCatalog);   
+        }
+    }
+
+    //remove all user relations to this question
+    //-->questionLangUserRelation
+    $allUsers = $mongo->read("accounts",[]);
+    $allUsersArray = (array)$allUsers;
+    $questionLangUserRelationsArray =  [];
+    $allUserIds =  [];
+    $userKarmaArray =  [];
+    foreach($allUsersArray as $user){
+        array_push($questionLangUserRelationsArray, (array)$user->questionLangUserRelation);
+        array_push($allUserIds, $user->userId);
+        array_push($userKarmaArray, (array)$user->questionsUserGaveKarmaTo);
+    }
+
+    foreach($questionLangUserRelationsArray as $relationKey => $relationArray){
+        $checkIfInRelationArray = array_search($questionId, $relationArray);
+        if($checkIfInRelationArray !== false){
+            unset($relationArray[$checkIfInRelationArray]);
+            $searchUserFilter = (['userId'=>$allUserIds[$relationKey]]);
+            $updateUser = ['$set' =>  ['questionLangUserRelation'=> $relationArray]];
+            $mongo->updateEntry("accounts",$searchUserFilter,$updateUser);      
+        }
+    }
+
+    //-->questionUserGaveKarmaTo
+    $karmaUp = [];
+    $karmaDown = [];
+    foreach($userKarmaArray as $karma){
+        array_push($karmaUp,(array)$karma["up"]);
+        array_push($karmaDown,(array)$karma["down"]);
+    }
+
+    //up karma
+    foreach($karmaUp as $karmaKey => $userKarmaArray){
+        $checkIfinArray = array_search($questionId, $userKarmaArray);
+        if($checkIfinArray !== false){
+            unset($userKarmaArray[$checkIfinArray]);
+            $searchUserFilter = (['userId'=>$allUserIds[$karmaKey]]);
+            $updateUser = ['$set' =>  ['questionsUserGaveKarmaTo.up' => $userKarmaArray]];
+            $mongo->updateEntry("accounts",$searchUserFilter,$updateUser);      
+        }
+    }
+
+    //down karma
+    foreach($karmaDown as $karmaKey => $userKarmaArray){
+        $checkIfinArray = array_search($questionId, $userKarmaArray);
+        if($checkIfinArray !== false){
+            unset($userKarmaArray[$checkIfinArray]);
+            $searchUserFilter = (['userId'=>$allUserIds[$karmaKey]]);
+            $updateUser = ['$set' =>  ['questionsUserGaveKarmaTo.down' => $userKarmaArray]];
+            $mongo->updateEntry("accounts",$searchUserFilter,$updateUser);      
+        }
+    }
+
+
+    //then fully remove the question from the system
+    $mongo->deleteByUid("questions", $questionId);
+
+    echo "Deleted Question successfully!";
+}
+
 
 ?>

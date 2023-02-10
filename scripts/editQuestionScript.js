@@ -84,3 +84,36 @@ function sendAjax(method, payload, id){
         }
     });
 }
+
+
+
+function deleteQuestion(id){
+    let text = "Are you sure that you want to delete this question ?";
+    if (confirm(text) == false) {
+      return;
+    }
+
+    let method = "deleteQuestion";
+    $.ajax({
+        type: "POST",
+        url: '/quizVerwaltung/doTransaction.php',
+        data: {
+            method: method,
+            id: id
+        },
+        success: function(response) {
+            if(response == "No Question found for this Id!" || response == "Illegal id given!" || response == "You are not allowed to edit this question!"){
+                toastMsgBody.innerHTML = response;
+                $(".toast").toast('show');
+                return;
+            }
+            toastMsgBody.innerHTML = response;
+            $(".toast").toast('show');
+       
+            setTimeout(function() {
+                //redirect to the url the user came from
+                location.href= document.referrer;
+            }, 1500);
+        }
+    });
+}

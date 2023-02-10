@@ -205,6 +205,14 @@ if(isset($isAdmin) && $isAdmin == true){
                     </div>
                 </div>
 
+                <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Delete Question</h5>        
+                        <br>       
+                        <button class="btn btn-danger" id="deleteQuestionBtn" onclick="deleteQuestion('<?php echo $_GET['questionId']; ?>')">Delete Question</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
