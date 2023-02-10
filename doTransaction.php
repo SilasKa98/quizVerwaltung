@@ -380,6 +380,72 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
 }
 
 
+if(isset($_POST["method"]) && $_POST["method"] == "showFollower"){
+    $profileUserId = $_POST["profileUserId"];
+
+    //check for security reasons if the id contains any illegal chars or if it is existing at all
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($profileUserId))){
+        echo "Illegal chars detected!";
+        exit();
+    }
+    
+    $searchUserFilter = (['userId'=>$profileUserId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+    $usersFollower = (array)$searchUser->follower;
+
+    $correspondingUsernames = [];
+    $correspondingFirstname = [];
+    $correspondingLastname = [];
+    foreach($usersFollower as $foundId){
+        $searchUserFilterFollower = (['userId'=>$foundId]);
+        $searchUserFollower = $mongo->findSingle("accounts",$searchUserFilterFollower,[]);
+        array_push($correspondingUsernames, $searchUserFollower->username);
+        array_push($correspondingFirstname, $searchUserFollower->firstname);
+        array_push($correspondingLastname, $searchUserFollower->lastname);
+    }
+
+    $ajaxResponse = [
+        "followerUsernames"=> $correspondingUsernames,
+        "followerFirstnames"=> $correspondingFirstname,
+        "followerLastnames"=> $correspondingLastname
+    ];
+    echo json_encode($ajaxResponse);
+}
+
+
+if(isset($_POST["method"]) && $_POST["method"] == "showFollowing"){
+    $profileUserId = $_POST["profileUserId"];
+
+    //check for security reasons if the id contains any illegal chars or if it is existing at all
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($profileUserId))){
+        echo "Illegal chars detected!";
+        exit();
+    }
+
+    $searchUserFilter = (['userId'=>$profileUserId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+    $usersFollowing = (array)$searchUser->following;
+
+    $correspondingUsernames = [];
+    $correspondingFirstname = [];
+    $correspondingLastname = [];
+    foreach($usersFollowing as $foundId){
+        $searchUserFilterFollowing = (['userId'=>$foundId]);
+        $searchUserFollowing = $mongo->findSingle("accounts",$searchUserFilterFollowing,[]);
+        array_push($correspondingUsernames, $searchUserFollowing->username);
+        array_push($correspondingFirstname, $searchUserFollowing->firstname);
+        array_push($correspondingLastname, $searchUserFollowing->lastname);
+    }
+
+    $ajaxResponse = [
+        "followingUsernames"=> $correspondingUsernames,
+        "followingFirstnames"=> $correspondingFirstname,
+        "followingLastnames"=> $correspondingLastname
+    ];
+    echo json_encode($ajaxResponse);
+}
+
+
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
     $userEntry = $_POST["value"];
 

@@ -82,6 +82,8 @@
 
 
     <?php include_once "modal_insertNewQuestionLang.php";?>
+    <?php include_once "modal_showFollower.php";?>
+    <?php include_once "modal_showFollowing.php";?>
   
 
     <section style="background-color: #eee;">
@@ -120,11 +122,23 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/users.svg" width="23px" >
-                        <p class="mb-0"><?php echo $showFollowerText." ".$visitedProfileFollowerCount; ?></p>
+                        <button id="showFollowerBtn" onclick="showFollower('<?php echo $foundProfile->userId;?>')">
+                            <p class="mb-0">
+                                <?php echo $showFollowerText." ".$visitedProfileFollowerCount; ?>
+                            </p>
+                        </button>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/users-rays.svg" width="23px" > 
-                        <p class="mb-0"><?php echo $showFollowingText." ".$visitedProfileFollowingCount;?></p>
+                        <?php if($foundProfile->userId == $userId){?>
+                            <button id="showFollowingBtn" onclick="showFollowing('<?php echo $foundProfile->userId;?>')">
+                        <?php }?>
+                            <p class="mb-0">
+                                <?php echo $showFollowingText." ".$visitedProfileFollowingCount;?>
+                            </p>
+                        <?php if($foundProfile->userId == $userId){?>
+                            </button>
+                        <?php }?>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/lightbulb.svg" width="18px" > 
@@ -222,6 +236,61 @@
                         document.getElementById("followBtn").innerHTML = <?php echo json_encode($notFollowedBtnText); ?>; 
                     }
                     
+                }
+            });
+        }
+
+        function showFollower(profileUserId){
+            let method = "showFollower";
+            $.ajax({
+                type: "POST",
+                url: '/quizVerwaltung/doTransaction.php',
+                data: {
+                    profileUserId: profileUserId,
+                    method: method
+                },
+                success: function(response) {
+                    $('#showFollower').modal('toggle');
+                    let jsonResponse = JSON.parse(response);   
+                    let followerModalBody = document.getElementById("followerModalBody");
+                    let followerUsernames = jsonResponse.followerUsernames;
+                    let followerFirstnames = jsonResponse.followerFirstnames;
+                    let followerLastnames = jsonResponse.followerLastnames;
+                    followerModalBody.innerHTML = "";
+                    for(let i=0;i<followerUsernames.length;i++){
+                        followerModalBody.innerHTML += "<a class='followerLink' href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+followerUsernames[i]+"'><p>"+
+                                                            followerFirstnames[i]+" "+followerLastnames[i]+" @"+followerUsernames[i]+
+                                                            "<img class='searchResultMiniPicture' src='/quizVerwaltung/media/defaultAvatar.png' width=20px>"
+                                                        "</p></a>";
+                    }
+                }
+            });
+        }
+
+        function showFollowing(profileUserId){
+            let method = "showFollowing";
+            $.ajax({
+                type: "POST",
+                url: '/quizVerwaltung/doTransaction.php',
+                data: {
+                    profileUserId: profileUserId,
+                    method: method
+                },
+                success: function(response) {
+                    $('#showFollowing').modal('toggle');
+                    let jsonResponse = JSON.parse(response);   
+                    console.log(jsonResponse);
+                    let followingModalBody = document.getElementById("followingModalBody");
+                    let followingUsernames = jsonResponse.followingUsernames;
+                    let followingFirstnames = jsonResponse.followingFirstnames;
+                    let followingLastnames = jsonResponse.followingLastnames;
+                    followingModalBody.innerHTML = "";
+                    for(let i=0;i<followingUsernames.length;i++){
+                        followingModalBody.innerHTML += "<a class='followerLink' href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+followingUsernames[i]+"'><p>"+
+                                                            followingFirstnames[i]+" "+followingLastnames[i]+" @"+followingUsernames[i]+
+                                                            "<img class='searchResultMiniPicture' src='/quizVerwaltung/media/defaultAvatar.png' width=20px>"
+                                                        "</p></a>";
+                    }
                 }
             });
         }
