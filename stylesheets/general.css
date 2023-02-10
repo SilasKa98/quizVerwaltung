@@ -118,6 +118,7 @@ body{
     margin-bottom: 1% !important;
     margin: 0 auto;
     margin-right: 10px !important;
+    border-top-right-radius: 0px !important;
   }
 
   #profileAvatar{
@@ -163,6 +164,7 @@ body{
     float: right;
     margin-left: 2px;
     height: 20px;
+    margin-left: 0px;
   }
 
   .outerMenuItems{
@@ -199,7 +201,15 @@ body{
     padding-right: 11px !important;
 
     background: #7e7e7e !important;
-    border-radius: 9px !important;
+    
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-right-radius: 9px !important;
+    border-top-right-radius: 9px !important;
+
+    background: #f9f9f9 !important;
+    border: 1px solid rgb(206, 206, 206) !important;
+    color: black !important;
   }
 
   .navbar{
