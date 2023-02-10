@@ -53,4 +53,7 @@
 
     //searchResult (navbar.php) but used in a script
     $noSearchMatches = "Keine passenden Treffer";
+
+    //editQuestion.php
+    $writeNewQuestionHeader = "Ändern Sie den Fragentext";
 ?>

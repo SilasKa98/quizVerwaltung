@@ -53,4 +53,7 @@
 
     //searchResult (navbar.php) but used in a script
     $noSearchMatches = "No matches";
+
+    //editQuestion.php
+    $writeNewQuestionHeader = "Change the question text";
 ?>

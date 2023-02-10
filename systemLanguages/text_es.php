@@ -51,4 +51,7 @@
 
     //searchResult (navbar.php) but used in a script
     $noSearchMatches = "Ninguna coincidencia adecuada";
+
+    //editQuestion.php
+    $writeNewQuestionHeader = "Cambiar el texto de la pregunta";
 ?>

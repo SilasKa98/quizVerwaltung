@@ -106,7 +106,7 @@ if(isset($isAdmin) && $isAdmin == true){
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel2"><?php echo $selectYourTagsHeader; ?></h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel2"><?php echo $writeNewQuestionHeader; ?></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body"  id="question_holder" >
@@ -140,14 +140,6 @@ if(isset($isAdmin) && $isAdmin == true){
                     </div>
                 </div>
                 
-                <div class="card mb-3 innerImportCard" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Sprache</h5>               
-                        <p class="card-text"><?php echo $lang;?></p>
-                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
-                    </div>
-                </div>
-
                 <div class="card mb-3 innerImportCard" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Antwort</h5>               
