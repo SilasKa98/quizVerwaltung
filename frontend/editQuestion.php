@@ -45,6 +45,8 @@ if(!$lang){
 $question = $selectedQuestion->question[$lang];
 $answer = $selectedQuestion->answer;
 $tags = $selectedQuestion->tags;
+$version = $selectedQuestion->version;
+$modificationDate = $selectedQuestion->modificationDate;
 
 
 if(isset($selectedQuestion->options)){
@@ -188,6 +190,20 @@ if(isset($isAdmin) && $isAdmin == true){
                         </div>
                     </div>
                 <?php }?>
+
+                <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Version</h5>               
+                        <p class="card-text"><?php echo $version;?></p>
+                    </div>
+                </div>
+
+                <div class="card mb-3 innerImportCard" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Modification Date</h5>               
+                        <p class="card-text"><?php echo $modificationDate;?></p>
+                    </div>
+                </div>
 
             </div>
         </div>

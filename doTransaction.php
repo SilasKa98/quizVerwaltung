@@ -648,6 +648,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
     $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
     $question_keys = array_keys((array)$searchQuestion->question);
     $questionAuthor = $searchQuestion->author;
+    $currentQuestionVersion = $searchQuestion->version;
 
     session_start();
     if($questionAuthor != $_SESSION["userData"]["username"]){
@@ -665,7 +666,20 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
 
     $update = ['$set' =>  ['question'=> $newQuestionArray]];
     $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
-    
+
+    //update the question Version
+    include_once "versionService.php";
+    $version = new VersionService();
+    $newVersion = $version->increaseVersion($currentQuestionVersion);
+
+    $updateVersion = ['$set' =>  ['version'=> $newVersion]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$updateVersion); 
+
+    //update the question modificationDate
+    $modificationDate = date("Y-m-d");
+    $updateModificationDate = ['$set' =>  ['modificationDate'=> $modificationDate]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$updateModificationDate); 
+
     echo "Edit successfull!";
 }
 
