@@ -22,12 +22,6 @@ class VersionService {
         $this->version = "$major.$minor";
         return $this->version;
     }
-
-    public function checkOldVersion($id){
-        include_once "mongoService.php";
-        $testmongo = new MongoDBSerive("192.168.2.97:27017", "root", "masterprojekt");
-        $testmongo->testRead($id);
-    }
 }
 
 ?>
