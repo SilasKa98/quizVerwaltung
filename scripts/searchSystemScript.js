@@ -47,7 +47,16 @@ $(document).ready(function(e) {
         searchResultList.innerHTML = "";
 
         for(let i=0;i<allMatchingIdsArray.length;i++){
-          searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+jsonResponse.authorsOfTheMatches[i]+'&searchedQuestionId='+jsonResponse.allMatchingIds[i]+'#searchFocus" class="list-group-item list-group-item-action">'+jsonResponse.allMatchingQuestionStrings[i]+'<span class="badge rounded-pill bg-primary searchInnerKarmaPill">'+jsonResponse.KarmaOfTheMatches[i]+'</span></a>';
+          searchResultList.innerHTML += '<a style="display:inline-block"'+
+                                          'href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+jsonResponse.authorsOfTheMatches[i]+'&searchedQuestionId='+jsonResponse.allMatchingIds[i]+'#searchFocus"' +
+                                          'class="list-group-item list-group-item-action">'+
+                                            '<p style="display: inline;">'+
+                                                jsonResponse.allMatchingQuestionStrings[i]
+                                            +'</p>'+
+                                             '<span class="badge rounded-pill bg-primary searchInnerKarmaPill">'+
+                                                jsonResponse.KarmaOfTheMatches[i]+
+                                             '</span>'+
+                                        '</a>';
         }
         if(allMatchingIdsArray.length == 0){
           searchResultList.innerHTML += '<span id="noMatches" class="list-group-item list-group-item-action">No Matches found</span>';
@@ -83,7 +92,14 @@ $(document).ready(function(e) {
           searchResultList.innerHTML = "";
 
           for(let i=0;i<allMatchingUsers.length;i++){
-            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+allMatchingUsers[i]+'" class="list-group-item list-group-item-action">'+allMatchingFirstnames[i]+" "+allMatchingLastnames[i]+' <span class="text-muted">@'+allMatchingUsers[i]+'</span><img class="searchResultMiniPicture" src="/quizVerwaltung/media/defaultAvatar.png" width=20px></a>';
+            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+allMatchingUsers[i]+'"'+
+                                            ' class="list-group-item list-group-item-action">'+
+                                              allMatchingFirstnames[i]+" "+allMatchingLastnames[i]+
+                                              '<span class="text-muted"> @'+
+                                                  allMatchingUsers[i]+
+                                              '</span>'+
+                                              '<img class="searchResultMiniPicture" src="/quizVerwaltung/media/defaultAvatar.png" width=20px>'+
+                                          '</a>';
           }
           if(allMatchingUsers.length == 0){
             searchResultList.innerHTML += '<span id="noMatches" class="list-group-item list-group-item-action">No Matches found</span>';
