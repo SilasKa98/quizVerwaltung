@@ -155,6 +155,7 @@ body{
   .selLanguageDropDown{
     margin-top: 10px;
     min-width: 63px;
+    border-radius: 10px;
   }
 
   .rightOuterMenu{
