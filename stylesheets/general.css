@@ -241,9 +241,11 @@ body{
   #searchResultAccordion{
     position: absolute;
     margin-top: 39px;
-    max-height: 206px;
+    max-height: 340px;
     overflow: auto;
     width: 430px;
+    min-width: 430px;
+    max-width: 430px;
     right: 303px;
   }
 
