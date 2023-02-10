@@ -20,6 +20,7 @@
     $navText_insertQuestion = "Insert Question";
     $profileInfoText = "Choose your favorite categories and always see what interests you.";
     $myProfileLink = "My Profile";
+    $latestQuestionsFollowing = "Latest Questions of the People you are Following";
 
 
     //Toast (index.php)

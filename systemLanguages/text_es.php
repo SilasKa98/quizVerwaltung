@@ -19,6 +19,7 @@
     $navText_insertQuestion = "Insertar pregunta";
     $profileInfoText = "Elija sus categorías favoritas y vea siempre lo que le interesa.";
     $myProfileLink = "Mi Perfil";
+    $latestQuestionsFollowing = "Últimas preguntas de las personas a las que sigues";
 
     //Toast (index.php)
     $toastTimeDisplay = "justo ahora";
