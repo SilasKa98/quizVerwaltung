@@ -154,6 +154,11 @@ body{
     padding-bottom: 44px;
   }
 
+  .collapsable_questionText{
+    text-decoration: none;
+    color: black;
+  }
+
   .selLanguageDropDown{
     margin-top: 10px;
     min-width: 63px;

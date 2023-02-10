@@ -114,11 +114,27 @@ class CartService{
                     $lang = array_key_first((array)$question);
                 }
 
+                $answer = $questionObject["answer"];
+                $author = $questionObject["author"];
+                $tags = (array)$questionObject["tags"];
+                
+                $tagBadges = "";
+
+                if (count($tags) != 0){
+                    foreach ($tags as $tag) {
+                        if ($tag != ""){
+                            $tagBadges = $tagBadges."<span class='badge rounded-pill text-bg-secondary' style='margin-right: 2px;'> $tag </span>";
+                        }
+                    }  
+                }
+                
                 print   "  <div class='card' id=$questionId style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
                             <div class='card-body'>
                              <div class='row'>
                                 <div class='col question' name='$questionId'>    
-                                    $question[$lang]
+                                    <a class='collapsable_questionText' data-bs-toggle='collapse' href='#collabsable_$questionId'>
+                                        $question[$lang]
+                                    </a>
                                 </div>
                                 <div class='col-1 d-flex flex-column cancel' style='justify-content: center;'>
                                     <button type='button' class='btn-close' aria-label='Close' name='$questionId'
@@ -129,7 +145,21 @@ class CartService{
                              </div>
                             </div>
                         </div>
-                        ";               
+
+                        <div class='collapse' id='collabsable_$questionId'>
+                            <div class=card questionCartCard' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
+                                <div class=card-body questionCartCard>
+                                    <p 'question-text'> Answer: $answer</p>
+                                    <p 'question-text'> Tags: $tagBadges</p>
+                                    <p 'question-text'> Author: 
+                                        <a href='/quizVerwaltung/frontend/userProfile.php?profileUsername=$author'>
+                                            <span class='badge rounded-pill bg-primary authorPill' style='margin-right: 2px;'> $author</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        ";
             }
         }
     }
