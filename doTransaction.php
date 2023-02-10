@@ -886,16 +886,19 @@ if(isset($_POST["method"]) && $_POST["method"] == "getLatestQuestionsOfFollowedU
         $searchUserFollowing = $mongo->findSingle("accounts",$searchUserFilterFollowing,[]);
         $followedUser = $searchUserFollowing->username;
 
+        // TODO change from creationDate to modification date
         $searchOption = ['sort' => ['creationDate' => -1] , 'limit' => 2];
         $searchQuestionOfFollowedUserFilter = (['author'=>$followedUser]);
         $searchQuestionOfFollowedUser = $mongo->read("questions",$searchQuestionOfFollowedUserFilter, $searchOption);
         foreach((array)$searchQuestionOfFollowedUser as $innerQuestion){
-            array_push($followedQuestionsArray, (array)$innerQuestion->question[array_key_first((array)$innerQuestion->question)]);
-            array_push($followedUsersArray, $innerQuestion->author);
-            array_push($followedCreationDateArray, $innerQuestion->creationDate);
+            //only show questions that arent older than 5 days
+            if(round(strtotime(date("Y-m-d")) - strtotime($innerQuestion->creationDate))/(60 * 60 * 24) <= 5){
+                array_push($followedQuestionsArray, (array)$innerQuestion->question[array_key_first((array)$innerQuestion->question)]);
+                array_push($followedUsersArray, $innerQuestion->author);
+                array_push($followedCreationDateArray, $innerQuestion->creationDate);
+            }
         }
     }
-
 
     $ajaxResponse = [
         "followedQuestionsArray" => $followedQuestionsArray,
