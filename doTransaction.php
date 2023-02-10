@@ -887,7 +887,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "getLatestQuestionsOfFollowedU
         $followedUser = $searchUserFollowing->username;
 
         // TODO change from creationDate to modification date
-        $searchOption = ['sort' => ['creationDate' => -1] , 'limit' => 2];
+        $searchOption = ['sort' => ['creationDate' => -1] , 'limit' => 3];
         $searchQuestionOfFollowedUserFilter = (['author'=>$followedUser]);
         $searchQuestionOfFollowedUser = $mongo->read("questions",$searchQuestionOfFollowedUserFilter, $searchOption);
         foreach((array)$searchQuestionOfFollowedUser as $innerQuestion){
@@ -899,6 +899,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "getLatestQuestionsOfFollowedU
             }
         }
     }
+
+    //cut all Arrays at 20 to avoid too many stuff in the view field... (logic means from index 0 to 20)
+    $followedQuestionsArray =array_slice($followedQuestionsArray, 0, 20); 
+    $followedUsersArray = array_slice($followedUsersArray, 0, 20); 
+    $followedCreationDateArray = array_slice($followedCreationDateArray, 0, 20); 
 
     $ajaxResponse = [
         "followedQuestionsArray" => $followedQuestionsArray,
