@@ -150,7 +150,7 @@ class AccountService{
             $this->sendAdminRequestMail($username,$firstname,$lastname,$userId,$mail,date("Y-m-d"));
         }
 
-       # return header("Location: frontend/loginAccount.php?signUp=success");
+        return header("Location: frontend/loginAccount.php?signUp=success");
     } 
 
 
