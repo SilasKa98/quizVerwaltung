@@ -1,11 +1,74 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+//include phpmailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//get .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 include_once "mongoService.php";
+
 
 class AccountService{
 
     function __construct() {
         $this->mongo = new MongoDBService();
     }
+
+
+   /**
+     *  
+     * Function to send a mail to the mailDev Acc if a user requests admin access
+     * 
+     */
+    function sendAdminRequestMail($username, $firstname, $lastname, $userId, $mailAdress, $creationDate){
+
+        //Create an instance; passing `true` enables exceptions
+        $mail = new PHPMailer(TRUE);
+
+        try {
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = $_ENV["smtpServer"];                    //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = $_ENV["devMailAcc"];                    //SMTP username
+            $mail->Password   = $_ENV["devMailPassword"];               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        
+            //Recipients
+            $mail->setFrom($mailAdress, $firstname." ".$lastname. " @".$username);
+            $mail->addAddress($_ENV["devMailAcc"], $_ENV["devMailName"]);     //Add a recipient
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = "Admin-Account request by ".$firstname." ".$lastname." @".$username;
+            $mail->Body    = "
+                              The User @".$username." (".$firstname." ".$lastname.") requests his account to be an admin account.<br><br>
+                              <b><h3>User-Informations:</h3></b>
+                              <b>UserId:</b> ".$userId."<br>
+                              <b>CreationDate:</b> ".$creationDate."<br>
+                              <b>Users Mail:</b> ".$mailAdress."<br>
+                              ";
+            $mail->AltBody = "
+                              The User @".$username." (".$firstname." ".$lastname.") requests his account to be an admin account.\r\n\r\n
+                              User-Informations:\r\n
+                              UserId: ".$userId."\r\n
+                              CreationDate: ".$creationDate."\r\n
+                              Users Mail: ".$mailAdress."\r\n
+                              ";
+        
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+
 
     /**
      * Function to register a new User
@@ -16,7 +79,7 @@ class AccountService{
      * @param string        $pwd_repeat     given repeated password of the user
      * 
      */
-    function register($username, $mail, $pwd, $pwd_repeat, $language, $firstname, $lastname){
+    function register($username, $mail, $pwd, $pwd_repeat, $language, $firstname, $lastname, $adminRequest){
 
         //check of errors in the given informations
         if(empty($username)|| empty($mail) || empty($pwd) || empty($pwd_repeat)|| empty($language) || empty($firstname) || empty($lastname)){
@@ -76,13 +139,18 @@ class AccountService{
             "follower"=>[],
             "following"=>[],
             "questionCart"=>[],
-            "favoritTags"=>[]
+            "favoritTags"=>[],
+            "isAdmin"=> false
         ];
 
         //insert the new User
         $this->mongo->insertSingle("accounts",$userInformation);
 
-        return header("Location: frontend/loginAccount.php?signUp=success");
+        if(isset($adminRequest)){
+            $this->sendAdminRequestMail($username,$firstname,$lastname,$userId,$mail,date("Y-m-d"));
+        }
+
+       # return header("Location: frontend/loginAccount.php?signUp=success");
     } 
 
 

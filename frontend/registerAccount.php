@@ -25,6 +25,8 @@
                 <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
             <?php } ?>
         </select>
+        <br><br>
+        <label>Request Admin Account: <input type="checkbox" name="requestAdmin"></label><br><br>
         <input type="hidden" name="method" value="registerAccount"><br><br>
         <input type="submit" name="signup_submit" value="Sign Up"><br><br>
     </form>
