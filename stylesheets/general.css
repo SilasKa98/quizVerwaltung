@@ -372,6 +372,7 @@ body{
 
   #usersSettingsHeader{
     text-align: center;
+    margin-top: 3%;
   }
 
   @media only screen and (max-width: 1199px) {
