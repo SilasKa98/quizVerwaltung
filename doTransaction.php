@@ -613,6 +613,18 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     echo json_encode($ajaxResponse);
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "emptyQuestionCart"){
+    include_once "cartService.php";
+    session_start();
+    $cartService = new CartService();
+    $clearResult = $cartService->emptyQuestionCart();
+    
+    $ajaxResponse = [
+        "clearResult" => $clearResult
+    ];
+    echo json_encode($ajaxResponse);
+}
+
 
 if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
     include_once "cartService.php";
