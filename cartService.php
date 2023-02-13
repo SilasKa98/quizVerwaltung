@@ -84,6 +84,15 @@ class CartService{
         }
     }
 
+    function emptyQuestionCart(){
+        $filterQuery = (['userId' => $this->userId]);
+
+        $update = ['$set' => ['questionCart' => []]];
+        $this->mongo->updateEntry("accounts", $filterQuery, $update);
+
+        return "cartGotDeleted";
+    }
+
     function printCart(){
         $filterQuery = (['userId' => $this->userId]);
 
