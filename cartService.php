@@ -144,12 +144,11 @@ class CartService{
                                 </div>
                              </div>
                             </div>
-                        </div>
 
-                        <div class='collapse' id='collabsable_$questionId'>
+                            <div class='collapse' id='collabsable_$questionId'>
                             <div class=card questionCartCard' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
                                 <div class=card-body questionCartCard>
-                                    <p 'question-text'> Answer: $answer</p>
+                                    <p 'question-text'> $answerType : $answer</p>
                                     <p 'question-text'> Tags: $tagBadges</p>
                                     <p 'question-text'> Author: 
                                         <a href='/quizVerwaltung/frontend/userProfile.php?profileUsername=$author'>
@@ -157,6 +156,7 @@ class CartService{
                                         </a>
                                     </p>
                                 </div>
+                            </div>
                             </div>
                         </div>
                         ";
