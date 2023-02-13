@@ -34,6 +34,7 @@ if(!isset($selectedQuestion)){
 
 //get language of the edited question
 $questionLanguageRelation = (array)$userInfo["questionLangUserRelation"];
+$isAdmin = $userInfo["isAdmin"];
 $lang = array_search($_GET["questionId"],$questionLanguageRelation);
 //check if there is no language set for this question by the user
 if(!$lang){

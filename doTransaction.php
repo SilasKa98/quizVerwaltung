@@ -729,7 +729,13 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
     $currentQuestionVersion = $searchQuestion->version;
 
     session_start();
-    if($questionAuthor != $_SESSION["userData"]["username"]){
+
+    $filterQueryCurrentUser = (['userId' => $_SESSION["userData"]["userId"]]);
+    $userInfoCurrentUser= $mongo->findSingle("accounts",$filterQueryCurrentUser);
+
+    $isCurrentUserAdmin = $userInfoCurrentUser["isAdmin"];
+
+    if($questionAuthor != $_SESSION["userData"]["username"] && !$isCurrentUserAdmin){
         echo "You are not allowed to edit this question!";
         exit();
     } 
@@ -782,8 +788,16 @@ if(isset($_POST["method"]) && $_POST["method"] == "deleteQuestion"){
 
     $questionAuthor = $searchQuestion->author;
 
+
     session_start();
-    if($questionAuthor != $_SESSION["userData"]["username"]){
+
+
+    $filterQueryCurrentUser = (['userId' => $_SESSION["userData"]["userId"]]);
+    $userInfoCurrentUser= $mongo->findSingle("accounts",$filterQueryCurrentUser);
+
+    $isCurrentUserAdmin = $userInfoCurrentUser["isAdmin"];
+
+    if($questionAuthor != $_SESSION["userData"]["username"] && !$isCurrentUserAdmin){
         echo "You are not allowed to edit this question!";
         exit();
     } 

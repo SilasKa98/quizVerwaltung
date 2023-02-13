@@ -22,6 +22,7 @@ class Printer{
         $searchUserFilter = (['userId'=>$this->currentUserId]);
         $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
         $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
+        $isUserAdmin = $searchUser["isAdmin"];
 
 
         for($i=0;$i<count($questionObject);$i++){
@@ -58,8 +59,8 @@ class Printer{
                                 </a>
                             </li>
                             ';
-                            //check for admin here later and grant full edit access
-                            if($questionObject[$i]->author == $_SESSION["userData"]["username"]){
+                            //check if user owns question or if user as admin access
+                            if($questionObject[$i]->author == $_SESSION["userData"]["username"] || $isUserAdmin){
                                 print'
                                 <li class="outerMenuItemsListElem" onclick="editQuestion(this)">
                                     <form action="/quizVerwaltung/frontend/editQuestion.php" method="GET">
