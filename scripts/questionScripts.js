@@ -162,7 +162,9 @@
         });
     }
 
-    function addToCart(e){
+    //TODO Fehler mit Open questions diese werden hier irgendwie nicht aktualisiert --> nur wenn die seite geladen wird 
+    //cart wird jedoch nach hinzufügen eines anderen Fragentyps dann wíeder aktualisiert etc. !!!!
+    function addToCart(e){    
         let questionId = e.getAttribute("name");
         let method = "addToCart";
 
@@ -189,20 +191,59 @@
                     cartInfoText.remove();
                 }
 
-                canvasBody.innerHTML += "<div class='card' id=" + jsonResponse.questionObject.id + " style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
+                let questionId = jsonResponse.questionObject.id;
+                let author = jsonResponse.questionObject.author;
+                let tags = jsonResponse.questionObject.tags;
+                let tagBadges = "";
+
+                let answerType;
+                let answer;
+
+                if (jsonResponse.questionObject.questionType === "Options" || jsonResponse.questionObject.questionType === "MultiOptions") {
+                    answerType = "Options";
+                    answer = createOptionsBubbles(jsonResponse.questionObject.options[jsonResponse.lang], jsonResponse.questionObject.answer);
+                } else {
+                    answerType = "Answer";
+                    answer = questionObject.answer;
+                }
+
+                if (tags.length != 0){
+                    tags.forEach((tag) => {
+                        if (tag != ""){
+                            tagBadges += "<span class='badge rounded-pill text-bg-secondary' style='margin-right: 2px;'>" + tag + "</span>";
+                        }
+                    });
+                }
+                
+                canvasBody.innerHTML += "<div class='card' id=" + questionId + " style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
                                             "<div class='card-body'>" + 
                                                 "<div class='row'>" + 
-                                                    "<div class='col question' name=" + jsonResponse.questionObject.id + ">" +
-                                                        jsonResponse.questionObject.question[jsonResponse.lang] + 
+                                                    "<div class='col question' name=" + questionId + ">" +
+                                                        "<a class='collapsable_questionText' data-bs-toggle='collapse' href='#collabsable_" + questionId + "'>" + 
+                                                            jsonResponse.questionObject.question[jsonResponse.lang] + 
+                                                        "</a>" + 
                                                     "</div>" + 
                                                 "<div class='col-1 d-flex flex-column cancel' style='justify-content: center;'>" + 
-                                                    "<button type='button' class='btn-close' aria-label='Close' name=" + jsonResponse.questionObject.id + " " + 
+                                                    "<button type='button' class='btn-close' aria-label='Close' name=" + questionId + " " + 
                                                         "onclick='removeCartItem(this)'" + 
                                                         "style='width: .4rem; height: .4rem; float: right;'>" +
                                                     "</button>" + 
                                                 "</div>" + 
                                             "</div>" + 
                                             "</div>" +
+                                            "<div class='collapse' id='collabsable_"+ questionId + "'>" + 
+                                                "<div class=card questionCartCard' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>" + 
+                                                    "<div class=card-body questionCartCard>" + 
+                                                        "<p 'question-text'> " + answerType + ": " + answer + "</p>" + 
+                                                        "<p 'question-text'> Tags: " + tagBadges + "</p>" + 
+                                                        "<p 'question-text'> Author: " + 
+                                                            "<a href='/quizVerwaltung/frontend/userProfile.php?profileUsername=$author'>" + 
+                                                                "<span class='badge rounded-pill bg-primary authorPill' style='margin-right: 2px;'>"+ author + "</span>" + 
+                                                            "</a>" + 
+                                                        "</p>" + 
+                                                    "</div>" + 
+                                                "</div>" + 
+                                            "</div>" + 
                                         "</div>";
 
                 cartCount.innerHTML = jsonResponse.cartLength;
@@ -212,6 +253,22 @@
             }
         });
     }
+
+    //TODO hier vllt noch etwas mehr formatierung machen damit das nicht so überlappt ?????!?!??
+    function createOptionsBubbles(options, answers) {
+        let answerPills = "";
+        answers = answers.split(",");
+        console.log(answers);
+        options.forEach((option, index) => {
+            if (answers.includes(index.toString())) {
+                answerPills += `<span class='badge rounded-pill text-bg-success' style='margin-right: 2px;'> ${option} </span>`;
+            } else {
+                answerPills += `<span class='badge rounded-pill text-bg-secondary' style='margin-right: 2px;'> ${option} </span>`;
+            }
+        });
+        return answerPills;
+    }
+    
 
     function createCatalog(e){
         let method = "createCatalog";
