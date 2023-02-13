@@ -114,7 +114,17 @@ class CartService{
                     $lang = array_key_first((array)$question);
                 }
 
-                $answer = $questionObject["answer"];
+                $answerType;
+                $answer;
+                
+                if ($questionObject["questionType"] == "Options" || $questionObject["questionType"] == "MultiOptions"){
+                    $answerType = "Options";
+                    $answer = $this->__createOptionsBubbles($questionObject["options"]->$lang, $questionObject["answer"]);
+                }else{
+                    $answerType = "Answer";
+                    $answer = $questionObject["answer"];
+                }
+                
                 $author = $questionObject["author"];
                 $tags = (array)$questionObject["tags"];
                 
@@ -164,5 +174,20 @@ class CartService{
         }
     }
 
+    //TODO hier vllt noch etwas mehr formatierung machen damit das nicht so überlappt ?????!?!??
+    function __createOptionsBubbles($options, $answers){
+        $answerPills = "";
+        $answers = explode(",",$answers);
+        $isArray = gettype($answers);
+
+        foreach ($options as $index => $option) {
+            if (in_array($index, $answers)){
+                $answerPills = $answerPills."<span class='badge rounded-pill text-bg-success' style='margin-right: 2px;'> $option </span>";
+            }else{
+                $answerPills = $answerPills."<span class='badge rounded-pill text-bg-secondary' style='margin-right: 2px;'> $option </span>";
+            }
+        }
+        return $answerPills;
+    }
 }
 ?>
