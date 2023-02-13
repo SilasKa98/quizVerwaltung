@@ -51,14 +51,14 @@ class AccountService{
                               The User @".$username." (".$firstname." ".$lastname.") requests his account to be an admin account.<br><br>
                               <b><h3>User-Informations:</h3></b>
                               <b>UserId:</b> ".$userId."<br>
-                              <b>CreationDate:</b> ".$creationDate."<br>
+                              <b>Join Date:</b> ".$creationDate."<br>
                               <b>Users Mail:</b> ".$mailAdress."<br>
                               ";
             $mail->AltBody = "
                               The User @".$username." (".$firstname." ".$lastname.") requests his account to be an admin account.\r\n\r\n
                               User-Informations:\r\n
                               UserId: ".$userId."\r\n
-                              CreationDate: ".$creationDate."\r\n
+                              Join Date: ".$creationDate."\r\n
                               Users Mail: ".$mailAdress."\r\n
                               ";
         

@@ -928,5 +928,23 @@ if(isset($_POST["method"]) && $_POST["method"] == "getLatestQuestionsOfFollowedU
     echo json_encode($ajaxResponse);
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "requestAdminAccount"){
+
+    session_start();
+    $userId = $_SESSION["userData"]["userId"];
+    $searchUserFilter = (['userId'=>$userId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+    $username = $searchUser->username;
+    $firstname = $searchUser->firstname;
+    $lastname = $searchUser->lastname;
+    $userId = $searchUser->userId;
+    $mailAdress = $searchUser->mail;
+    $joinDate = $searchUser->joinDate;
+
+    include_once "accountService.php";
+    $account = new AccountService();
+    $account->sendAdminRequestMail($username, $firstname, $lastname, $userId, $mailAdress, $joinDate);
+}
+
 
 ?>
