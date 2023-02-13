@@ -57,4 +57,15 @@
 
     //editQuestion.php
     $writeNewQuestionHeader = "Ändern Sie den Fragentext";
+
+
+    //usersSettings.php
+    $deleteAccountText = "Ihren Account permanent löschen";
+    $adminAccessRequestText = "Admin-Account anfragen";
+    $adminAccountHeader = "Admin-Account";
+    $adminAccountExampleText = "Mit einem Admin-Account können Sie alle Fragen bearbeiten oder löschen. Außerdem können Sie fragen verifizieren um Ihre Richtigkeit zu bestätigen.";
+    $adminAccessRequestButton = "Anfragen";
+    $deleteAccountHeader = "Account löschen";
+    $deleteAccountExampleText = "Achtung! Durch ausführen dieser Aktion wird Ihr Account und alle damit verbundenen Daten gelöscht! Auch Ihre erstellten Fragen sowie sämtliche Interaktionen gehen verloren.";
+    $deleteAccountButton = "Löschen";
 ?>

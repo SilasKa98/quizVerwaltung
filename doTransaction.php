@@ -878,7 +878,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "deleteQuestion"){
 
 
     //then fully remove the question from the system
-    $mongo->deleteByUid("questions", $questionId);
+    $deleteFilter = ["id" => $questionId];
+    $mongo->deleteByUid("questions", $deleteFilter);
 
     echo "Deleted Question successfully!";
 }
@@ -929,4 +930,109 @@ if(isset($_POST["method"]) && $_POST["method"] == "getLatestQuestionsOfFollowedU
 }
 
 
+if(isset($_POST["method"]) && $_POST["method"] == "requestAdminAccount"){
+
+    session_start();
+    $userId = $_SESSION["userData"]["userId"];
+    $searchUserFilter = (['userId'=>$userId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+    $username = $searchUser->username;
+    $firstname = $searchUser->firstname;
+    $lastname = $searchUser->lastname;
+    $userId = $searchUser->userId;
+    $mailAdress = $searchUser->mail;
+    $joinDate = $searchUser->joinDate;
+
+    include_once "accountService.php";
+    $account = new AccountService();
+    $account->sendAdminRequestMail($username, $firstname, $lastname, $userId, $mailAdress, $joinDate);
+}
+
+
+if(isset($_POST["method"]) && $_POST["method"] == "deleteUserAccount"){
+
+    session_start();
+    $userId = $_SESSION["userData"]["userId"];
+    $username = $_SESSION["userData"]["username"];
+
+    
+    //deleting the id from all follower-Arrays its found in
+    $searchUserFollowerFilter = (['follower'=>$userId]);
+    $searchUserFollower = $mongo->read("accounts",$searchUserFollowerFilter,[]);
+
+    foreach((array)$searchUserFollower as $item){
+        $followerArray = (array)$item->follower;
+        $foundId = array_search($userId, $followerArray);
+        unset($followerArray[$foundId]);
+        $followerArray = array_values($followerArray);
+        $searchUserFilter = (['userId'=>$item->userId]);
+        $updateUser = ['$set' =>  ['follower' => $followerArray]];
+        $mongo->updateEntry("accounts",$searchUserFilter,$updateUser);      
+    }
+
+
+    //deleting the id from all following-Arrays its found in
+    $searchUserFollowingFilter = (['following'=>$userId]);
+    $searchUserFollowing = $mongo->read("accounts",$searchUserFollowingFilter,[]);
+
+    foreach((array)$searchUserFollowing as $item){
+        $followingArray = (array)$item->following;
+        $foundId = array_search($userId, $followingArray);
+        unset($followingArray[$foundId]);
+        $followingArray = array_values($followingArray);
+        $searchUserFilter = (['userId'=>$item->userId]);
+        $updateUser = ['$set' =>  ['following' => $followingArray]];
+        $mongo->updateEntry("accounts",$searchUserFilter,$updateUser);      
+    }
+
+
+    //remove all questions the user created and also save the ids of this questions for deleting them from catalogs later
+    $allQuestionIdsBelongingToUser = [];
+    $searchUserAuthorFilter = (['author'=>$username]);
+    $searchUserQuestions = $mongo->read("questions",$searchUserAuthorFilter);
+    foreach((array)$searchUserQuestions as $question){
+        array_push($allQuestionIdsBelongingToUser, $question->id);
+        $deleteFilter = ["id" => $question->id];
+        $mongo->deleteByUid("questions", $deleteFilter);
+    }
+
+
+    //remove all questions from catalogs if they are created by the user which gets deleted
+    //get all Catalogs
+    $searchUserQuestionInCatalog = $mongo->read("catalog",[]);
+
+    foreach($searchUserQuestionInCatalog as $catalog){
+        $catalogQuestionsArray = (array)$catalog->questions;
+        //check for matches in two arrays (all QuestionIds of the user & the current catalog questions array of the loop)
+        $questionsArrayMatches = array_intersect($catalogQuestionsArray, $allQuestionIdsBelongingToUser);
+        //if there are questions of the user found remove them and update the array
+        if(!empty($questionsArrayMatches)){
+            foreach($questionsArrayMatches as $key =>$questionsToDelete){
+                unset($catalogQuestionsArray[$key]);
+                $catalogQuestionsArray = array_values($catalogQuestionsArray);
+                $catalogIdFilter = (['id'=>$catalog->id]);
+                $updateCatalog = ['$set' =>  ['questions' => $catalogQuestionsArray]];
+                $mongo->updateEntry("catalog",$catalogIdFilter,$updateCatalog);      
+            }
+        }
+    }
+
+
+    //remove all catalogs the user created
+    $searchUserCatalogs= $mongo->read("catalog",$searchUserAuthorFilter);
+    foreach((array)$searchUserCatalogs as $catalog){
+        $deleteFilter = ["id" => $catalog->id];
+        $mongo->deleteByUid("catalog", $deleteFilter);
+    }
+
+
+    //remove the user account
+    $deleteUserFilter= ["userId" => $userId];
+    $mongo->deleteByUid("accounts", $deleteUserFilter);
+
+
+    //destroy session to log off the user
+    session_destroy();
+
+}
 ?>

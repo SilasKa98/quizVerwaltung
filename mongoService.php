@@ -135,10 +135,7 @@ class MongoDBService {
      * @param string        $id             The id of the entry in the mongodb
      * @param array[string] $options        An array of assignments defining options // default value is an empty array
      */
-    public function deleteByUid($collection, $id, $options = []){
-        $oid = $id;    
-        $filter = ["id" => $id];
-
+    public function deleteByUid($collection, $filter, $options = []){
         try {
             $deleteResult = $this->db->$collection->deleteOne($filter, $options);
         } catch (\Throwable $e) {

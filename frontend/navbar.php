@@ -106,6 +106,9 @@ if (!isset($cartCount)){$cartCount = 0;}
                             <li>
                                 <a class="dropdown-item" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="/quizVerwaltung/frontend/usersSettings.php">Settings</a>
+                            </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form class="navbar-form navbar-right" method="post" action="/quizVerwaltung/doTransaction.php">

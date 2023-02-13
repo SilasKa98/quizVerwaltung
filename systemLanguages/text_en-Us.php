@@ -57,4 +57,16 @@
 
     //editQuestion.php
     $writeNewQuestionHeader = "Change the question text";
+
+
+     //usersSettings.php
+     $deleteAccountText = "Permanently delete your account";
+     $adminAccessRequestText = "Request Admin-Account";
+     $adminAccountHeader = "Admin-Account";
+     $adminAccountExampleText = "With an admin account you can edit or delete all questions. Also, you can verify questions to confirm their accuracy.";
+     $adminAccessRequestButton = "Request";
+     $deleteAccountHeader = "Delete Account";
+     $deleteAccountExampleText = "Attention! By performing this action, your account and all associated data will be deleted! Also your created questions and all interactions will be lost.";
+     $deleteAccountButton = "Delete";
+
 ?>
