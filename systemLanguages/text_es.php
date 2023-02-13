@@ -55,4 +55,14 @@
 
     //editQuestion.php
     $writeNewQuestionHeader = "Cambiar el texto de la pregunta";
+
+     //usersSettings.php
+     $deleteAccountText = "Eliminar permanentemente tu cuenta";
+     $adminAccessRequestText = "Solicitar cuenta de administrador";
+     $adminAccountHeader = "Cuenta de administrador";
+     $adminAccountExampleText = "Con una cuenta de administrador, puede editar o eliminar todas las preguntas. También puede verificar las preguntas para confirmar su exactitud.";
+     $adminAccessRequestButton = "Solicitar";
+     $deleteAccountHeader = "Borrar cuenta";
+     $deleteAccountExampleText = "¡Atención! Al realizar esta acción, se eliminará su cuenta y todos los datos asociados. Tus preguntas y todas las interacciones también se perderán.";
+     $deleteAccountButton = "Borrar";
 ?>
