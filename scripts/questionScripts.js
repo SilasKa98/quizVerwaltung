@@ -326,7 +326,28 @@
                 cartCount.innerHTML = jsonResponse.cartLength;
                 question.remove();
             }
-        })
+        });
+    }
+
+    function emptyQuestionCart(e){
+        let method = "emptyQuestionCart";
+        
+        $.ajax({
+            type: 'post',
+            url: '/quizVerwaltung/doTransaction.php',
+            data: {
+                method: method
+            },
+            success: function(response){
+                let jsonResponse = JSON.parse(response);
+                
+                let canvasBody = document.getElementById("canvas-body");
+                let cartCount = document.getElementById("cartCount");
+
+                cartCount.innerHTML = 0;
+                canvasBody.innerHTML = "";
+            }
+        });
     }
 
 
