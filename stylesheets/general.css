@@ -253,17 +253,6 @@ body{
   }
 
 
-  #searchResultAccordion{
-    position: absolute;
-    margin-top: 39px;
-    max-height: 340px;
-    overflow: auto;
-    width: 430px;
-    min-width: 430px;
-    max-width: 430px;
-    right: 303px;
-  }
-
   .searchInnerKarmaPill{
     float: right;
   }
@@ -274,6 +263,13 @@ body{
 
   #searchResultsWrapper{
     display: none;
+
+    position: absolute;
+    margin-top: 39px;
+    max-height: 340px;
+    overflow: auto;
+    min-width: 430px;
+    max-width: 430px;
   }
 
   #searchResults_questions_header,#searchResults_users_header{
