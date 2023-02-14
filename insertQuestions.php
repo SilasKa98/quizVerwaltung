@@ -233,8 +233,6 @@
                     method: method
                 },
                 success: function(response) {
-                    console.log(response);
-                    console.log("Import successfull");
                     toastMsgBody.innerHTML = 'Import Successfull! <div style="float:right;"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div> loading..</div>';
                     $(".toast").toast('show');
                     setTimeout(function() {
