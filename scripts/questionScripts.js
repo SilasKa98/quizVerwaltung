@@ -284,6 +284,31 @@
         });
         return buttonCheck;
     }
+    
+    //get all neccesary infos from frontend
+    async function getCatalogSettings(){
+        console.log("in getCatalogSettings");
+        
+        
+        var buttonPressed = await submitCatalog();
+        console.log(buttonPressed)
+        
+        p = new Promise(function (resolve, reject){
+            var name = document.getElementById("catalogName").value;
+            var publicStatus = document.getElementById("radioPublic").checked;
+
+            if(name != ""){
+                result = {
+                    name: name,
+                    publicStatus: publicStatus
+                }
+                resolve (result);
+            }else{
+                reject ("error bei keine ahnung was ------");
+            }
+        });
+        return p;
+    }
 
     function createCatalog(e){
         let method = "createCatalog";
