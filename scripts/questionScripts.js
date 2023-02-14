@@ -269,26 +269,35 @@
         return answerPills;
     }
     
+    //TODO logs herausnehmen !!!!
     //check if save button clicked!!!!
     async function submitCatalog(){
         console.log("in submitCatalog");
         buttonCheck = new Promise(function (resolve, reject){
             var submit = document.getElementById("catalogSave");
+            
             submit.addEventListener('click', (event) => {
                 if(event){
-                    resolve(event);
-                }else{
-                    reject("errorEvent by catalogCreation"); //TODO scheint hier dann nicht komplett abzubrechen und später zweimal auszuführen !
+                    var buttonStatus = "save";
+                    resolve(buttonStatus);
                 }
             });
+            
+            var window = document.getElementById("catalogOptions");
+            window.addEventListener("hidden.bs.modal", (event) => {
+                if (event) {
+                    var closeStatus = true;
+                    resolve(closeStatus);
+                }
+            })            
         });
         return buttonCheck;
     }
     
+    //TODO logs herausnehmen !!!!
     //get all neccesary infos from frontend
     async function getCatalogSettings(){
         console.log("in getCatalogSettings");
-        
         
         var buttonPressed = await submitCatalog();
         console.log(buttonPressed)
@@ -297,7 +306,7 @@
             var name = document.getElementById("catalogName").value;
             var publicStatus = document.getElementById("radioPublic").checked;
 
-            if(name != ""){
+            if(name != "" || buttonPressed == "save"){
                 result = {
                     name: name,
                     publicStatus: publicStatus
@@ -310,9 +319,17 @@
         return p;
     }
 
+    //TODO logs herausnehmen !!!!
     async function createCatalog(e){
         console.log("befor await");
-        let catalogSettings = await getCatalogSettings();
+        
+        let catalogSettings;
+        try {
+            catalogSettings = await getCatalogSettings();
+        } catch (error) {
+            console.log("Hier sollte das aufgerufen werden !!!!");
+            return ;
+        }
         
         console.log("after await");
         let method = "createCatalog";
