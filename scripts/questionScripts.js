@@ -310,18 +310,35 @@
         return p;
     }
 
-    function createCatalog(e){
+    async function createCatalog(e){
+        console.log("befor await");
+        let catalogSettings = await getCatalogSettings();
+        
+        console.log("after await");
         let method = "createCatalog";
+        console.log(catalogSettings);
+        //TODO wie bekomme ich hier attribute!!!
+        let name = catalogSettings.name;
+        console.log("name: " + name);
+        let status = "";
+        if (catalogSettings.publicStatus == true){
+            status = "public";
+        }else{
+            status = "private";
+        }
 
         $.ajax({
 
             type: 'post',
             url: '/quizVerwaltung/doTransaction.php',
             data: {
-                method: method
+                method: method,
+                name: name,
+                status: status
             },
             success: function(response){
                 let jsonResponse = JSON.parse(response);
+                document.getElementById("catalogName").value = "";
 
                 if (jsonResponse.createResult === "cartEmpty"){
                     toastMsgBody.innerHTML = "Can't create catalog of Empty Cart. Please add some questions to be able to create a catalog.";
