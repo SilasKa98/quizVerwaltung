@@ -375,6 +375,14 @@ body{
     margin-top: 3%;
   }
 
+  .personRecommendationCardBody{
+    padding: 5px !important;
+  }
+
+  .personRecommendationCard{
+    margin-bottom: 1% !important;
+  }
+
   @media only screen and (max-width: 1199px) {
     #navOpenDrpDwnBtn {
       margin-left: 0 !important;

@@ -418,5 +418,37 @@
         });
     }
 
+    function getPersonRecommendations(){
+        let method = "getPersonRecommendations";
+        $.ajax({
+            type: "POST",
+            url: '/quizVerwaltung/doTransaction.php',
+            data: {
+                method: method
+            },
+            success: function(response) {
+              console.log(response);
+              let jsonResponse = JSON.parse(response);
+              console.log(jsonResponse);
+              let usernames = jsonResponse.matchingUsernames;
+              let firstnames = jsonResponse.matchingFirstnames;
+              let lastnames = jsonResponse.matchingLastnames;
+              let recommendationHolder = document.getElementById("recommendationPersonHolder");
+              for(let i=0;i<usernames.length;i++){
+                recommendationHolder.innerHTML += 
+                '<div class="card personRecommendationCard">'+
+                    '<div class="card-body personRecommendationCardBody">'+
+                        '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+usernames[i]+'" class="list-group-item list-group-item-action">'+
+                            firstnames[i]+' '+lastnames[i]+
+                            '<span class="text-muted"> @'+usernames[i]+'</span>'+
+                            '<img class="searchResultMiniPicture" style="margin-left: 1%;" src="/quizVerwaltung/media/defaultAvatar.png" width="20px">'+
+                        '</a>'+
+                    '</div>'+
+                '</div>';
+              }
+            }
+        });
+    }
+
 
 

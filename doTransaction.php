@@ -1047,4 +1047,63 @@ if(isset($_POST["method"]) && $_POST["method"] == "deleteUserAccount"){
     session_destroy();
 
 }
+
+if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
+    session_start();
+    $userId = $_SESSION["userData"]["userId"];
+    $currentUsername = $_SESSION["userData"]["username"];
+
+    $searchUserFilter = (['userId'=>$userId]);
+    $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+    $userFavoritTags = (array)$searchUser->favoritTags;
+    $userFollowings = (array)$searchUser->following;
+
+    $matchingUsernames = [];
+    $matchingFirstnames = [];
+    $matchingLastnames = [];
+
+    //get users by matching tags
+    foreach($userFavoritTags as $item){
+        $similarityFilter = (['favoritTags'=>$item]);
+        $searchUsersWithSimilarTags= $mongo->read("accounts",$similarityFilter);
+        foreach((array)$searchUsersWithSimilarTags as $foundUser){
+            if($foundUser->username != $currentUsername){
+                if (!in_array($foundUser->username, $matchingUsernames)){
+                    array_push($matchingUsernames,$foundUser->username);
+                    array_push($matchingFirstnames,$foundUser->firstname);
+                    array_push($matchingLastnames,$foundUser->lastname);
+                }
+            } 
+        }
+    }
+
+    //get users by followings of followings
+    foreach($userFollowings as $item){
+        $searchUserFollowingFilter = (['userId'=>$item]);
+        $searchUserFollowing = $mongo->findSingle("accounts",$searchUserFollowingFilter);
+        foreach((array)$searchUserFollowing->following as $foundUser){
+            if($foundUser != $userId && !in_array($foundUser, $userFollowings)){
+                $searchFoundUserFilter = (['userId'=>$foundUser]);
+                $searchFoundUser = $mongo->findSingle("accounts",$searchFoundUserFilter);
+                array_push($matchingUsernames, $searchFoundUser->username);
+                array_push($matchingFirstnames, $searchFoundUser->firstname);
+                array_push($matchingLastnames, $searchFoundUser->lastname);
+            }
+        }
+    }
+
+    //cut all Arrays at 15 to avoid too many stuff in the view field... (logic means from index 0 to 15)
+    $matchingUsernames =array_slice($matchingUsernames, 0, 15); 
+    $matchingFirstnames = array_slice($matchingFirstnames, 0, 15); 
+    $matchingLastnames = array_slice($matchingLastnames, 0, 15); 
+
+
+    $ajaxResponse = [
+        "matchingUsernames" => $matchingUsernames,
+        "matchingFirstnames" => $matchingFirstnames,
+        "matchingLastnames" => $matchingLastnames
+    ];
+
+    echo json_encode($ajaxResponse);
+}
 ?>

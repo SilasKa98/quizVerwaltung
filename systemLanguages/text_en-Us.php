@@ -21,6 +21,7 @@
     $profileInfoText = "Choose your favorite categories and always see what interests you.";
     $myProfileLink = "My Profile";
     $latestQuestionsFollowing = "Latest Questions of the People you are Following";
+    $personsYouMayKnow = "People who might interest you:";
 
 
     //Toast (index.php)

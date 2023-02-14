@@ -22,6 +22,7 @@
     $profileInfoText = "Wähle deine lieblings Kategorien und sehe immer was dich interessiert.";
     $myProfileLink = "Mein Profil";
     $latestQuestionsFollowing = "Neueste Fragen der Personen, denen Sie folgen";
+    $personsYouMayKnow = "Personen die Sie interessieren könnten:";
 
     //Toast (index.php)
     $toastTimeDisplay = "gerade eben";
