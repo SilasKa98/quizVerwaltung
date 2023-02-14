@@ -204,7 +204,7 @@
                     answer = createOptionsBubbles(jsonResponse.questionObject.options[jsonResponse.lang], jsonResponse.questionObject.answer);
                 } else {
                     answerType = "Answer";
-                    answer = questionObject.answer;
+                    answer = jsonResponse.questionObject.answer;
                 }
 
                 if (tags.length != 0){
