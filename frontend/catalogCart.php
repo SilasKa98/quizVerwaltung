@@ -19,7 +19,10 @@
   </div>
 
   <div class="container-fluid" align="center" style="margin-bottom: 10px;" id=catalogButtons>
-    <button type="button" name="exportButton" class="btn btn-primary" style="width: 40%;" onclick="createCatalog()">Katalog erstellen</button>
+    <!--<button type="button" name="exportButton" class="btn btn-primary" style="width: 40%;" onclick="createCatalog()">Katalog erstellen</button>-->
+    <button type="button" name="exportButton" class="btn btn-primary" style="width: 40%;" data-bs-toggle="modal" data-bs-target="#catalogOptions" onclick="createCatalog(this)">
+      Katalog erstellen
+    </button>
     
     <div class="btn-group">
       <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40%;">
@@ -35,3 +38,5 @@
 
   </div>
 </div>
+
+<?php include_once("modal_catalogOptions.php"); ?>
