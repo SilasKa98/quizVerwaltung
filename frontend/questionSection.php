@@ -23,10 +23,8 @@ $searchUserFavTagsFilter = (['userId'=>$_SESSION["userData"]["userId"]]);
 $searchUserFavTags = $mongoRead->findSingle("accounts",$searchUserFavTagsFilter);
 $userFavTags = (array)$searchUserFavTags->favoritTags;
 
-//limit the max shown questions on the lading page
-//TODO needs to be randomized in some sort of way... maybe also look for new created questions, highly upvoted questions etc.
-$favTagsOptions = ['limit' => 15];
-
+//limit the max shown questions on the lading page and also sort it by creationDate to get new ones
+$favTagsOptions = ['sort' => [ 'creationDate' => -1 ,'karma' => -1], 'limit'=> 15];
 
 if(!empty($userFavTags)){
     $filterQueryQuestionPrint = ['tags' => ['$in' => $userFavTags]];
@@ -41,6 +39,7 @@ foreach ($mongoData as $doc) {
     $fetchedQuestion = $question->parseReadInQuestion($doc);
     array_push($readyForPrintObjects,$fetchedQuestion);
 }
+
 
 echo '<div class="container-fluid" id="allQuestionWrapper">';
     foreach ($readyForPrintObjects as $doc) {
