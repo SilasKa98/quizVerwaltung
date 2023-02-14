@@ -269,6 +269,21 @@
         return answerPills;
     }
     
+    //check if save button clicked!!!!
+    async function submitCatalog(){
+        console.log("in submitCatalog");
+        buttonCheck = new Promise(function (resolve, reject){
+            var submit = document.getElementById("catalogSave");
+            submit.addEventListener('click', (event) => {
+                if(event){
+                    resolve(event);
+                }else{
+                    reject("errorEvent by catalogCreation"); //TODO scheint hier dann nicht komplett abzubrechen und später zweimal auszuführen !
+                }
+            });
+        });
+        return buttonCheck;
+    }
 
     function createCatalog(e){
         let method = "createCatalog";
