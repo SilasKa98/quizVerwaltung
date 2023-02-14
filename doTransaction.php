@@ -1068,7 +1068,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
         $searchUsersWithSimilarTags= $mongo->read("accounts",$similarityFilter);
         foreach((array)$searchUsersWithSimilarTags as $foundUser){
             if($foundUser->username != $currentUsername){
-                if (!in_array($foundUser->username, $matchingUsernames)){
+                if (!in_array($foundUser->username, $matchingUsernames) && !in_array($foundUser->userId, $userFollowings)){
                     array_push($matchingUsernames,$foundUser->username);
                     array_push($matchingFirstnames,$foundUser->firstname);
                     array_push($matchingLastnames,$foundUser->lastname);
