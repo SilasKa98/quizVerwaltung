@@ -630,7 +630,9 @@ if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
     include_once "cartService.php";
     session_start();
     $cartService = new CartService();
-    $createResult = $cartService->createCatalog();
+    $name = $_POST["name"];
+    $status = $_POST["status"];
+    $createResult = $cartService->createCatalog($name, $status);
 
     $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
     $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
