@@ -1092,6 +1092,12 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
         }
     }
 
+
+    //shuffle the arrays so its randomized and not only tag results
+    shuffle($matchingUsernames);
+    shuffle($matchingFirstnames);
+    shuffle($matchingLastnames);
+
     //cut all Arrays at 15 to avoid too many stuff in the view field... (logic means from index 0 to 15)
     $matchingUsernames =array_slice($matchingUsernames, 0, 15); 
     $matchingFirstnames = array_slice($matchingFirstnames, 0, 15); 
