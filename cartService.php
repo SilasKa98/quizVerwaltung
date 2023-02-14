@@ -4,15 +4,17 @@ include_once "mongoService.php";
 class Catalog{
     public $author;
     public $id;
+    public $name;
     public $questions = [];
     public $creationDate;
     public $modificationDate;
     public $status;
 
 
-    function __construct($author, $id, $questions, $creationDate, $modificationDate, $status){
+    function __construct($author, $id, $name, $questions, $creationDate, $modificationDate, $status){
         $this->author = $author;
         $this->id = $id;
+        $this->name = $name;
         $this->questions = $questions;
         $this->creationDate = $creationDate;
         $this->modificationDate = $modificationDate;
