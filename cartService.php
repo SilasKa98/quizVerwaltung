@@ -62,7 +62,7 @@ class CartService{
         return "successfullRemove";
     }
 
-    function createCatalog(){
+    function createCatalog($name, $status){
         $filterQuery = (['userId' => $this->userId]);
         //get all questions currently in the cart
         $result = $this->mongo->findSingle("accounts", $filterQuery);
@@ -76,7 +76,7 @@ class CartService{
 
             $dateNow = date("Y-m-d");
             $id = uniqid();
-            $catalog = new Catalog($result["username"], $id, $cart, $dateNow, $dateNow, "public"); //TODO noch machen das ein popup fragt ob public oder private
+            $catalog = new Catalog($result["username"], $id, $name, $cart, $dateNow, $dateNow, $status);
 
             //create a new entry in catalogs with the userId
             $this->mongo->insertSingle("catalog", $catalog);
