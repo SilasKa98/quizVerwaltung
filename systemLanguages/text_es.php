@@ -34,6 +34,8 @@
     $selectYourTagsHeader = "Seleccione las etiquetas adecuadas para la pregunta";
     $adjustButton = "Ajustar";
     $finalizeImportButton = "Preguntas frecuentes";
+    $giveTagsReminderAlert = "¡Atención! Si no asigna etiquetas a las preguntas, a otros usuarios les resultará difícil encontrar sus preguntas.";
+
 
     //userProfile.php
     $userHasNoQuestionsYet = "todavía no ha creado ninguna pregunta.";

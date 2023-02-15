@@ -36,6 +36,8 @@
     $selectYourTagsHeader = "Select the appropriate tags for the question";
     $adjustButton = "Adjust";
     $finalizeImportButton = "Import questions";
+    $giveTagsReminderAlert = "Attention! If you do not assign tags to the questions, it will be difficult for other users to find your questions.";
+
 
     //userProfile.php
     $userHasNoQuestionsYet = "hasn't created any questions yet.";

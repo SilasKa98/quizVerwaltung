@@ -38,3 +38,10 @@
     width: 100%;
     min-height: 130px;
 }
+
+
+#giveTagsReminderAlert{
+    width: 50%;
+    margin: 2% auto;
+    text-align: center;
+}

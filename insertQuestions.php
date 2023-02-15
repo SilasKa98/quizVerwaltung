@@ -28,7 +28,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
-    <body>
+    <body onload="callReminder()">
     <div id="response"></div>
 
         <div class="modal fade" id="changeActionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -124,7 +124,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">'.$key.'</h5>';
                                         if($key == "tags"){
-                                            echo'<p class="card-text" id="tagsCard_'.$qObj->id.'">'.$value.'</p>';
+                                            echo'<p class="card-text tagContext" id="tagsCard_'.$qObj->id.'">'.$value.'</p>';
                                             echo'<button onclick="changeTags(this,\''.$allTags.'\',tags_'.$qObj->id.',tagsCard_'.$qObj->id.')" class="btn btn-primary">'; echo $adjustButton; echo'</button>';
                                         }else{
                                             echo'<p class="card-text">'.$value.'</p>';
@@ -143,6 +143,12 @@
             }
             echo '</div>';
 
+            echo'
+            <div class="alert alert-danger" id="giveTagsReminderAlert" role="alert">
+               '.$giveTagsReminderAlert.'
+            </div>
+            ';
+
             echo '<button class="btn btn-primary btn-lg btn-block" role="button" onclick="finalizeImport()" id="finalImportBtn">'; echo $finalizeImportButton; echo'</button>';
         }
 
@@ -159,6 +165,28 @@
 
 
     <script>
+        
+        function callReminder(){
+            setInterval(function () {
+                let allTagHolders = document.querySelectorAll(".tagContext");
+                let countEmptys = 0;
+
+                for(let i=0;i<allTagHolders.length;i++){
+                    if(allTagHolders[i].innerHTML == "-"){
+                        countEmptys++;
+                    }
+                }
+
+                if(countEmptys >0){
+                    document.getElementById("giveTagsReminderAlert").style.display = "block";
+                }else{
+                    document.getElementById("giveTagsReminderAlert").style.display = "none";
+                }
+                
+            }, 1000);
+        }
+
+
         async function changeTags(e, allTags,tagsField, tagsCard){
             allTags = allTags.split(",");
             let tagsHolder = document.getElementById("tags_holder").innerHTML;
@@ -188,6 +216,10 @@
             let questionId = e.parentNode.parentNode.parentNode.children[0].value;
             tagsField.value = selectedTags.toString();
             tagsCard.innerHTML =selectedTags.toString();
+
+            if(selectedTags.length == 0){
+                tagsCard.innerHTML = "-";
+            }
 
         }   
 
