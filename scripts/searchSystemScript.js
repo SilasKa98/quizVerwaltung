@@ -48,7 +48,7 @@ $(document).ready(function(e) {
 
         for(let i=0;i<allMatchingIdsArray.length;i++){
           searchResultList.innerHTML += '<a style="display:inline-block"'+
-                                          'href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+jsonResponse.authorsOfTheMatches[i]+'&searchedQuestionId='+jsonResponse.allMatchingIds[i]+'#searchFocus"' +
+                                          'href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+jsonResponse.authorsOfTheMatches[i]+'&searchedQuestionId='+jsonResponse.allMatchingIds[i]+'&section=questions#searchFocus"' +
                                           'class="list-group-item list-group-item-action">'+
                                             '<p style="display: inline;">'+
                                                 jsonResponse.allMatchingQuestionStrings[i]
@@ -92,7 +92,7 @@ $(document).ready(function(e) {
           searchResultList.innerHTML = "";
 
           for(let i=0;i<allMatchingUsers.length;i++){
-            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+allMatchingUsers[i]+'"'+
+            searchResultList.innerHTML += '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+allMatchingUsers[i]+'&section=questions"'+
                                             ' class="list-group-item list-group-item-action">'+
                                               allMatchingFirstnames[i]+" "+allMatchingLastnames[i]+
                                               '<span class="text-muted"> @'+

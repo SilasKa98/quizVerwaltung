@@ -83,7 +83,7 @@ if (!isset($cartCount)){$cartCount = 0;}
                 </li>
 
                 <li class="nav-item dropdown" id="navOpenDrpDwnBtn">
-                        <a id="ankerWrapUserLink" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>">
+                        <a id="ankerWrapUserLink" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>&section=questions">
                             <p id="usernameLink">
                                 <?php echo $username; ?>
                             </p>
@@ -104,7 +104,7 @@ if (!isset($cartCount)){$cartCount = 0;}
                                 </form>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>"><?php echo $myProfileLink; ?></a>
+                                <a class="dropdown-item" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>&section=questions"><?php echo $myProfileLink; ?></a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/quizVerwaltung/frontend/usersSettings.php">Settings</a>

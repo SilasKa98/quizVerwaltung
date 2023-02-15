@@ -150,49 +150,60 @@
             </div>
             <div class="col-lg-8">
                 <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0"><?php echo $fullNameField; ?></p>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><?php echo $fullNameField; ?></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"><?php echo $foundProfile->firstname." ".$foundProfile->lastname;?></p>
+                            </div>
                         </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0"><?php echo $foundProfile->firstname." ".$foundProfile->lastname;?></p>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">E-mail</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"><?php echo $foundProfile->mail; ?></p>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">E-mail</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0"><?php echo $foundProfile->mail; ?></p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0"><?php echo $languageField; ?></p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0"><?php echo $foundProfile->userLanguage; ?></p>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><?php echo $languageField; ?></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"><?php echo $foundProfile->userLanguage; ?></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
                 <div class="col-lg-12">
                     <div class="card mb-4">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link <?php if($_GET["section"] == "questions"){ echo "active";}?>" aria-current="page" href="userProfile.php?profileUsername=<?php echo $visitedUserprofile;?>&section=questions">Questions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if($_GET["section"] == "catalog"){ echo "active";}?>" href="userProfile.php?profileUsername=<?php echo $visitedUserprofile;?>&section=catalog">Catalogs</a>
+                            </li>
+                        </ul>
                         <div class="card-body" id="userprofileQuestionWrapper">
                             <?php
+                            if($_GET["section"] == "questions"){
                                 foreach ($readyForPrintQuestions as $doc) {
                                     $printer->printQuestion($doc);
                                 }
-                            ?>
 
-                            <?php
                                 if(count($readyForPrintQuestions) == 0){
                                     echo"<p id='noQuestionsYetText'>".$foundProfile->username." ".$userHasNoQuestionsYet."</p>";
                                 }
+                            }
+                            if($_GET["section"] == "catalog"){
+                                echo"<p id='noQuestionsYetText'>print all catalogs here</p>";
+                            }
                             ?>
                         </div>
                     </div>
@@ -208,6 +219,7 @@
 
     <script src="/quizVerwaltung/scripts/questionScripts.js"></script>
     <script>
+
         function follow(followedUserId){
             let method = "changeFollower";
             $.ajax({
@@ -258,7 +270,7 @@
                     let followerLastnames = jsonResponse.followerLastnames;
                     followerModalBody.innerHTML = "";
                     for(let i=0;i<followerUsernames.length;i++){
-                        followerModalBody.innerHTML += "<a class='followerLink' href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+followerUsernames[i]+"'><p>"+
+                        followerModalBody.innerHTML += "<a class='followerLink' href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+followerUsernames[i]+"&section=questions'><p>"+
                                                             followerFirstnames[i]+" "+followerLastnames[i]+" @"+followerUsernames[i]+
                                                             "<img class='searchResultMiniPicture' src='/quizVerwaltung/media/defaultAvatar.png' width=20px>"
                                                         "</p></a>";
@@ -286,7 +298,7 @@
                     let followingLastnames = jsonResponse.followingLastnames;
                     followingModalBody.innerHTML = "";
                     for(let i=0;i<followingUsernames.length;i++){
-                        followingModalBody.innerHTML += "<a class='followerLink' href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+followingUsernames[i]+"'><p>"+
+                        followingModalBody.innerHTML += "<a class='followerLink' href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+followingUsernames[i]+"&section=questions'><p>"+
                                                             followingFirstnames[i]+" "+followingLastnames[i]+" @"+followingUsernames[i]+
                                                             "<img class='searchResultMiniPicture' src='/quizVerwaltung/media/defaultAvatar.png' width=20px>"
                                                         "</p></a>";

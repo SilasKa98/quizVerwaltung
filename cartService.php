@@ -172,7 +172,7 @@ class CartService{
                                     <p 'question-text'> $answerType : $answer</p>
                                     <p 'question-text'> Tags: $tagBadges</p>
                                     <p 'question-text'> Author: 
-                                        <a href='/quizVerwaltung/frontend/userProfile.php?profileUsername=$author'>
+                                        <a href='/quizVerwaltung/frontend/userProfile.php?profileUsername=$author&section=questions'>
                                             <span class='badge rounded-pill bg-primary authorPill' style='margin-right: 2px;'> $author</span>
                                         </a>
                                     </p>

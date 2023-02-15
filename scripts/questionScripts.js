@@ -237,7 +237,7 @@
                                                         "<p 'question-text'> " + answerType + ": " + answer + "</p>" + 
                                                         "<p 'question-text'> Tags: " + tagBadges + "</p>" + 
                                                         "<p 'question-text'> Author: " + 
-                                                            "<a href='/quizVerwaltung/frontend/userProfile.php?profileUsername=$author'>" + 
+                                                            "<a href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+author+"&section=questions'>" + 
                                                                 "<span class='badge rounded-pill bg-primary authorPill' style='margin-right: 2px;'>"+ author + "</span>" + 
                                                             "</a>" + 
                                                         "</p>" + 
@@ -483,7 +483,7 @@
                     '<div class="card recentQuestionWrapper">'+
                         '<div class="card-body">'+
                             '<p class="recentQuestionText">'+followedQuestionsArray[i]+'</p>'+
-                            '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+followedUsersArray[i]+'"><span class="badge rounded-pill text-bg-primary recentUserPill">@'+followedUsersArray[i]+'</span></a>'+
+                            '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+followedUsersArray[i]+'&section=questions"><span class="badge rounded-pill text-bg-primary recentUserPill">@'+followedUsersArray[i]+'</span></a>'+
                             '<span class="badge text-bg-secondary recentDatePill">'+followedCreationDateArray[i]+'</span>'+
                         '</div>'+
                     '</div>'
@@ -512,7 +512,7 @@
                 recommendationHolder.innerHTML += 
                 '<div class="card personRecommendationCard">'+
                     '<div class="card-body personRecommendationCardBody">'+
-                        '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+usernames[i]+'" class="list-group-item list-group-item-action">'+
+                        '<a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='+usernames[i]+'&section=questions" class="list-group-item list-group-item-action">'+
                             firstnames[i]+' '+lastnames[i]+
                             '<span class="text-muted"> @'+usernames[i]+'</span>'+
                             '<img class="searchResultMiniPicture" style="margin-left: 1%;" src="/quizVerwaltung/media/defaultAvatar.png" width="20px">'+
