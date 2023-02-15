@@ -30,10 +30,17 @@
     $foundProfile= $mongo->findSingle("accounts",$filterQueryUserprofile,[]);
 
 
+    //get all catalogs of this user
+    $filterQueryCatalogs = ['author' => $foundProfile->username];
+    $usersCatalogs = $mongo->read("catalog", $filterQueryCatalogs);
+    $readyForPrintCatalogs = [];
+    foreach ($usersCatalogs as $doc) {
+        array_push($readyForPrintCatalogs,$doc);
+    }
+
     //get all questions of this user
     $filterQuery = ['author' => $foundProfile->username];
-    $options = [];
-    $usersQuestions = $mongo->read("questions", $filterQuery, $options);
+    $usersQuestions = $mongo->read("questions", $filterQuery);
 
     $readyForPrintQuestions = [];
     $totalKarmaEarned = 0;
@@ -184,10 +191,10 @@
                     <div class="card mb-4">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link <?php if($_GET["section"] == "questions"){ echo "active";}?>" aria-current="page" href="userProfile.php?profileUsername=<?php echo $visitedUserprofile;?>&section=questions">Questions</a>
+                                <a class="nav-link <?php if($_GET["section"] == "questions"){ echo "active";}?>" aria-current="page" href="userProfile.php?profileUsername=<?php echo $visitedUserprofile;?>&section=questions"><?php echo $questionsTabText;?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link <?php if($_GET["section"] == "catalog"){ echo "active";}?>" href="userProfile.php?profileUsername=<?php echo $visitedUserprofile;?>&section=catalog">Catalogs</a>
+                                <a class="nav-link <?php if($_GET["section"] == "catalog"){ echo "active";}?>" href="userProfile.php?profileUsername=<?php echo $visitedUserprofile;?>&section=catalog"><?php echo $catalogsTabText;?></a>
                             </li>
                         </ul>
                         <div class="card-body" id="userprofileQuestionWrapper">
@@ -202,7 +209,13 @@
                                 }
                             }
                             if($_GET["section"] == "catalog"){
-                                echo"<p id='noQuestionsYetText'>print all catalogs here</p>";
+                                foreach ($readyForPrintCatalogs as $doc) {
+                                    $printer->printCatalog($doc);
+                                }
+
+                                if(count($readyForPrintCatalogs) == 0){
+                                    echo"<p id='noQuestionsYetText'>".$foundProfile->username." ".$userHasNoCatalogsYet."</p>";
+                                }
                             }
                             ?>
                         </div>

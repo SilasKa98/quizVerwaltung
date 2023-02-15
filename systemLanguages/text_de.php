@@ -39,6 +39,7 @@
 
     //userProfile.php
     $userHasNoQuestionsYet = "hat noch keine Fragen erstellt.";
+    $userHasNoCatalogsYet = "hat noch keine Kataloge";
     $fullNameField = "Name";
     $languageField = "Sprache";
     $userTotalKarmaOwned = "Verdientes Karma:";
@@ -48,6 +49,8 @@
     $notFollowedBtnText = "Folgen";
     $showFollowerText = "Follower";
     $showFollowingText = "Gefolgt";
+    $questionsTabText = "Fragen";
+    $catalogsTabText = "Kataloge";
 
     //navbar.php
     $searchResultUsersHeader = "Nutzer";

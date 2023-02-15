@@ -1,6 +1,7 @@
 <?php
 include_once "karmaService.php";
 include_once "mongoService.php";
+include_once "questionService.php";
 
 class Printer{
 
@@ -141,6 +142,48 @@ class Printer{
                 </div>      
             ';
         }
+    }
+
+    function printCatalog($catalogObject){
+        $mongo = new MongoDbService();
+        $printer = new Printer();
+
+        //find QuestionLangRelation of current user:
+        $searchUserFilter = (['userId'=>$this->currentUserId]);
+        $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
+        $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
+
+        print'
+        <div class="card questionCard">
+            <div class="card-header">
+                <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$catalogObject->id.'">
+                    <span id="headerText_'.$catalogObject->id.'">'.$catalogObject->name.'</span>
+                </a>
+            </div>
+            <div class="collapse" id="collapsable_'.$catalogObject->id.'">
+                <div class="card-body">';
+
+                //print each question of the catalog with the printQuestion function
+                    foreach($catalogObject->questions as $question){
+                        $searchQuestionFilter = (['id'=>$question]);
+                        $searchQuestion = $mongo->read("questions",$searchQuestionFilter,[]);
+                        $readyForPrintQuestions = [];
+                        foreach ($searchQuestion as $doc) {
+                            $question = new QuestionService();
+                            $fetchedQuestion = $question->parseReadInQuestion($doc);
+                            array_push($readyForPrintQuestions,$fetchedQuestion);
+                        }
+
+                        foreach ($readyForPrintQuestions as $doc) {
+                            $printer->printQuestion($doc);
+                        }
+                    }
+
+                print'  
+                </div>
+            </div>
+        </div>
+        ';
     }
 }
 
