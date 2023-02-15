@@ -154,35 +154,36 @@ class Printer{
         $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
 
         print'
-        <div class="card questionCard">
-            <div class="card-header">
-                <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$catalogObject->id.'">
-                    <span id="headerText_'.$catalogObject->id.'">'.$catalogObject->name.'</span>
-                </a>
-            </div>
-            <div class="collapse" id="collapsable_'.$catalogObject->id.'">
-                <div class="card-body">';
+            <div class="card catalogCard">
+                <div class="card-header catalogHeader">
+                <img src="/quizVerwaltung/media/cubes.svg" class="catalogIcon" width=30px>
+                    <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$catalogObject->id.'">
+                        <span id="headerText_'.$catalogObject->id.'">'.$catalogObject->name.'</span>
+                    </a>
+                </div>
+                <div class="collapse" id="collapsable_'.$catalogObject->id.'">
+                    <div class="card-body">';
 
-                //print each question of the catalog with the printQuestion function
-                    foreach($catalogObject->questions as $question){
-                        $searchQuestionFilter = (['id'=>$question]);
-                        $searchQuestion = $mongo->read("questions",$searchQuestionFilter,[]);
-                        $readyForPrintQuestions = [];
-                        foreach ($searchQuestion as $doc) {
-                            $question = new QuestionService();
-                            $fetchedQuestion = $question->parseReadInQuestion($doc);
-                            array_push($readyForPrintQuestions,$fetchedQuestion);
+                    //print each question of the catalog with the printQuestion function
+                        foreach($catalogObject->questions as $question){
+                            $searchQuestionFilter = (['id'=>$question]);
+                            $searchQuestion = $mongo->read("questions",$searchQuestionFilter,[]);
+                            $readyForPrintQuestions = [];
+                            foreach ($searchQuestion as $doc) {
+                                $question = new QuestionService();
+                                $fetchedQuestion = $question->parseReadInQuestion($doc);
+                                array_push($readyForPrintQuestions,$fetchedQuestion);
+                            }
+
+                            foreach ($readyForPrintQuestions as $doc) {
+                                $printer->printQuestion($doc);
+                            }
                         }
 
-                        foreach ($readyForPrintQuestions as $doc) {
-                            $printer->printQuestion($doc);
-                        }
-                    }
-
-                print'  
+                    print'  
+                    </div>
                 </div>
             </div>
-        </div>
         ';
     }
 }

@@ -121,6 +121,27 @@ body{
     border-top-right-radius: 0px !important;
   }
 
+  .catalogIcon{
+    float: left;
+  }
+  
+  .catalogCard{
+    margin-bottom: 1% !important;
+    margin-right: 2% !important;
+    padding: 2% !important;
+    background-color: #cbcaca !important;
+    /*float: left;*/
+  }
+
+  .catalogHeader{
+    background: none !important;
+    border: none !important;
+    padding: 2%;
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+  }
+
   #profileAvatar{
     border-radius: 74px !important;
     border: 3px solid black;
