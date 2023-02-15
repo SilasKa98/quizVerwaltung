@@ -4,6 +4,10 @@
     header("Location: frontend/loginAccount.php");
     exit();
   }
+  if($_POST['inputFile'] == ""){
+    header("Location:frontend/frontend_insertQuestion.php");
+    exit();
+  }
   extract($_SESSION["userData"]);
 
   //get the selected userLanguage to display the system in the right language
@@ -182,7 +186,7 @@
                 }else{
                     document.getElementById("giveTagsReminderAlert").style.display = "none";
                 }
-                
+
             }, 1000);
         }
 
