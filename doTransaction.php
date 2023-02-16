@@ -40,7 +40,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
     }
     
     //check if question is already translated in this language
-    if(array_key_exists($_POST["selLanguage"],$fetchedQuestion[0]->question)){
+    if(array_key_exists($_POST["selLanguage"],(array)$fetchedQuestion[0]->question)){
         echo "Translation already exists!";
         exit();
     }
@@ -62,7 +62,6 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
     }
 
     if(isset($fetchedQuestion[0]->options)){
-        print_r($translatedQuestion);
         $newOptions = (array)$translatedQuestion[0]->options->$sourceLanguage;
 
         //first get all question versions that exist
