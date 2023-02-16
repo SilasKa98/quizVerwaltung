@@ -8,7 +8,7 @@ async function changeQuestionTags(id){
 
     //select the choosen tags when the save button is pressed and procceed with the steps to save them
     var selectedTags = [];
-    let allBtnTags = document.querySelectorAll(".btn-check");
+    let allBtnTags = document.querySelectorAll(".tagBtn");
     console.log(allBtnTags);
     for(let i=0;i<allBtnTags.length;i++){
         if(allBtnTags[i].checked){
