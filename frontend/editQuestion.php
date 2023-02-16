@@ -91,7 +91,7 @@ if(isset($isAdmin) && $isAdmin == true){
             <div class="modal-body" id="ChangeModal-body">
                 <div class="btn-group" role="group" id="tags_holder" aria-label="Basic checkbox toggle button group">
                     <?php foreach((array)$allTagsObj->allTags as $key => $tag){ ?>
-                        <input type="checkbox" name="<?php echo $tag; ?>" class="btn-check" id="btncheck<?php echo $key;?>" <?php if(in_array($tag, (array)$tags)){ echo"checked"; } ?>>
+                        <input type="checkbox" name="<?php echo $tag; ?>" class="btn-check tagBtn" id="btncheck<?php echo $key;?>" <?php if(in_array($tag, (array)$tags)){ echo"checked"; } ?>>
                         <label class="btn btn-outline-secondary tagsBtn" for="btncheck<?php echo $key; ?>"><?php echo $tag; ?></label>
                     <?php } ?>
                 </div>
