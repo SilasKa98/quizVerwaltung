@@ -3,6 +3,7 @@
 
         private $dom;
         private $catalogName;
+        private $root;
 
         function __construct($catalogName){
             $this->dom = new DOMDocument();
@@ -11,21 +12,124 @@
             $this->dom->formatOutput = true;
 
             $this->catalogName = $catalogName;
-
-            $this->dom->createElement('quiz');
+            $this->root = $this->dom->createElement('quiz');
         }
 
-        function parseQuestionObject($questionType){
-            //TODO je nach type wird dann eine andere XML classe verwendet bzw. geparsed
+        function parseQuestionObject($questionObject){
+            $questionSection = $this->dom->createElement('question');
+            $questionType = $questionObject->questionType;
+
+            //Question Type separation
+            switch($questionType) {
+                case 'Options':
+                    $questionType = 'multioptions';
+                    $questionClass = new MultiChoiceQuestion($questionObject, $this->dom);
+                    break;
+                case 'MultiOptions':
+                    $questionType = 'multioptions';
+                    $questionClass = new MultiChoiceQuestion($questionObject, $this->dom);
+                    break;
+                case 'Open':
+                    $questionType = 'shortanswer';
+                    $questionClass = new OpenQuestion($questionObject, $this->dom);
+                    break;
+                case 'YesNo':
+                    $questionType = 'truefalse';
+                    $questionClass = new YesNoQuestion($questionObject, $this->dom);
+                    break;
+                default:
+                    //TODO
+            }
+            /*
+            Fragetypen die noch gemacht werden müssen => Order
+            */
+
+            $questionType = new DOMAttr('type', $questionType);
+            $questionSection->setAttributeNode($questionType);
+
+            $questionTextSection = $this->dom->createElement('questiontext');
+            $questionText = $this->dom->createElement('text', $questionObject->question->de); //TODO sprachen auslesen aus db !!!!
+            $questionTextSection->appendChild($questionText);
+            $questionSection->appendChild($questionTextSection);
+
+            $questionBodyFinished = $questionClass->getQuestionBodyAsDom($questionSection);
+            $this->root->appendChild($questionBodyFinished);
         }
 
         function saveXML(){
-            $this->dom->saveXML("moodleXML/".$this->catalogName."xml");
+            $this->dom->appendChild($this->root);
+            $this->dom->save("moodleXML/".$this->catalogName.".xml");
         }
     }
 
-    class MultiChoiceQuestion{
 
+    class Question {
+        function __construct($questionObject, $dom){
+            $this->questionObject = $questionObject;
+            $this->dom = $dom;
+        }
+        
+        function getQuestionBodyAsDom($questionSection){
+            return $questionSection;
+        }
+
+        function createFeedback($fraction){
+            $feedback = $this->dom->createElement('feedback');
+            if ($fraction != '0') {
+                $text = $this->dom->createElement('text', 'Correct!');
+            }else {
+                $text = $this->dom->createElement('text', 'Incorrect :(');
+            }
+            $feedback->appendChild($text);
+
+            return $feedback;
+        }
     }
 
+    class MultiChoiceQuestion extends Question {
+        function getQuestionBodyAsDom($questionSection){
+            return; //TODO angepasst an Fragetyp
+        }
+    }
+
+    class OpenQuestion extends Question {
+        function getQuestionBodyAsDom($questionSection){
+            return; //TODO angepasst an Fragetyp
+        }
+    }
+
+    class YesNoQuestion extends Question {
+        function getQuestionBodyAsDom($questionSection){
+            $answer = $this->questionObject->answer;
+
+            for ($i=0; $i < 2; $i++) { 
+                if ($i == 0) {
+                    $text = $this->dom->createElement('text', 'True');
+                    if ($answer == 'true') {
+                       $fraction = '100';
+                    }else {
+                        $fraction = '0';
+                    }
+                }else{
+                    $text = $this->dom->createElement('text', 'False');
+                    if ($answer == 'false') {
+                        $fraction = '100';
+                     }else {
+                         $fraction = '0';
+                     }
+                }
+                $answerSection = $this->dom->createElement('answer');
+                $answerAttribute = new DOMAttr('fraction', $fraction);
+                $answerSection->setAttributeNode($answerAttribute);
+                $feedback = $this->createFeedback($fraction);
+
+                $answerSection->appendChild($text);
+                $answerSection->appendChild($feedback);
+
+                $questionSection->appendChild($answerSection);
+            }
+
+            return $questionSection;
+        }
+    }
 ?>
