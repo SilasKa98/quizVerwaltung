@@ -1113,4 +1113,21 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
 
     echo json_encode($ajaxResponse);
 }
+
+if(isset($_POST["method"]) && $_POST["method"] == "moodleExport"){
+    session_start();
+    $userId = $_SESSION["userData"]["userId"];
+
+    $exportParser;
+    if($_POST["exportType"] == "moodle"){
+        $exportParser = new MoodleXMLParser("newCatalog"); //TODO hier irgendwie dynamisch noch den Namen aus der Form Control holen
+    }
+
+    //get question cart
+    $filterQuery = (['userId' => $userId]);
+    $searchUser = $mongo->findSingle('accounts', $filterQuery);
+
+    $userCart = (array)$searchUser->questionCart;
+    var_dump('<script>console.log( '+ $userCart +'); </script>');
+}
 ?>
