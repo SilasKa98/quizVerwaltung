@@ -58,7 +58,7 @@
 
         function saveXML(){
             $this->dom->appendChild($this->root);
-            $this->dom->save("moodleXML/".$this->catalogName.".xml");
+            $this->dom->save("catalogExports/".$this->catalogName.".xml");
         }
     }
 
@@ -88,7 +88,43 @@
 
     class MultiChoiceQuestion extends Question {
         function getQuestionBodyAsDom($questionSection){
-            return; //TODO angepasst an Fragetyp
+            $answerArray = explode(',', ($this->questionObject->answer));
+            $options = (array)$this->questionObject->options->de; //TODO hier müssen noch die anderen Sprachen angepasst werden !!!!
+            var_dump($options);
+            print("<hr>");
+            $fraction;
+
+            foreach ($options as $index => $option) {
+                if (in_array($index, $answerArray)) {
+                    $fraction = "100";
+                }else{
+                    $fraction = "0";
+                }
+                $answerSection = $this->dom->createElement('answer');
+                $answerAttribute = new DOMAttr('fraction', $fraction);
+                $answerSection->setAttributeNode($answerAttribute);
+                //option Text
+                $text = $this->dom->createElement('text', $option);
+                $feedback = $this->createFeedback($fraction);
+
+                $answerSection->appendChild($text);
+                $answerSection->appendChild($feedback);
+                $questionSection->appendChild($answerSection);
+            }
+            
+            $shuffel = $this->dom->createElement('shuffleanswers', '1');
+            if (count($answerArray) > 1) {
+                $single = $this->dom->createElement('single', 'false');
+            }else{
+                $single = $this->dom->createElement('single', 'true');
+            }
+            $numbering = $this->dom->createElement('answernumbering', 'ABC');
+
+            $questionSection->appendChild($shuffel);
+            $questionSection->appendChild($single);
+            $questionSection->appendChild($numbering);
+
+            return $questionSection;
         }
     }
 
