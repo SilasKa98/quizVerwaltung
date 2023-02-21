@@ -7,20 +7,22 @@
       </div>
       <div class="modal-body">  
 
-        <select class="form-select" aria-label="Default select example" id="exportTypesList" name="exportTypes">
-          <option value="" disabled selected>Export type (default 'Standard')</option>
-          <option value="Moodle">Moodle XML</option>
-          <option value="TODO">TODO</option>
-          <option value="Standard">Standard</option>
-        </select>
-        <br>
-        <input type="text" class="form-control" id="catalogName" placeholder="Please name your export (default 'newCatalog')">
-        <hr>
-        <button class="btn btn-outline-primary"
-          data-bs-dismiss="modal" id="download" style="width: 100%">
-          Download
-        </button>
-
+        <form action="/quizverwaltung/doTransaction.php" method="post" value="download">
+          <select class="form-select" aria-label="Default select example" id="exportTypesList" name="exportTypes">
+            <option value="" disabled selected>Export type (default 'Standard')</option>
+            <option value="Moodle">Moodle XML</option>
+            <option value="TODO">TODO</option>
+            <option value="Standard">Standard</option>
+          </select>
+          <br>
+          <input type="text" class="form-control" id="catalogName" placeholder="Please name your export (default 'newCatalog')">
+          <hr>
+          <button class="btn btn-outline-primary"
+            data-bs-dismiss="modal" id="download" style="width: 100%">
+            Download
+          </button>
+        <form>
+        
         </div>
       </div>
     </div>
