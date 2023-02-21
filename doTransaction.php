@@ -1114,7 +1114,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
     echo json_encode($ajaxResponse);
 }
 
-if(isset($_POST["method"]) && $_POST["method"] == "moodleExport"){
+if(isset($_POST["method"]) && $_POST["method"] == "download"){
+    print("<script>console.log('hier das sollte dann auf der Console ausgegeben werden!'); </script>");
     session_start();
     $userId = $_SESSION["userData"]["userId"];
 
