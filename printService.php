@@ -132,6 +132,7 @@ class Printer{
                                     print'</p>';
                                 }
 
+                                print'<p "card-text">Downloads: '.$questionObject[$i]->downloadCount."</p>";
                                 print'<p "card-text">Author: <a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
                             print'</div>
                         </div>
@@ -146,6 +147,7 @@ class Printer{
         $printer = new Printer();
 
         print'
+            <button class="exportCatalogBtn btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exportDownload" onclick="insertCatalogNameInExportfield(\''.$catalogObject->name.'\',\''.$catalogObject->id.'\')">Export</button>
             <div class="card catalogCard">
                 <div class="card-header catalogHeader">
                 <img src="/quizVerwaltung/media/cubes.svg" class="catalogIcon" width=30px>

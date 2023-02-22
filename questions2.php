@@ -5,7 +5,7 @@ class Question {
   public $answer;
 
 
-  public function __construct($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate) {
+  public function __construct($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount) {
     $this->question =  $question;
     $this->answer  = $answer;
     $this->id = $id;
@@ -16,7 +16,8 @@ class Question {
     $this->tags = $tags;
     $this->karma = $karma;
     $this->author = $author;
-    $this->verification = "";
+    $this->verification = $verification;
+    $this->downloadCount = $downloadCount;
   }
 
 }
@@ -45,7 +46,7 @@ class MultiLineQuestion extends Question{
 class OptionsQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -57,7 +58,8 @@ class OptionsQuestion extends Question{
     $this->tags = $tags;
     $this->karma = $karma;
     $this->author = $author;
-    $this->verification = "";
+    $this->verification = $verification;
+    $this->downloadCount = $downloadCount;
   }
 }
 
@@ -68,7 +70,7 @@ class MultiOptionsQuestion extends OptionsQuestion{
 class OrderQuestion extends Question{
   public $options;
 
-  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate) {
+  public function __construct($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount) {
     $this->question = $question;
     $this->answer  = $answer;
     $this->options = $options;
@@ -80,7 +82,8 @@ class OrderQuestion extends Question{
     $this->tags = $tags;
     $this->karma = $karma;
     $this->author = $author;
-    $this->verification = "";
+    $this->verification = $verification;
+    $this->downloadCount = $downloadCount;
   }
 }
 
@@ -110,29 +113,31 @@ function parseLine( $line ) {
   $creationDate = date("Y-m-d");
   $modificationDate = date("Y-m-d");
 
+  $verification = "not verified";
+  $downloadCount = 0;
 	if( $parts[0] == "YesNo" ) {
-		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate);
+		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "RegOpen" ) {
-		return new RegOpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate);
+		return new RegOpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "Open" ) {
-		return new OpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate);
+		return new OpenQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "Correct" ) {
-		return new CorrectQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate);
+		return new CorrectQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "Order" ) {
-		return new OrderQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate);
+		return new OrderQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "Options" ) {
-		return new OptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate);
+		return new OptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "MultiOptions" ) {
-		return new MultiOptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate);
+		return new MultiOptionsQuestion( [$language=>$parts[1]], $parts[2], [$language=>array_slice($parts,3)], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "Dyn" ) {
 		$func = $parts[1];
 		if( method_exists( "Dyn", $func ) ) {
 			return Dyn::{$func}();
 		} else {
-			return new Question( "-", "", "", "", "", "", "", "", "", "");
+			return new Question( "-", "", "", "", "", "", "", "", "", "", "", "");
 		}
 	} else {
-		return new Question( "-", "", "", "", "", "", "", "", "", "");
+		return new Question( "-", "", "", "", "", "", "", "", "", "", "", "");
 	}
 }
 

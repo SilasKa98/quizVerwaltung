@@ -19,9 +19,25 @@ class QuestionService{
         return $encodedJson = json_encode($questionObject, JSON_PRETTY_PRINT);
     }
 
+    function increaseDownloadCount($questionId){
+        include_once "mongoService.php";
+        $mongo = new MongoDBService();
+        $filterQueryQuestion = (['id' => $questionId]);
+        $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
+
+        if(!isset($searchQuestion->downloadCount)){
+            $downloadCount = 0;
+        }else{
+            $downloadCount = $searchQuestion->downloadCount;
+        }
+        $newDownloadCount = $downloadCount+1;
+        
+        $updateDownloadCounter = ['$set' =>  ['downloadCount' => $newDownloadCount]];
+        $mongo->updateEntry("questions",$filterQueryQuestion,$updateDownloadCounter);   
+    }
+
 
     function parseReadInQuestion($questionObject){
-
         $questionType = $questionObject->questionType;
         $question = $questionObject->question->jsonSerialize();
         $answer = $questionObject->answer;
@@ -32,24 +48,26 @@ class QuestionService{
         $tags = $questionObject->tags;
         $creationDate = $questionObject->creationDate;
         $modificationDate = $questionObject->modificationDate;
+        $verification = $questionObject->verification;
+        $downloadCount = $questionObject->downloadCount;
 
         if( $questionType == "YesNo" ) {
-            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate);
+            $formattedQuestion = new YesNoQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
         } else if( $questionType == "RegOpen" ) {
-            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate);
+            $formattedQuestion = new RegOpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
         } else if( $questionType == "Open" ) {
-            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate);
+            $formattedQuestion = new OpenQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
         } else if( $questionType == "Correct" ) {
-            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate);
+            $formattedQuestion = new CorrectQuestion($question, $answer, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
         } else if( $questionType == "Order" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate);
+            $formattedQuestion = new OrderQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
         } else if( $questionType == "Options" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate);
+            $formattedQuestion = new OptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
         } else if( $questionType == "MultiOptions" ) {
             $options = $questionObject->options;
-            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate);
+            $formattedQuestion = new MultiOptionsQuestion($question, $answer, $options, $questionType, $version, $id, $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
         } else if( $questionType == "Dyn" ) {
             /*
             $func = $parts[1];
@@ -60,7 +78,7 @@ class QuestionService{
             }
             */
         } else {
-            $formattedQuestion = new Question( "-", "", "", "", "", "", "", "", "", "");
+            $formattedQuestion = new Question( "-", "", "", "", "", "", "", "", "", "", "", "");
         }
         return [$formattedQuestion];
     }

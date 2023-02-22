@@ -301,7 +301,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
         $value["version"] = $version;
         $value["karma"] = 0;
         $value["author"] = $_SESSION["userData"]["username"];
-        $value["verification"] = "";
+        $value["verification"] = "not verified";
+        $value["downloadCount"] = 0;
         print_r($value);
         $mongo->insertMultiple("questions",[$value]);
     }
@@ -1133,13 +1134,61 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
 
     $userCart = (array)$searchUser->questionCart;
 
+    $questionService = new QuestionService();
+
     foreach($userCart as $cartQuestionId){
         $filterQueryQuestion = (['id' => $cartQuestionId]);
         $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
         $exportParser->parseQuestionObject($searchQuestion);
+
+        $questionService->increaseDownloadCount($cartQuestionId);
     }
 
     $exportParser->saveXML();
 }
+
+
+if(isset($_POST["method"]) && $_POST["method"] == "downloadCatalog"){
+
+    session_start();
+    $userId = $_SESSION["userData"]["userId"];
+
+    //get catalog
+    $catalogId = $_POST["downloadCatalogId"];
+    $filterQuery = (['id' => $catalogId]);
+    $searchCatalog = $mongo->findSingle('catalog', $filterQuery);
+    if(!isset($searchCatalog)){
+        //if id isnt existing, go exit. Id got illegally changed by user
+        header("LOCATION: index.php?error=illegalId");
+        exit();
+    }
+
+    if(isset($_POST["exportName"])){
+        $exportName = $_POST["exportName"];
+    }else{
+        $exportName = "newCatalog";
+    }
+
+    $exportParser;
+    if($_POST["exportType"] == "Moodle"){
+        include_once "moodleXMLParser.php";
+        $exportParser = new MoodleXMLParser($exportName);
+    }
+
+    $catalogQuestions = (array)$searchCatalog->questions;
+  
+    $questionService = new QuestionService();
+
+    foreach($catalogQuestions as $cartQuestionId){
+        $filterQueryQuestion = (['id' => $cartQuestionId]);
+        $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
+        $exportParser->parseQuestionObject($searchQuestion);
+
+        $questionService->increaseDownloadCount($cartQuestionId);
+    }
+
+    $exportParser->saveXML();
+}
+
 
 ?>
