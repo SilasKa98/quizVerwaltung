@@ -2,6 +2,7 @@
 include_once "karmaService.php";
 include_once "mongoService.php";
 include_once "questionService.php";
+include_once "accountService.php";
 
 class Printer{
 
@@ -11,6 +12,7 @@ class Printer{
 
 
     function printQuestion($questionObject){
+        $account = new AccountService();
         $karmaObj = new KarmaService();
         $userKarmaGiven = $karmaObj->getKarmaUserRelation($this->currentUserId);
         $userKarmaGivenUp = (array)$userKarmaGiven->up;
@@ -22,19 +24,12 @@ class Printer{
         //find QuestionLangRelation of current user:
         $searchUserFilter = (['userId'=>$this->currentUserId]);
         $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
-        $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
         $isUserAdmin = $searchUser["isAdmin"];
 
 
         for($i=0;$i<count($questionObject);$i++){
             
-            $lang = array_search($questionObject[$i]->id,$questionLanguageRelation);
-
-            //check if there is no language set for this question by the user
-            if(!$lang){
-                //get the first key of the question so it can be used to set it as the default language
-                $lang = array_key_first((array)$questionObject[$i]->question);
-            }
+            $lang = $account->getUserQuestionLangRelation($this->currentUserId, $questionObject[$i]->id);
                
             //find all available translation for this question to display it in the <select> dropdown for questionLanguage selection
             $filterQuery = (['id' => $questionObject[$i]->id]);
@@ -147,11 +142,6 @@ class Printer{
     function printCatalog($catalogObject){
         $mongo = new MongoDbService();
         $printer = new Printer();
-
-        //find QuestionLangRelation of current user:
-        $searchUserFilter = (['userId'=>$this->currentUserId]);
-        $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
-        $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
 
         print'
             <div class="card catalogCard">

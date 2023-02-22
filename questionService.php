@@ -22,7 +22,6 @@ class QuestionService{
 
     function parseReadInQuestion($questionObject){
 
-
         $questionType = $questionObject->questionType;
         $question = $questionObject->question->jsonSerialize();
         $answer = $questionObject->answer;
