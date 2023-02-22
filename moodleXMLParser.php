@@ -1,4 +1,7 @@
 <?php
+    include_once "accountService.php";
+    $account = new AccountService();
+
     class MoodleXMLParser{
 
         private $dom;
@@ -18,6 +21,7 @@
         function parseQuestionObject($questionObject){
             $questionSection = $this->dom->createElement('question');
             $questionType = $questionObject->questionType;
+            $questionId = $questionObject->id;
 
             //Question Type separation
             switch($questionType) {
@@ -48,7 +52,8 @@
             $questionSection->setAttributeNode($questionType);
 
             $questionTextSection = $this->dom->createElement('questiontext');
-            $questionText = $this->dom->createElement('text', $questionObject->question->de); //TODO sprachen auslesen aus db !!!!
+            $lang = $account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $questionId);
+            $questionText = $this->dom->createElement('text', $questionObject->question->$lang); //TODO sprachen auslesen aus db !!!!
             $questionTextSection->appendChild($questionText);
             $questionSection->appendChild($questionTextSection);
 
@@ -89,7 +94,8 @@
     class MultiChoiceQuestion extends Question {
         function getQuestionBodyAsDom($questionSection){
             $answerArray = explode(',', ($this->questionObject->answer));
-            $options = (array)$this->questionObject->options->de; //TODO hier müssen noch die anderen Sprachen angepasst werden !!!!
+            $lang = $account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $this->questionObject->id);
+            $options = (array)$this->questionObject->options->$lang; //TODO hier müssen noch die anderen Sprachen angepasst werden !!!!
             var_dump($options);
             print("<hr>");
             $fraction;
