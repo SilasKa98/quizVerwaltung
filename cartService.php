@@ -96,6 +96,9 @@ class CartService{
     }
 
     function printCart(){
+        include_once "accountService.php";
+        $account = new AccountService();
+
         $filterQuery = (['userId' => $this->userId]);
 
         $result = $this->mongo->findSingle("accounts", $filterQuery);
@@ -109,21 +112,13 @@ class CartService{
                 ";
         }else{
             foreach ($cart as $questionId) {
-                $searchUserFilter = (['userId'=>$this->userId]);
-                $searchUser = $this->mongo->findSingle("accounts",$searchUserFilter);
-                $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
-
-                $lang = array_search($questionId,$questionLanguageRelation);
 
                 //get the questions from the ids
                 $filterQuery = ["id" => $questionId];
                 $questionObject = $this->mongo->findSingle("questions", $filterQuery);
                 $question = $questionObject["question"];
 
-                if(!$lang){
-                    //get the first key of the question so it can be used to set it as the default language
-                    $lang = array_key_first((array)$question);
-                }
+                $lang = $account->getUserQuestionLangRelation($this->userId, $questionId);
 
                 $answerType;
                 $answer;
