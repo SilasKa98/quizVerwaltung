@@ -319,6 +319,18 @@
                 }
             });
         }
+
+
+        function insertCatalogNameInExportfield(catalogName,catalogId){
+            document.getElementById("exportName").value = catalogName;
+            document.getElementById("downloadMethod").value = "downloadCatalog";
+            let downloadForm = document.getElementById("exportDownloadForm");
+            let input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "downloadCatalogId");
+            input.setAttribute("value", catalogId);
+            downloadForm.appendChild(input);
+        }
     </script>
 
     <!-- fly to card animation scripts -->

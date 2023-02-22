@@ -7,14 +7,14 @@
       </div>
       <div class="modal-body">  
 
-        <form action="/quizVerwaltung/doTransaction.php" method="post">
+        <form action="/quizVerwaltung/doTransaction.php" method="post" id="exportDownloadForm">
           <select class="form-select" aria-label="Default select example" id="exportTypesList" name="exportType" required>
             <option value="" disabled selected>Export type (default 'Standard')</option>
             <option value="Moodle">Moodle XML</option>
             <option value="TODO">TODO</option>
             <option value="Standard">Standard</option>
           </select>
-          <input type="hidden" name="method" value="downloadCart">
+          <input type="hidden" name="method" id="downloadMethod" value="downloadCart">
           <br>
           <input type="text" class="form-control" name="exportName" id="exportName" placeholder="Please name your export (default 'newCatalog')" required>
           <hr>

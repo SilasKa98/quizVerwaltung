@@ -146,6 +146,7 @@ class Printer{
         $printer = new Printer();
 
         print'
+            <button class="exportCatalogBtn btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exportDownload" onclick="insertCatalogNameInExportfield(\''.$catalogObject->name.'\',\''.$catalogObject->id.'\')">Export</button>
             <div class="card catalogCard">
                 <div class="card-header catalogHeader">
                 <img src="/quizVerwaltung/media/cubes.svg" class="catalogIcon" width=30px>
