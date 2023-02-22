@@ -227,6 +227,26 @@ class AccountService{
         #return header("Location: index.php?changeLanguage=success");
     }
 
+    function getUserQuestionLangRelation($userId, $questionId){
+
+        //find QuestionLangRelation of current user:
+        $searchUserFilter = (['userId'=>$userId]);
+        $searchUser = $this->mongo->findSingle("accounts",$searchUserFilter);
+        $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
+
+        $langExists = array_key_exists($questionId,$questionLanguageRelation);
+
+        if($langExists){
+            $lang = $questionLanguageRelation[$questionId];
+        }else{
+            //get the first key of the question so it can be used to set it as the default language
+            $searchQuestionFilter= (['id'=>$questionId]);
+            $searchQuestion = $this->mongo->findSingle("questions",$searchQuestionFilter);
+            $lang = array_key_first((array)$searchQuestion->question);
+        }
+        return $lang;
+    }
+    
 }
 
 
