@@ -92,16 +92,20 @@ if (!isset($cartCount)){$cartCount = 0;}
                         <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li>
-                                <form method="post" action="/quizVerwaltung/doTransaction.php">
-                                    <input type="hidden" name="destination" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">             
-                                    <select name="language" class="form-select" id="changeLangSel" onchange="this.form.submit()">
+                                <!--dont remove, needed for bugfix-->
+                                <form></form>
+                            </li>
+                            <li>
+                            <form class="navbar-form navbar-right" method="post" action="/quizVerwaltung/doTransaction.php">
+                                <input type="hidden" name="destination" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">     
+                                <select name="language" class="form-select" id="changeLangSel" onchange="this.form.submit()">
                                     <?php
                                         foreach($all_languages as $key => $value){
                                         echo "<option value='".$key."'"; if($key == $selectedLanguage){echo "selected='selected'";}  echo">".$value."</option>";
                                         }
                                     ?>
                                     </select>
-                                </form>
+                            </form>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>&section=questions"><?php echo $myProfileLink; ?></a>

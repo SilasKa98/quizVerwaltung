@@ -1111,14 +1111,20 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
     echo json_encode($ajaxResponse);
 }
 
-if(isset($_POST["method"]) && $_POST["method"] == "download"){
-    print("<script>console.log('hier das sollte dann auf der Console ausgegeben werden!'); </script>");
+if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
     session_start();
     $userId = $_SESSION["userData"]["userId"];
 
+    if(isset($_POST["exportName"])){
+        $exportName = $_POST["exportName"];
+    }else{
+        $exportName = "newCatalog";
+    }
+
     $exportParser;
-    if($_POST["exportType"] == "moodle"){
-        $exportParser = new MoodleXMLParser("newCatalog"); //TODO hier irgendwie dynamisch noch den Namen aus der Form Control holen
+    if($_POST["exportType"] == "Moodle"){
+        include_once "moodleXMLParser.php";
+        $exportParser = new MoodleXMLParser($exportName);
     }
 
     //get question cart
@@ -1126,6 +1132,14 @@ if(isset($_POST["method"]) && $_POST["method"] == "download"){
     $searchUser = $mongo->findSingle('accounts', $filterQuery);
 
     $userCart = (array)$searchUser->questionCart;
-    var_dump('<script>console.log( '+ $userCart +'); </script>');
+
+    foreach($userCart as $cartQuestionId){
+        $filterQueryQuestion = (['id' => $cartQuestionId]);
+        $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
+        $exportParser->parseQuestionObject($searchQuestion);
+    }
+
+    $exportParser->saveXML();
 }
+
 ?>

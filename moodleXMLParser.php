@@ -1,6 +1,5 @@
 <?php
     include_once "accountService.php";
-    $account = new AccountService();
 
     class MoodleXMLParser{
 
@@ -9,6 +8,7 @@
         private $root;
 
         function __construct($catalogName){
+            $this->account = new AccountService();
             $this->dom = new DOMDocument();
             $this->dom->encoding = 'utf-8';
             $this->dom->xmlVersion = '1.0';
@@ -27,19 +27,19 @@
             switch($questionType) {
                 case 'Options':
                     $questionType = 'multioptions';
-                    $questionClass = new MultiChoiceQuestion($questionObject, $this->dom);
+                    $questionClass = new ExportMultiChoiceQuestion($questionObject, $this->dom);
                     break;
                 case 'MultiOptions':
                     $questionType = 'multioptions';
-                    $questionClass = new MultiChoiceQuestion($questionObject, $this->dom);
+                    $questionClass = new ExportMultiChoiceQuestion($questionObject, $this->dom);
                     break;
                 case 'Open':
                     $questionType = 'shortanswer';
-                    $questionClass = new OpenQuestion($questionObject, $this->dom);
+                    $questionClass = new ExportOpenQuestion($questionObject, $this->dom);
                     break;
                 case 'YesNo':
                     $questionType = 'truefalse';
-                    $questionClass = new YesNoQuestion($questionObject, $this->dom);
+                    $questionClass = new ExportYesNoQuestion($questionObject, $this->dom);
                     break;
                 default:
                     //TODO
@@ -52,7 +52,7 @@
             $questionSection->setAttributeNode($questionType);
 
             $questionTextSection = $this->dom->createElement('questiontext');
-            $lang = $account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $questionId);
+            $lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $questionId);
             $questionText = $this->dom->createElement('text', $questionObject->question->$lang); //TODO sprachen auslesen aus db !!!!
             $questionTextSection->appendChild($questionText);
             $questionSection->appendChild($questionTextSection);
@@ -63,15 +63,27 @@
 
         function saveXML(){
             $this->dom->appendChild($this->root);
-            $this->dom->save("catalogExports/".$this->catalogName.".xml");
+            $this->dom->save("catalogExports/".$this->catalogName."_".$_SESSION["userData"]["userId"].".xml");
+
+            $filename = $this->catalogName."_".$_SESSION["userData"]["userId"].".xml";
+            $filenamePrint = $this->catalogName.".xml";
+            $file = "catalogExports/".$filename;
+
+            header('Content-type: application/octet-stream');
+            header("Content-Type: ".mime_content_type($file));
+            header("Content-Disposition: attachment; filename=".$filenamePrint);
+            readfile($file);
+
+            unlink($file);      
         }
     }
 
 
-    class Question {
+    class ExportQuestion {
         function __construct($questionObject, $dom){
             $this->questionObject = $questionObject;
             $this->dom = $dom;
+            $this->account = new AccountService();
         }
         
         function getQuestionBodyAsDom($questionSection){
@@ -91,13 +103,12 @@
         }
     }
 
-    class MultiChoiceQuestion extends Question {
+    class ExportMultiChoiceQuestion extends ExportQuestion {
         function getQuestionBodyAsDom($questionSection){
             $answerArray = explode(',', ($this->questionObject->answer));
-            $lang = $account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $this->questionObject->id);
+            $lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $this->questionObject->id);
             $options = (array)$this->questionObject->options->$lang; //TODO hier müssen noch die anderen Sprachen angepasst werden !!!!
-            var_dump($options);
-            print("<hr>");
+
             $fraction;
 
             foreach ($options as $index => $option) {
@@ -134,13 +145,13 @@
         }
     }
 
-    class OpenQuestion extends Question {
+    class ExportOpenQuestion extends ExportQuestion {
         function getQuestionBodyAsDom($questionSection){
             return; //TODO angepasst an Fragetyp
         }
     }
 
-    class YesNoQuestion extends Question {
+    class ExportYesNoQuestion extends ExportQuestion {
         function getQuestionBodyAsDom($questionSection){
             $answer = $this->questionObject->answer;
 

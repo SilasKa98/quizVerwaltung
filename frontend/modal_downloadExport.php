@@ -7,24 +7,40 @@
       </div>
       <div class="modal-body">  
 
-        <form action="/quizverwaltung/doTransaction.php" method="post" value="download">
-          <select class="form-select" aria-label="Default select example" id="exportTypesList" name="exportTypes">
+        <form action="/quizVerwaltung/doTransaction.php" method="post">
+          <select class="form-select" aria-label="Default select example" id="exportTypesList" name="exportType" required>
             <option value="" disabled selected>Export type (default 'Standard')</option>
             <option value="Moodle">Moodle XML</option>
             <option value="TODO">TODO</option>
             <option value="Standard">Standard</option>
           </select>
+          <input type="hidden" name="method" value="downloadCart">
           <br>
-          <input type="text" class="form-control" id="catalogName" placeholder="Please name your export (default 'newCatalog')">
+          <input type="text" class="form-control" name="exportName" id="exportName" placeholder="Please name your export (default 'newCatalog')" required>
           <hr>
-          <button class="btn btn-outline-primary"
-            data-bs-dismiss="modal" id="download" style="width: 100%">
-            Download
-          </button>
-        <form>
-        
+          <button type="submit" class="btn btn-outline-primary" style="width: 100%" onclick="sendDownloadRequest()">Download</button>
+        </form>
+        <!--data-bs-dismiss="modal" -->
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  //TODO auslagern in js file
+  function sendDownloadRequest(){
+
+    let exportTypesList = document.getElementById("exportTypesList").value;
+    let exportName = document.getElementById("exportName").value;
+
+    if(exportTypesList != "" && exportName != ""){
+      setTimeout(function(){
+        document.getElementById("exportTypesList").value = "";
+        document.getElementById("exportName").value = "";
+        $('#exportDownload').modal('hide');
+      }, 800);
+    }
+
+  }
+</script>

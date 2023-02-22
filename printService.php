@@ -69,6 +69,7 @@ class Printer{
                                 ';
                             }
                             
+                     //<span "card-text" style="float:left;"><a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author.'"</span></a></span>       
                    print'</ul>
                     </div>
                     <div class="card questionCard">
@@ -76,6 +77,7 @@ class Printer{
                             <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$questionObject[$i]->id.'" '; if(isset($_GET["searchedQuestionId"]) && $_GET["searchedQuestionId"] == $questionObject[$i]->id ){ print "id=\"searchFocus\""; } print'>
                                 <span id="headerText_'.$questionObject[$i]->id.'">'.$questionObject[$i]->question->$lang.'</span>
                             </a>
+                            
                             <div class="rightInnerMenuWrapper">
                                 <p class="karmaDisplay">
                                     <span id="karma_'.$questionObject[$i]->id.'">'.$questionObject[$i]->karma.'</span>
