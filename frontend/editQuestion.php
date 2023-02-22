@@ -31,17 +31,12 @@ if(!isset($selectedQuestion)){
     echo " <a href='../index.php'>Back to Home</a>";
     exit();
 }
-
-//get language of the edited question
-$questionLanguageRelation = (array)$userInfo["questionLangUserRelation"];
 $isAdmin = $userInfo["isAdmin"];
-$lang = array_search($_GET["questionId"],$questionLanguageRelation);
-//check if there is no language set for this question by the user
-if(!$lang){
-    //get the first key of the question so it can be used to set it as the default language
-    $lang = array_key_first((array)$selectedQuestion->question);
-}
-   
+
+include_once "../accountService.php";
+$account = new AccountService();
+$lang = $account->getUserQuestionLangRelation($userId, $_GET["questionId"]);
+
 
 $question = $selectedQuestion->question[$lang];
 $answer = $selectedQuestion->answer;
