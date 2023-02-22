@@ -132,6 +132,7 @@ class Printer{
                                     print'</p>';
                                 }
 
+                                print'<p "card-text">Downloads: '.$questionObject[$i]->downloadCount."</p>";
                                 print'<p "card-text">Author: <a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
                             print'</div>
                         </div>
