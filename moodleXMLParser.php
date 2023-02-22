@@ -147,7 +147,28 @@
 
     class ExportOpenQuestion extends ExportQuestion {
         function getQuestionBodyAsDom($questionSection){
-            return; //TODO angepasst an Fragetyp
+            //TODO aktuell ausgeblendet da wir die antworden noch nicht übersetzen das kann noch gemacht werden
+            //$lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $this->questionObject->id);
+            $answerArray = explode(',', ($this->questionObject->answer));
+            $fraction = "100";
+
+            foreach ($answerArray as $answer) {
+                $answerSection = $this->dom->createElement('answer');
+                $answerAttribute = new DOMAttr('fraction', $fraction);
+                $answerSection->setAttributeNode($answerAttribute);
+                $feedback = $this->createFeedback($fraction);
+                //answerText
+                $text = $this->dom->createElement('text', $answer);
+
+                $answerSection->appendChild($text);
+                $answerSection->appendChild($feedback);
+                $questionSection->appendChild($answerSection);
+            }
+
+            $usecase = $this->dom->createElement('usecase', '0');
+            $questionSection->appendChild($usecase);
+
+            return $questionSection;
         }
     }
 
