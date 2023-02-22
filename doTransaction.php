@@ -243,18 +243,19 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
 
     $questionLangUserRelation = (array)$searchUser["questionLangUserRelation"];
 
-    $isQuestionPresent = array_search($_POST["questionId"],$questionLangUserRelation);
+    #$isQuestionPresent = array_search($_POST["questionId"],$questionLangUserRelation);
+    $isQuestionPresent = array_key_exists($_POST["questionId"],$questionLangUserRelation);
 
     if($isQuestionPresent !== false){
-        unset($questionLangUserRelation[$isQuestionPresent]);
+        unset($questionLangUserRelation[$_POST["questionId"]]);
     }
 
     //first get all current relations that exist
-    $checkRelationEntrys = $searchUser;
+    #$checkRelationEntrys = $searchUser;
     //cast it to array and select the field of the object so the new field can get added
     $checkRelationEntrys = $questionLangUserRelation;
     // add the new id lang relation
-    $checkRelationEntrys[$_POST["questionLang"]] = $_POST["questionId"];
+    $checkRelationEntrys[$_POST["questionId"]] = $_POST["questionLang"];
     $update = ['$set' =>  ['questionLangUserRelation'=> $checkRelationEntrys]];
     $mongo->updateEntry("accounts",$searchUserFilter,$update);
 
@@ -582,9 +583,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
 
 if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     include_once "cartService.php";
+    include_once "accountService.php";
     session_start();
     $id = $_POST["questionId"];
     $cart = new CartService();
+    $account = new accountService();
     $addResult = $cart->addItem($id);
 
     $questionFilter = (['id'=>$id]);
@@ -592,16 +595,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
 
     $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
     $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
-    $questionLanguageRelation = (array)$searchUser["questionLangUserRelation"];
+
     $cartLength = count((array)$searchUser->questionCart);
-    $lang = array_search($id,$questionLanguageRelation);
 
-    if(!$lang){
-        //get the first key of the question so it can be used to set it as the default language
-        $lang = array_key_first((array)$questionObject->question);
-    }
-
-
+    $lang = $account->getUserQuestionLangRelation($_SESSION["userData"]["userId"],$id);
 
     $ajaxResponse = [
         "addResult"=> $addResult,
