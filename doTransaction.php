@@ -1060,6 +1060,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
     $matchingUsernames = [];
     $matchingFirstnames = [];
     $matchingLastnames = [];
+    $matchingIds = [];
 
     //get users by matching tags
     foreach($userFavoritTags as $item){
@@ -1071,17 +1072,25 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
                     array_push($matchingUsernames,$foundUser->username);
                     array_push($matchingFirstnames,$foundUser->firstname);
                     array_push($matchingLastnames,$foundUser->lastname);
+                    array_push($matchingIds,$foundUser->userId);
                 }
             } 
         }
     }
+
+    //cut all Arrays at 7 to limit the amount of users found by tags (logic means from index 0 to 7)
+    $matchingUsernames =array_slice($matchingUsernames, 0, 7); 
+    $matchingFirstnames = array_slice($matchingFirstnames, 0, 7); 
+    $matchingLastnames = array_slice($matchingLastnames, 0, 7); 
+    
+
 
     //get users by followings of followings
     foreach($userFollowings as $item){
         $searchUserFollowingFilter = (['userId'=>$item]);
         $searchUserFollowing = $mongo->findSingle("accounts",$searchUserFollowingFilter);
         foreach((array)$searchUserFollowing->following as $foundUser){
-            if($foundUser != $userId && !in_array($foundUser, $userFollowings)){
+            if($foundUser != $userId && !in_array($foundUser, $userFollowings) && !in_array($foundUser, $matchingIds)){
                 $searchFoundUserFilter = (['userId'=>$foundUser]);
                 $searchFoundUser = $mongo->findSingle("accounts",$searchFoundUserFilter);
                 array_push($matchingUsernames, $searchFoundUser->username);
@@ -1090,14 +1099,9 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
             }
         }
     }
+    
 
-
-    //shuffle the arrays so its randomized and not only tag results
-    shuffle($matchingUsernames);
-    shuffle($matchingFirstnames);
-    shuffle($matchingLastnames);
-
-    //cut all Arrays at 15 to avoid too many stuff in the view field... (logic means from index 0 to 15)
+    //cut all Arrays at 15 to avoid too many stuff in the view field... from index 8 to 15 there are users found by following (logic means from index 0 to 15)
     $matchingUsernames =array_slice($matchingUsernames, 0, 15); 
     $matchingFirstnames = array_slice($matchingFirstnames, 0, 15); 
     $matchingLastnames = array_slice($matchingLastnames, 0, 15); 
