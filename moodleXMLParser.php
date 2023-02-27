@@ -26,11 +26,11 @@
             //Question Type separation
             switch($questionType) {
                 case 'Options':
-                    $questionType = 'multioptions';
+                    $questionType = 'multichoice';
                     $questionClass = new ExportMultiChoiceQuestion($questionObject, $this->dom);
                     break;
                 case 'MultiOptions':
-                    $questionType = 'multioptions';
+                    $questionType = 'multichoice';
                     $questionClass = new ExportMultiChoiceQuestion($questionObject, $this->dom);
                     break;
                 case 'Open':
@@ -51,9 +51,16 @@
             $questionType = new DOMAttr('type', $questionType);
             $questionSection->setAttributeNode($questionType);
 
+            $nameSection = $this->dom->createElement('name');
+            $nameText = $this->dom->createElement('text', $this->catalogName);
+
             $questionTextSection = $this->dom->createElement('questiontext');
             $lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $questionId);
             $questionText = $this->dom->createElement('text', $questionObject->question->$lang); //TODO sprachen auslesen aus db !!!!
+            
+            $nameSection->appendChild($nameText);
+            $questionSection->appendChild($nameSection);
+            
             $questionTextSection->appendChild($questionText);
             $questionSection->appendChild($questionTextSection);
 
@@ -178,14 +185,14 @@
 
             for ($i=0; $i < 2; $i++) { 
                 if ($i == 0) {
-                    $text = $this->dom->createElement('text', 'True');
+                    $text = $this->dom->createElement('text', 'true');
                     if ($answer == 'true') {
                        $fraction = '100';
                     }else {
                         $fraction = '0';
                     }
                 }else{
-                    $text = $this->dom->createElement('text', 'False');
+                    $text = $this->dom->createElement('text', 'false');
                     if ($answer == 'false') {
                         $fraction = '100';
                      }else {
