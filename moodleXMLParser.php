@@ -51,7 +51,7 @@
             $questionType = new DOMAttr('type', $questionType);
             $questionSection->setAttributeNode($questionType);
 
-            $nameSection = $this->dom->createElement('name');
+            $nameSection = $this->dom->createElement('name');   //TODO ggf. kann man hier sogar noch Tags in als Namen verwenden // andererseits scheint moodle xml auch tags zu unterstützen
             $nameText = $this->dom->createElement('text', $this->catalogName);
 
             $questionTextSection = $this->dom->createElement('questiontext');
@@ -100,8 +100,10 @@
         function createFeedback($fraction){
             $feedback = $this->dom->createElement('feedback');
             if ($fraction != '0') {
+                //$feedback = $this->dom->createElement('correctfeedback');
                 $text = $this->dom->createElement('text', 'Correct!');
             }else {
+                //$feedback = $this->dom->createElement('incorrectfeedback');
                 $text = $this->dom->createElement('text', 'Incorrect :(');
             }
             $feedback->appendChild($text);
@@ -142,7 +144,7 @@
             }else{
                 $single = $this->dom->createElement('single', 'true');
             }
-            $numbering = $this->dom->createElement('answernumbering', 'ABC');
+            $numbering = $this->dom->createElement('answernumbering', 'abc');
 
             $questionSection->appendChild($shuffel);
             $questionSection->appendChild($single);
