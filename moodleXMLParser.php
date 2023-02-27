@@ -121,10 +121,16 @@
             $fraction;
 
             foreach ($options as $index => $option) {
+                $fractionAmount = (string)(100/count($answerArray));
+                
                 if (in_array($index, $answerArray)) {
-                    $fraction = "100";
+                    $fraction = $fractionAmount;
                 }else{
-                    $fraction = "0";
+                    if (count($answerArray) > 1) {
+                        $fraction = "-100"; 
+                    }else{
+                        $fraction = "0";
+                    }
                 }
                 $answerSection = $this->dom->createElement('answer');
                 $answerAttribute = new DOMAttr('fraction', $fraction);
