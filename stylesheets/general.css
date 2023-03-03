@@ -426,6 +426,12 @@ body{
     margin-top: 1rem;
   }
 
+
+
+  .innerImportCard{
+    overflow: auto;
+  }
+
   @media only screen and (max-width: 1199px) {
     #navOpenDrpDwnBtn {
       margin-left: 0 !important;
