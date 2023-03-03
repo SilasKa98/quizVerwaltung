@@ -4,7 +4,7 @@
     header("Location: frontend/loginAccount.php");
     exit();
   }
-  if($_POST['inputFile'] == ""){
+  if(basename($_FILES["inputFileData"]["name"]) == ""){
     header("Location:frontend/frontend_insertQuestion.php");
     exit();
   }
@@ -61,11 +61,26 @@
         include_once "mongoService.php";
 
         if (isset($_POST['import'])) {
+
+            //upload the file to the server so it can be imported
+            $dotPosition = strpos(basename($_FILES["inputFileData"]["name"]), ".");
+            $userSpecificFilename = substr_replace(basename($_FILES["inputFileData"]["name"]), "_".$userId, $dotPosition, 0);
+
+            $target_dir = "topics/";
+            $target_file = $target_dir . $userSpecificFilename;
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            move_uploaded_file($_FILES["inputFileData"]["tmp_name"], $target_file);
+
+            echo "<input type='hidden' value='".$userSpecificFilename."' id='inputFilename' readonly>";
+            
+
             //get all available Tags
             $allTagsObj= $mongo->findSingle("tags",[],[]);
             $allTags = implode(",",(array)$allTagsObj->allTags);
 
-            $inputFile = $_POST['inputFile'];
+            #$inputFile = $_POST['inputFile'];
+            $inputFile = $userSpecificFilename;
             $question = new QuestionService();
             $questionObject = $question->getQuestion($inputFile,"topics");
             
@@ -156,11 +171,6 @@
             echo '<button class="btn btn-primary btn-lg btn-block" role="button" onclick="finalizeImport()" id="finalImportBtn">'; echo $finalizeImportButton; echo'</button>';
         }
 
-        //TODO remove later
-        if (isset($_POST['clean'])) {
-            $mongo = new MongoDBService();
-            $mongo->cleanCollection("questions");
-        }
         ?>
 
 
@@ -245,6 +255,7 @@
 
 
         function finalizeImport(){
+            let inputFilename = document.getElementById("inputFilename").value;
             let importInput = document.querySelectorAll(".importInput");
             var allQuestions = {};
             var additionalCounter = 0;
@@ -266,7 +277,8 @@
                 url: 'doTransaction.php',
                 data: {
                     allQuestions: allQuestions,
-                    method: method
+                    method: method,
+                    inputFilename: inputFilename
                 },
                 success: function(response) {
                     toastMsgBody.innerHTML = 'Import Successfull! <div style="float:right;"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div> loading..</div>';

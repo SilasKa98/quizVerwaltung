@@ -306,6 +306,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
         print_r($value);
         $mongo->insertMultiple("questions",[$value]);
     }
+
+    unlink("topics/".$_POST["inputFilename"]);
 }
 
 
