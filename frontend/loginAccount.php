@@ -53,7 +53,7 @@
             width: 78%;
             border-radius: 10px;
             background-color: #585858;
-            margin-top: 14px;
+            margin-top: 2px;
             padding-top: 12px;
         }
         .menuBar.fixed a {
