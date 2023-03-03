@@ -29,6 +29,7 @@
 
 <script>
   //TODO auslagern in js file
+  
   function sendDownloadRequest(){
 
     let exportTypesList = document.getElementById("exportTypesList").value;
@@ -43,4 +44,5 @@
     }
 
   }
+  
 </script>

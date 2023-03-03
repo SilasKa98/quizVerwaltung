@@ -1,7 +1,4 @@
-
 <?php include_once "modal_insertNewQuestionLang.php";?>
-
-        
 
 <?php
 
