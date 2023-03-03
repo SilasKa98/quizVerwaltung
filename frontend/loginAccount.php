@@ -98,7 +98,7 @@
             <img class="d-block mx-auto mb-4" src="/quizVerwaltung/media/logoQuizManagerTransparent2.png" alt="" width="300">
             <div class="col-md-5 p-lg-5 mx-auto my-5" style="padding: 0 !important; width: 78%;">
                 <h1 class="display-4 fw-normal">Quiz Manager</h1>
-                <p class="lead fw-normal">An application to create, manage and share all kinds of quizzes.</p>
+                <p class="lead fw-normal">An application to create, manage and share all kind of quiz questions.</p>
                 <div class="menuBar">
                     <a class="btn btn-outline-secondary menuBtn" href="#loginSection">Login</a>
                     <a class="btn btn-outline-secondary menuBtn" href="#uploadSection">Upload Questions</a>
