@@ -37,7 +37,6 @@
             <div class="center">
                 <form method="post" action="/quizVerwaltung/insertQuestions.php" enctype="multipart/form-data">
                     <input class="inputfile" type="file" name="inputFileData" onchange="setFilename(this)">
-                    <input type="hidden" value ="" name="inputFile" id="inputFilename">
                     <button class="button-5" type="submit" name="import"><?php echo $text_import_form["import_btn"]?></button>
                 </form>
             </div>
@@ -45,11 +44,6 @@
     </div>
 
     <script src="/quizVerwaltung/scripts/questionScripts.js"></script>
-    <script>
-        function setFilename(e){
-            let inputTarget = document.getElementById("inputFilename");
-            inputTarget.value = e.value.split(/(\\|\/)/g).pop();
-        }
-    </script>
+
 </body>
 </html>
