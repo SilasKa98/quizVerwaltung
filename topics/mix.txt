@@ -1,1 +1,4 @@
-Options#Wonach wurde die Java-Technologie benannt?#1#Der gleichnamigen Insel#Einer Kaffee-Sorte#Einem  Gesellschaftstanz im 3/4-Takt aus den 1920er-Jahren 
+YesNo#YourQuestion...#your Answer(true/false)
+MultiOptions#YourQuestion...#0,2#Answer1#Answer2#Answer3
+Open#YourQuestion...#Free Answer
+Options#YourQuestion...#1#answer Option1#answer Option2
