@@ -150,14 +150,18 @@ class Printer{
             <button class="exportCatalogBtn btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exportDownload" onclick="insertCatalogNameInExportfield(\''.$catalogObject->name.'\',\''.$catalogObject->id.'\')">Export</button>
             <div class="card catalogCard">
                 <div class="card-header catalogHeader">
-                <img src="/quizVerwaltung/media/cubes.svg" class="catalogIcon" width=30px>
+                    <img src="/quizVerwaltung/media/cubes.svg" class="catalogIcon" width=30px>
                     <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$catalogObject->id.'">
                         <span id="headerText_'.$catalogObject->id.'">'.$catalogObject->name.'</span>
-                    </a>
-                </div>
+                    </a>';
+                    if($catalogObject->status == "public"){
+                        print '<span class="badge rounded-pill text-bg-success catalogStatusPill">Public</span>';
+                    }else{
+                        print '<span class="badge rounded-pill text-bg-danger catalogStatusPill">Private</span>';
+                    }
+        print'</div>
                 <div class="collapse" id="collapsable_'.$catalogObject->id.'">
                     <div class="card-body">';
-
                     //print each question of the catalog with the printQuestion function
                         foreach($catalogObject->questions as $question){
                             $searchQuestionFilter = (['id'=>$question]);

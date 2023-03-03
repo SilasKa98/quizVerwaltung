@@ -211,7 +211,11 @@
                             }
                             if($_GET["section"] == "catalog"){
                                 foreach ($readyForPrintCatalogs as $doc) {
-                                    $printer->printCatalog($doc);
+                                    if($doc->status == "private" && $foundProfile->userId == $userId){
+                                      $printer->printCatalog($doc);  
+                                    }elseif($doc->status == "public"){
+                                        $printer->printCatalog($doc); 
+                                    }    
                                 }
 
                                 if(count($readyForPrintCatalogs) == 0){

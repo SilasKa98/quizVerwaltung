@@ -411,6 +411,10 @@ body{
     padding: 2px !important;
   }
 
+  .catalogStatusPill{
+    float: right;
+  }
+
   @media only screen and (max-width: 1199px) {
     #navOpenDrpDwnBtn {
       margin-left: 0 !important;
