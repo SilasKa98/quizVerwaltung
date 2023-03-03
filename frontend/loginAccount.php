@@ -50,11 +50,10 @@
         .menuBar.fixed {
             position: fixed;
             z-index: 9999;
-            width: 78%;
-            border-radius: 10px;
             background-color: #585858;
-            margin-top: 2px;
             padding-top: 12px;
+            width: 100%;
+            left: 0;
         }
         .menuBar.fixed a {
             color: white;
@@ -67,10 +66,10 @@
                 top: 0;
                 z-index: inherit;
                 width: inherit;
-                border-radius: inherit;
                 background-color: inherit;
                 margin-top: inherit;
                 padding-top: inherit;
+                left: inherit;
             }
             .menuBar.fixed a {
                 color: inherit;
