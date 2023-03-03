@@ -94,25 +94,30 @@ function parseLine( $line ) {
   $questionType = $parts[0];
 
 
-
-  //language needs to be set here!!
-  #$language = "de";
   //language is automatically detected with the deepL Api
   include_once "translationService.php";
   $deepLDetectLanguage = new TranslationService("de");
   $language = $deepLDetectLanguage->detectLanguage($parts[1]);
 
-   //check the inserted questions for illegal stuff and escape chars that need to be escaped
-   $parts[1] = str_replace("<pre>", "<br><pre class='displayCodeInQuestion'>", $parts[1]);
-   $parts[1] = str_replace("\"", "'", $parts[1]);
-   
-   /*echo "<hr><br>".$parts[1];
-   foreach($parts as $part){
-    $part = str_replace("<pre>", "<pre class='displayCodeInQuestion'>", $part);
-    echo $part."<br>";
+  
+  //check the inserted questions for illegal stuff and escape chars that need to be escaped
+  $parts[1] = str_replace("<pre>", "<br><pre class='displayCodeInQuestion'>", $parts[1]);
+  $parts[1] = str_replace("\"", "'", $parts[1]);
+  if( $parts[0] == "YesNo" || $parts[0] == "RegOpen" || $parts[0] == "Open" &&  $parts[0] == "Correct") {
+    if(count($parts) != 3){
+      header("LOCATION: frontend/frontend_insertQuestion.php?error=illegalQuestionFormat");
+      exit();
+    }
   }
-  echo "<br><hr>";
-*/
+
+  if( $parts[0] == "Order" || $parts[0] == "Options" || $parts[0] == "MultiOptions") {
+    $optionsCount = count(array_slice($parts,3));
+    if(count($parts) != 3+$optionsCount){
+      header("LOCATION: frontend/frontend_insertQuestion.php?error=illegalQuestionFormat");
+      exit();
+    }
+  }
+
 
   $karma = 0;
 
