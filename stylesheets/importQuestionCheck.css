@@ -45,3 +45,17 @@
     margin: 2% auto;
     text-align: center;
 }
+
+.displayCodeInQuestion{
+    background-color: #c9c9c9;
+    width: fit-content;
+    display: inline-block;
+    padding: 9px;
+    border-radius: 8px;
+    overflow: inherit;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+.innerImportCard{
+    overflow: auto;
+}
