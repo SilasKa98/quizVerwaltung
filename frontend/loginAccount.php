@@ -155,7 +155,7 @@
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
                     <!--<img src="/quizVerwaltung/media/insertExamplePicture.png" style="border-radius: 7px;" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">-->
-                    <img src="/quizVerwaltung/media/insertOverviewExamplePicture.png" class="d-block mx-lg-auto img-fluid exampleImg" alt="Bootstrap Themes"  loading="lazy">
+                    <img src="/quizVerwaltung/media/insertOverviewExamplePicture.PNG" class="d-block mx-lg-auto img-fluid exampleImg" alt="Bootstrap Themes"  loading="lazy">
                 </div>
                 <div class="col-lg-6">
                     <h1 class="display-5 fw-bold lh-1 mb-3">Easily upload new Questions</h1>
@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <div class="col-10 col-sm-8 col-lg-6">
-                    <img src="/quizVerwaltung/media/translateExamplePicture.png" class="d-block mx-lg-auto img-fluid exampleImg" width="500" height="300" alt="Bootstrap Themes" loading="lazy">
+                    <img src="/quizVerwaltung/media/translateExamplePicture.PNG" class="d-block mx-lg-auto img-fluid exampleImg" width="500" height="300" alt="Bootstrap Themes" loading="lazy">
                 </div>
             </div>
         </div>
@@ -197,7 +197,7 @@
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
                     <!--<img src="/quizVerwaltung/media/insertExamplePicture.png" style="border-radius: 7px;" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">-->
-                    <img src="/quizVerwaltung/media/ProfileExamplePicture.png" class="d-block mx-lg-auto img-fluid exampleImg" alt="Bootstrap Themes"  loading="lazy">
+                    <img src="/quizVerwaltung/media/ProfileExamplePicture.PNG" class="d-block mx-lg-auto img-fluid exampleImg" alt="Bootstrap Themes"  loading="lazy">
                 </div>
                 <div class="col-lg-6">
                     <h1 class="display-5 fw-bold lh-1 mb-3">Connect with People and earn Reputation</h1>
@@ -229,7 +229,7 @@
                     </div>
                 </div>
                 <div class="col-10 col-sm-8 col-lg-6">
-                    <img src="/quizVerwaltung/media/exportExamplePicture.png" class="d-block mx-lg-auto img-fluid exampleImg" alt="Bootstrap Themes" loading="lazy">
+                    <img src="/quizVerwaltung/media/exportExamplePicture.PNG" class="d-block mx-lg-auto img-fluid exampleImg" alt="Bootstrap Themes" loading="lazy">
                 </div>
             </div>
         </div>
@@ -241,7 +241,7 @@
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
                     <!--<img src="/quizVerwaltung/media/insertExamplePicture.png" style="border-radius: 7px;" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">-->
-                    <img src="/quizVerwaltung/media/catalogExamplePicture.png" class="d-block mx-lg-auto img-fluid exampleImg" style="width: 450px" alt="Bootstrap Themes"  loading="lazy">
+                    <img src="/quizVerwaltung/media/catalogExamplePicture.PNG" class="d-block mx-lg-auto img-fluid exampleImg" style="width: 450px" alt="Bootstrap Themes"  loading="lazy">
                 </div>
                 <div class="col-lg-6">
                     <h1 class="display-5 fw-bold lh-1 mb-3">Create catalogs to group questions</h1>
