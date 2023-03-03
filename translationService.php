@@ -19,7 +19,7 @@ class TranslationService{
 
     function translateText($inputText){
         $translator = new \DeepL\Translator($this->authKey);
-        $result = $translator->translateText($inputText, null, $this->targetLanguage);
+        $result = $translator->translateText($inputText, null, $this->targetLanguage, ['tag_handling' => 'html']);
         return $result->text;
     }
 
