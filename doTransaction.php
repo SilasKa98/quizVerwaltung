@@ -1120,6 +1120,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
 
 if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
     session_start();
+    $questionService = new QuestionService();
     $userId = $_SESSION["userData"]["userId"];
 
     if(isset($_POST["exportName"])){
@@ -1128,29 +1129,41 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
         $exportName = "newCatalog";
     }
 
-    $exportParser;
-    if($_POST["exportType"] == "Moodle"){
-        include_once "moodleXMLParser.php";
-        $exportParser = new MoodleXMLParser($exportName);
-    }
-
     //get question cart
     $filterQuery = (['userId' => $userId]);
     $searchUser = $mongo->findSingle('accounts', $filterQuery);
-
     $userCart = (array)$searchUser->questionCart;
 
-    $questionService = new QuestionService();
 
-    foreach($userCart as $cartQuestionId){
-        $filterQueryQuestion = (['id' => $cartQuestionId]);
-        $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
-        $exportParser->parseQuestionObject($searchQuestion);
+    //moodle export
+    if($_POST["exportType"] == "Moodle"){
+        include_once "moodleXMLParser.php";
+        $exportParser = new MoodleXMLParser($exportName);
+    
+        foreach($userCart as $cartQuestionId){
+            $filterQueryQuestion = (['id' => $cartQuestionId]);
+            $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
+            $exportParser->parseQuestionObject($searchQuestion);
 
-        $questionService->increaseDownloadCount($cartQuestionId);
+            $questionService->increaseDownloadCount($cartQuestionId);
+        }
+
+        $exportParser->saveXML();
     }
 
-    $exportParser->saveXML();
+    if($_POST["exportType"] == "JSON"){
+        include_once "jsonParser.php";
+        $jsonParser = new JsonParser();
+
+        $allQuestionsInCard = [];
+        foreach($userCart as $cartQuestionId){
+            $filterQueryQuestion = (['id' => $cartQuestionId]);
+            $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
+            array_push($allQuestionsInCard, $searchQuestion);
+        }
+        $serializedJsonObject = $jsonParser->serializeQuestion($allQuestionsInCard);
+        $jsonParser->saveJsonFile($serializedJsonObject, $exportName, $userId);
+    }
 }
 
 

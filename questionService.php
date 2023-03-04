@@ -14,10 +14,6 @@ class QuestionService{
         return array_map('parseLine', $lines);
     }
 
-    //JSON_FORCE_OBJECT | 
-    function serializeQuestion($questionObject){
-        return $encodedJson = json_encode($questionObject, JSON_PRETTY_PRINT);
-    }
 
     function increaseDownloadCount($questionId){
         include_once "mongoService.php";

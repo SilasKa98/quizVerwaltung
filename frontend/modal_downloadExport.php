@@ -12,6 +12,7 @@
             <option value="" disabled selected>Export type (default 'Standard')</option>
             <option value="Moodle">Moodle XML</option>
             <option value="TODO">TODO</option>
+            <option value="JSON">JSON</option>
             <option value="Standard">Standard</option>
           </select>
           <input type="hidden" name="method" id="downloadMethod" value="downloadCart">

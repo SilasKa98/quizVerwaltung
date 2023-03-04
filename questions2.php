@@ -101,7 +101,7 @@ function parseLine( $line ) {
 
   
   //check the inserted questions for illegal stuff and escape chars that need to be escaped
-  $parts[1] = str_replace("<pre>", "<br><pre class='displayCodeInQuestion' translate=\"no\">", $parts[1]);
+  $parts[1] = str_replace("<span>", "<br><span class='displayCodeInQuestion' translate=\"no\">", $parts[1]);
   $parts[1] = str_replace("\"", "'", $parts[1]);
   if( $parts[0] == "YesNo" || $parts[0] == "RegOpen" || $parts[0] == "Open" &&  $parts[0] == "Correct") {
     if(count($parts) != 3){
