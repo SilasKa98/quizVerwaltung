@@ -5,6 +5,7 @@ include_once "accountService.php";
 class ExportParser{
     
     function serializeQuestion($questionObject){
+        //TODI iterate over the object and filter for the correct language.. currently all languages get exported
         return json_encode($questionObject, JSON_PRETTY_PRINT);
     }
 
