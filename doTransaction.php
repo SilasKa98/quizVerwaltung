@@ -1129,7 +1129,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
         $exportName = "newCatalog";
     }
 
-    //get question cart
+    //get the users question cart
     $filterQuery = (['userId' => $userId]);
     $searchUser = $mongo->findSingle('accounts', $filterQuery);
     $userCart = (array)$searchUser->questionCart;
@@ -1151,9 +1151,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
         $exportParser->saveXML();
     }
 
+    //json export
     if($_POST["exportType"] == "JSON"){
-        include_once "jsonParser.php";
-        $jsonParser = new JsonParser();
+        include_once "exportParser.php";
+        $jsonParser = new ExportParser();
 
         $allQuestionsInCard = [];
         foreach($userCart as $cartQuestionId){
@@ -1162,7 +1163,29 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
             array_push($allQuestionsInCard, $searchQuestion);
         }
         $serializedJsonObject = $jsonParser->serializeQuestion($allQuestionsInCard);
-        $jsonParser->saveJsonFile($serializedJsonObject, $exportName, $userId);
+        $jsonParser->downloadFile($serializedJsonObject, $exportName, $userId, ".json");
+    }
+
+
+    //latex export
+    if($_POST["exportType"] == "Latex"){
+        include_once "exportParser.php";
+        $latexParser = new ExportParser();
+
+        $allQuestionsInCard = [];
+        foreach($userCart as $cartQuestionId){
+            $filterQueryQuestion = (['id' => $cartQuestionId]);
+            $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
+            array_push($allQuestionsInCard, $searchQuestion);
+        }
+        $parsedLatexObj = $latexParser->jsonToLatex($allQuestionsInCard, $userId, $exportName);
+        $latexParser->downloadFile($parsedLatexObj, $exportName, $userId, ".tex");
+    }
+
+
+    //standard/simpQui export
+    if($_POST["exportType"] == "standard"){
+
     }
 }
 
