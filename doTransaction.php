@@ -1118,6 +1118,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "getPersonRecommendations"){
     echo json_encode($ajaxResponse);
 }
 
+
 if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
     session_start();
     $questionService = new QuestionService();
@@ -1129,13 +1130,27 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
         $exportName = "newCatalog";
     }
 
-    //get the users question cart
-    $filterQuery = (['userId' => $userId]);
-    $searchUser = $mongo->findSingle('accounts', $filterQuery);
-    $userCart = (array)$searchUser->questionCart;
+
+     //get catalog or user cart
+     if(isset($_POST["downloadCatalogId"])){
+        $catalogId = $_POST["downloadCatalogId"];
+        $filterQuery = (['id' => $catalogId]);
+        $searchCatalog = $mongo->findSingle('catalog', $filterQuery);
+        if(!isset($searchCatalog)){
+            //if id isnt existing, go exit. Id got illegally changed by user
+            header("LOCATION: index.php?error=illegalId");
+            exit();
+        }
+        $userCart = (array)$searchCatalog->questions;
+    }else{
+        //get the users question cart
+        $filterQuery = (['userId' => $userId]);
+        $searchUser = $mongo->findSingle('accounts', $filterQuery);
+        $userCart = (array)$searchUser->questionCart;
+    }
 
 
-    //moodle export
+    //initalize the moodle export
     if($_POST["exportType"] == "Moodle"){
         include_once "moodleXMLParser.php";
         $exportParser = new MoodleXMLParser($exportName);
@@ -1151,7 +1166,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
         $exportParser->saveXML();
     }
 
-    //json export
+    //initalize the json export
     if($_POST["exportType"] == "JSON"){
         include_once "exportParser.php";
         $jsonParser = new ExportParser();
@@ -1167,7 +1182,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
     }
 
 
-    //latex export
+    //initalize the latex export
     if($_POST["exportType"] == "Latex"){
         include_once "exportParser.php";
         $latexParser = new ExportParser();
@@ -1183,54 +1198,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
     }
 
 
-    //standard/simpQui export
+    //initalize the standard/simpQui export
     if($_POST["exportType"] == "standard"){
 
     }
 }
-
-
-if(isset($_POST["method"]) && $_POST["method"] == "downloadCatalog"){
-
-    session_start();
-    $userId = $_SESSION["userData"]["userId"];
-
-    //get catalog
-    $catalogId = $_POST["downloadCatalogId"];
-    $filterQuery = (['id' => $catalogId]);
-    $searchCatalog = $mongo->findSingle('catalog', $filterQuery);
-    if(!isset($searchCatalog)){
-        //if id isnt existing, go exit. Id got illegally changed by user
-        header("LOCATION: index.php?error=illegalId");
-        exit();
-    }
-
-    if(isset($_POST["exportName"])){
-        $exportName = $_POST["exportName"];
-    }else{
-        $exportName = "newCatalog";
-    }
-
-    $exportParser;
-    if($_POST["exportType"] == "Moodle"){
-        include_once "moodleXMLParser.php";
-        $exportParser = new MoodleXMLParser($exportName);
-    }
-
-    $catalogQuestions = (array)$searchCatalog->questions;
-  
-    $questionService = new QuestionService();
-
-    foreach($catalogQuestions as $cartQuestionId){
-        $filterQueryQuestion = (['id' => $cartQuestionId]);
-        $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
-        $exportParser->parseQuestionObject($searchQuestion);
-
-        $questionService->increaseDownloadCount($cartQuestionId);
-    }
-
-    $exportParser->saveXML();
-}
-
 
 ?>

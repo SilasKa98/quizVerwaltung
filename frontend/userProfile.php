@@ -327,7 +327,6 @@
 
         function insertCatalogNameInExportfield(catalogName,catalogId){
             document.getElementById("exportName").value = catalogName;
-            document.getElementById("downloadMethod").value = "downloadCatalog";
             let downloadForm = document.getElementById("exportDownloadForm");
             let input = document.createElement("input");
             input.setAttribute("type", "hidden");
