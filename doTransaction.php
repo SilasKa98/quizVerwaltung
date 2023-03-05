@@ -1178,7 +1178,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
             $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
             array_push($allQuestionsInCard, $searchQuestion);
         }
-        $parsedLatexObj = $latexParser->jsonToLatex($allQuestionsInCard, $userId, $exportName);
+        $parsedLatexObj = $latexParser->convertToLatex($allQuestionsInCard, $userId, $exportName);
         $latexParser->downloadFile($parsedLatexObj, $exportName, $userId, ".tex");
     }
 

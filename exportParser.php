@@ -10,7 +10,7 @@ class ExportParser{
     }
 
     //this function only converts the questions with the answer options not the whole object. So it can be used in latex for askin questions directly (e.g. exams)
-    function jsonToLatex($jsonObj, $userId, $exportName) {
+    function convertToLatex($jsonObj, $userId, $exportName) {
       $account = new AccountService();
       
       $latex = "";
