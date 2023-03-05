@@ -9,8 +9,9 @@ class ExportParser{
         return json_encode($questionObject, JSON_PRETTY_PRINT);
     }
 
+    
     //this function only converts the questions with the answer options not the whole object. So it can be used in latex for askin questions directly (e.g. exams)
-    function convertToLatex($jsonObj, $userId, $exportName) {
+    function convertToLatex($obj, $userId, $exportName) {
       $account = new AccountService();
       
       $latex = "";
@@ -20,7 +21,7 @@ class ExportParser{
       $latex .= "\\begin{document}\n";
       $latex .= "\\maketitle\n\n";
 
-      foreach((array)$jsonObj as $value){
+      foreach((array)$obj as $value){
         $lang = $account->getUserQuestionLangRelation($userId, $value->id);
         $questionText = $value->question->$lang;
         $questionType = $value->questionType;
@@ -44,6 +45,32 @@ class ExportParser{
       }
       $latex .= "\\end{document}";
       return $latex;
+    }
+
+
+    function convertToStandard($obj, $userId, $exportName){
+      $account = new AccountService();
+
+      $standard = "";
+      foreach((array)$obj as $value){
+        $lang = $account->getUserQuestionLangRelation($userId, $value->id);
+        $questionText = $value->question->$lang;
+        $questionType = $value->questionType;
+
+        $standard .= $questionType."#";
+        $standard .= $questionText."#";
+        if($questionType == "YesNo" || $questionType == "Open"){
+          $standard .=  $value->answer."\n";
+        }
+        elseif($questionType == "Options" || $questionType == "MultiOptions"){
+          $standard .=  $value->answer;
+          foreach($value->options->$lang as $optionsValue){
+            $standard .= "#".$optionsValue;
+          }
+          $standard .= "\n";
+        }
+      }
+      return $standard;
     }
 
 

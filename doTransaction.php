@@ -1159,7 +1159,6 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
             $filterQueryQuestion = (['id' => $cartQuestionId]);
             $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
             $exportParser->parseQuestionObject($searchQuestion);
-
             $questionService->increaseDownloadCount($cartQuestionId);
         }
 
@@ -1199,8 +1198,18 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
 
 
     //initalize the standard/simpQui export
-    if($_POST["exportType"] == "standard"){
+    if($_POST["exportType"] == "Standard"){
+        include_once "exportParser.php";
+        $stdParser = new ExportParser();
 
+        $allQuestionsInCard = [];
+        foreach($userCart as $cartQuestionId){
+            $filterQueryQuestion = (['id' => $cartQuestionId]);
+            $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
+            array_push($allQuestionsInCard, $searchQuestion);
+        }
+        $parsedStdObj = $stdParser->convertToStandard($allQuestionsInCard, $userId, $exportName);
+        $stdParser->downloadFile($parsedStdObj, $exportName, $userId, ".txt");
     }
 }
 
