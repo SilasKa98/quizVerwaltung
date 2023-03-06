@@ -71,4 +71,13 @@
      $deleteAccountHeader = "Borrar cuenta";
      $deleteAccountExampleText = "¡Atención! Al realizar esta acción, se eliminará su cuenta y todos los datos asociados. Tus preguntas y todas las interacciones también se perderán.";
      $deleteAccountButton = "Borrar";
+
+    //catalogCart.php
+    $cartNameText = "Cesta de preguntas";
+    $createCatalogButton = "Crear catálogo";
+    $exportButton = "Exportar";
+    //cartService.php
+    $cartInfoText = "   Actualmente no tiene preguntas en su cesta.
+                        Simplemente agregue una pregunta abriendo el menú desplegable junto a una pregunta y haciendo clic en el carrito de compras.
+                    ";
 ?>

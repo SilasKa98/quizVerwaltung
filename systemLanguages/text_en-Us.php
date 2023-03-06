@@ -75,4 +75,12 @@
      $deleteAccountExampleText = "Attention! By performing this action, your account and all associated data will be deleted! Also your created questions and all interactions will be lost.";
      $deleteAccountButton = "Delete";
 
+    //catalogCart.php
+    $cartNameText = "Question cart";
+    $createCatalogButton = "Create catalog";
+    $exportButton = "Export";
+    //cartService.php
+    $cartInfoText = "   You currently have no questions in your basket.
+                        Simply add a question by opening the dropdown menu next to a question and clicking on the shopping cart.
+                    ";
 ?>

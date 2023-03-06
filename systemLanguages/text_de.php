@@ -73,4 +73,13 @@
     $deleteAccountHeader = "Account löschen";
     $deleteAccountExampleText = "Achtung! Durch ausführen dieser Aktion wird Ihr Account und alle damit verbundenen Daten gelöscht! Auch Ihre erstellten Fragen sowie sämtliche Interaktionen gehen verloren.";
     $deleteAccountButton = "Löschen";
+
+    //catalogCart.php
+    $cartNameText = "Fragenkorb";
+    $createCatalogButton = "Katalog erstellen";
+    $exportButton = "Exportieren";
+    //cartService.php
+    $cartInfoText = "   Du hast aktuell keine Fragen in deinem Korb.
+                        Füge einfach eine Frage hinzu indem du neben einer Frage das Dropdown Menü öffnest und den Warenkorb anklicks.
+                    ";
 ?>

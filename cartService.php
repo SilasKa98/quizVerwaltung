@@ -31,7 +31,6 @@ class CartService{
         extract($_SESSION["userData"]);
         $this->mongo = new MongoDBService();
         $this->userId = $userId;
-
     }
 
     function addItem($questionId){
@@ -102,14 +101,17 @@ class CartService{
         $filterQuery = (['userId' => $this->userId]);
 
         $result = $this->mongo->findSingle("accounts", $filterQuery);
-        $cart = (array)$result["questionCart"];
+        $cart = (array)$result["questionCart"];  
 
         if (empty($cart)){
-            print"
-                <p id='cartInfoText'>Du hast aktuell keine Fragen in deinem Korb.
-                Füge einfach eine Frage hinzu indem du neben einer Frage
-                das Dropdown Menü öffnest und den Warenkorb anklicks.</p>
-                ";
+            //for website language text 
+            $filterQuery = (['userId' => $this->userId]);
+            $getAccountInfos= $this->mongo->findSingle("accounts",$filterQuery,[]);
+            $selectedLanguage = $getAccountInfos->userLanguage;
+            $root = $_SERVER['DOCUMENT_ROOT'];
+            include $root."/quizverwaltung/systemLanguages/text_".$selectedLanguage.".php";   
+
+            print"<p id='cartInfoText'>$cartInfoText</p>";
         }else{
             foreach ($cart as $questionId) {
 
