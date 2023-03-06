@@ -82,4 +82,19 @@
     $cartInfoText = "   Du hast aktuell keine Fragen in deinem Korb.
                         Füge einfach eine Frage hinzu indem du neben einer Frage das Dropdown Menü öffnest und den Warenkorb anklicks.
                     ";
+
+    //modal_catalogOptions.php
+    $catalogOptionsLabel = "Katalog Optionen";
+    $catalogNamePlaceholder = "Bitte geben Sie einen Katalognamen ein";
+    $catalogVisibilitySetting = "Ändern Sie die Sichtbarkeit für Ihren Katalog";
+    $publicButton = "Öffentlich";
+    $privateButton = "Privat";
+    $optionsCloseButton = "Abbrechen";
+    $optionsSaveButton = "Speichern";
+
+    //modal_downloadExport.php
+    $downloadExportLabel = "Erstellen und herunterladen des Exports";
+    $exportTypeOptions = "Exporttyp (Standard 'Standard')";
+    $exportName = "Bitte benennen Sie Ihren Export (Standard 'newCatalog')";
+    $downloadButton = "Herunterladen";
 ?>

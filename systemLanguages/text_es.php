@@ -80,4 +80,19 @@
     $cartInfoText = "   Actualmente no tiene preguntas en su cesta.
                         Simplemente agregue una pregunta abriendo el menú desplegable junto a una pregunta y haciendo clic en el carrito de compras.
                     ";
+
+    //modal_catalogOptions.php
+    $catalogOptionsLabel = "Opciones de catálogo";
+    $catalogNamePlaceholder = "Por favor, introduzca un nombre de catálogo";
+    $catalogVisibilitySetting = "Cambia la configuración de visibilidad de tu catálogo";
+    $publicButton = "Público";
+    $privateButton = "Privado";
+    $optionsCloseButton = "Cerca";
+    $optionsSaveButton = "Ahorrar";
+
+    //modal_downloadExport.php
+    $downloadExportLabel = "Cree y descargue su exportación aquí";
+    $exportTypeOptions = "Tipo de exportación (predeterminado 'Standard')";
+    $exportName = "Asigne un nombre a su exportación (predeterminado 'newCatalog')";
+    $downloadButton = "Descargar";
 ?>

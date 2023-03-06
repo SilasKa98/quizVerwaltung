@@ -83,4 +83,19 @@
     $cartInfoText = "   You currently have no questions in your basket.
                         Simply add a question by opening the dropdown menu next to a question and clicking on the shopping cart.
                     ";
+
+    //modal_catalogOptions.php
+    $catalogOptionsLabel = "Catalog Options";
+    $catalogNamePlaceholder = "Please enter a catalog name";
+    $catalogVisibilitySetting = "Change the visibility setting for your catalog";
+    $publicButton = "Public";
+    $privateButton = "Private";
+    $optionsCloseButton = "Close";
+    $optionsSaveButton = "Save";
+
+    //modal_downloadExport.php
+    $downloadExportLabel = "Create & download your export here";
+    $exportTypeOptions = "Export type (default 'Standard')";
+    $exportName = "Please name your export (default 'newCatalog')";
+    $downloadButton = "Download";
 ?>
