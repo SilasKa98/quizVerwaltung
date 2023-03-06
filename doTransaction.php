@@ -603,11 +603,21 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
 
     $lang = $account->getUserQuestionLangRelation($_SESSION["userData"]["userId"],$id);
 
+    $root = $_SERVER['DOCUMENT_ROOT'];
+    $filterQuery = (['userId' => $_SESSION["userData"]["userId"]]);
+    $getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);
+    $selectedLanguage = $getAccountInfos->userLanguage;
+    include $root."/quizverwaltung/systemLanguages/text_".$selectedLanguage.".php";
+
     $ajaxResponse = [
         "addResult"=> $addResult,
         "questionObject"=> $questionObject,
         "lang"=> $lang,
-        "cartLength" => $cartLength
+        "cartLength" => $cartLength,
+        "answerField" => $answerField,
+        "optionsField" => $optionsField,
+        "tagsField" => $tagsField,
+        "authorField" => $authorField
     ];
     echo json_encode($ajaxResponse);
 }

@@ -200,10 +200,10 @@
                 let answer;
 
                 if (jsonResponse.questionObject.questionType === "Options" || jsonResponse.questionObject.questionType === "MultiOptions") {
-                    answerType = "Options";
+                    answerType = jsonResponse.optionsField;
                     answer = createOptionsBubbles(jsonResponse.questionObject.options[jsonResponse.lang], jsonResponse.questionObject.answer);
                 } else {
-                    answerType = "Answer";
+                    answerType = jsonResponse.answerField;
                     answer = jsonResponse.questionObject.answer;
                 }
 
@@ -214,7 +214,7 @@
                         }
                     });
                 }
-                
+               
                 //TODO hier muss noch irgednwie festgestellt werden welche sprache der user ausgewählt hat damit dann auch die sprachdatei zugegriffen werden kann
                 canvasBody.innerHTML += "<div class='card' id=" + questionId + " style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
                                             "<div class='card-body'>" + 
@@ -236,8 +236,8 @@
                                                 "<div class=card questionCartCard' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>" + 
                                                     "<div class=card-body questionCartCard>" + 
                                                         "<p 'question-text'> " + answerType + ": " + answer + "</p>" + 
-                                                        "<p 'question-text'> Tags: " + tagBadges + "</p>" + 
-                                                        "<p 'question-text'> Author: " + 
+                                                        "<p 'question-text'>" + jsonResponse.tagsField + ": " + tagBadges + "</p>" + 
+                                                        "<p 'question-text'>" + jsonResponse.authorField + ": " + 
                                                             "<a href='/quizVerwaltung/frontend/userProfile.php?profileUsername="+author+"&section=questions'>" + 
                                                                 "<span class='badge rounded-pill bg-primary authorPill' style='margin-right: 2px;'>"+ author + "</span>" + 
                                                             "</a>" + 
