@@ -215,6 +215,7 @@
                     });
                 }
                 
+                //TODO hier muss noch irgednwie festgestellt werden welche sprache der user ausgewählt hat damit dann auch die sprachdatei zugegriffen werden kann
                 canvasBody.innerHTML += "<div class='card' id=" + questionId + " style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
                                             "<div class='card-body'>" + 
                                                 "<div class='row'>" + 

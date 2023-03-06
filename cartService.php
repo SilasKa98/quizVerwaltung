@@ -103,14 +103,14 @@ class CartService{
         $result = $this->mongo->findSingle("accounts", $filterQuery);
         $cart = (array)$result["questionCart"];  
 
-        if (empty($cart)){
-            //for website language text 
-            $filterQuery = (['userId' => $this->userId]);
-            $getAccountInfos= $this->mongo->findSingle("accounts",$filterQuery,[]);
-            $selectedLanguage = $getAccountInfos->userLanguage;
-            $root = $_SERVER['DOCUMENT_ROOT'];
-            include $root."/quizverwaltung/systemLanguages/text_".$selectedLanguage.".php";   
+        //for website language text 
+        $filterQuery = (['userId' => $this->userId]);
+        $getAccountInfos= $this->mongo->findSingle("accounts",$filterQuery,[]);
+        $selectedLanguage = $getAccountInfos->userLanguage;
+        $root = $_SERVER['DOCUMENT_ROOT'];
+        include $root."/quizverwaltung/systemLanguages/text_".$selectedLanguage.".php";
 
+        if (empty($cart)){
             print"<p id='cartInfoText'>$cartInfoText</p>";
         }else{
             foreach ($cart as $questionId) {
@@ -126,10 +126,10 @@ class CartService{
                 $answer;
                 
                 if ($questionObject["questionType"] == "Options" || $questionObject["questionType"] == "MultiOptions"){
-                    $answerType = "Options";
+                    $answerType = $optionsField;
                     $answer = $this->__createOptionsBubbles($questionObject["options"]->$lang, $questionObject["answer"]);
                 }else{
-                    $answerType = "Answer";
+                    $answerType = $answerField;
                     $answer = $questionObject["answer"];
                 }
                 
@@ -167,8 +167,8 @@ class CartService{
                             <div class=card questionCartCard' style='margin: .5rem; --bs-card-spacer-y: .5rem;'>
                                 <div class=card-body questionCartCard>
                                     <p 'question-text'> $answerType : $answer</p>
-                                    <p 'question-text'> Tags: $tagBadges</p>
-                                    <p 'question-text'> Author: 
+                                    <p 'question-text'> ".$tagsField.": $tagBadges</p>
+                                    <p 'question-text'> ".$authorField.": 
                                         <a href='/quizVerwaltung/frontend/userProfile.php?profileUsername=$author&section=questions'>
                                             <span class='badge rounded-pill bg-primary authorPill' style='margin-right: 2px;'> $author</span>
                                         </a>

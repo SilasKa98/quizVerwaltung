@@ -26,6 +26,10 @@ class Printer{
         $searchUser = $mongo->findSingle("accounts",$searchUserFilter,[]);
         $isUserAdmin = $searchUser["isAdmin"];
 
+        //account language from the user 
+        $root = $_SERVER['DOCUMENT_ROOT'];
+        $selectedLanguage = $searchUser->userLanguage;
+        include $root."/quizverwaltung/systemLanguages/text_".$selectedLanguage.".php";
 
         for($i=0;$i<count($questionObject);$i++){
             
@@ -102,11 +106,11 @@ class Printer{
                         </div>
                         <div class="collapse" id="collapsable_'.$questionObject[$i]->id.'">';
                             print'<div class="card-body">';
-                                print'<p "card-text">Antwort: '.$questionObject[$i]->answer."</p>";
-                                print'<p "card-text">Typ: '.$questionObject[$i]->questionType."</p>";
+                                print'<p "card-text">'.$answerField.': '.$questionObject[$i]->answer."</p>";
+                                print'<p "card-text">'.$questionTypeField.': '.$questionObject[$i]->questionType."</p>";
 
                                 if(isset($questionObject[$i]->options)){
-                                    print'<p "card-text">Optionen: ';
+                                    print'<p "card-text">'.$optionsField.': ';
                                     for($x=0;$x<count($questionObject[$i]->options->$lang);$x++){
                                         $questionAnswers = explode(",",$questionObject[$i]->answer);
                                         if(in_array($x, $questionAnswers)){
@@ -119,21 +123,21 @@ class Printer{
                                     print'</p>';
                                 }
                                 
-                                print'<p "card-text">Erstellungsdatum: '.$questionObject[$i]->creationDate."</p>";
-                                print'<p "card-text">Letzte Änderung: '.$questionObject[$i]->modificationDate."</p>";
-                                print'<p "card-text">Version: '.$questionObject[$i]->version."</p>";
+                                print'<p "card-text">'.$creationDateField.': '.$questionObject[$i]->creationDate."</p>";
+                                print'<p "card-text">'.$lastChangeField.': '.$questionObject[$i]->modificationDate."</p>";
+                                print'<p "card-text">'.$versionField.': '.$questionObject[$i]->version."</p>";
                                 
                                 if(isset($questionObject[$i]->tags)){
     
-                                    print'<p "card-text" class="questionTagsWrapper">Tags: ';
+                                    print'<p "card-text" class="questionTagsWrapper">'.$tagsField.': ';
                                     for($x=0;$x<count($questionObject[$i]->tags);$x++){
                                         print'<span class="badge rounded-pill text-bg-secondary" style="margin-right: 2px;">'.$questionObject[$i]->tags[$x].'</span>';
                                     }
                                     print'</p>';
                                 }
 
-                                print'<p "card-text">Downloads: '.$questionObject[$i]->downloadCount."</p>";
-                                print'<p "card-text">Author: <a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
+                                print'<p "card-text">'.$downloadsNumberField.': '.$questionObject[$i]->downloadCount."</p>";
+                                print'<p "card-text">'.$authorField.': <a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
                             print'</div>
                         </div>
                     </div> 

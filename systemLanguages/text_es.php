@@ -95,4 +95,15 @@
     $exportTypeOptions = "Tipo de exportación (predeterminado 'Standard')";
     $exportName = "Asigne un nombre a su exportación (predeterminado 'newCatalog')";
     $downloadButton = "Descargar";
+
+    //printService.php & cartService.php Question prints
+    $answerField = "Respuesta";
+    $questionTypeField = "Tipo";
+    $optionsField = "Opciones";
+    $creationDateField = "Fecha de creación";
+    $lastChangeField = "Última actualización";
+    $versionField = "Versión";
+    $tagsField = "Etiquetas";
+    $downloadsNumberField = "Descargas";
+    $authorField = "Autor";
 ?>
