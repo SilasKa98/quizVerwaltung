@@ -7,9 +7,9 @@
     extract($_SESSION["userData"]);
 
 
-    include_once "../mongoService.php";
-    include_once "../questionService.php";
-    include_once "../printService.php";
+    include_once "../services/mongoService.php";
+    include_once "../services/questionService.php";
+    include_once "../services/printService.php";
 
     
 

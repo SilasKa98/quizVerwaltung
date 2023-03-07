@@ -1,10 +1,12 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+
+$basePath = dirname(__DIR__, 1);
+require $basePath.'/vendor/autoload.php';
 use DeepL\DeepLException;
 use DeepL\Translator;
 
 //read in the .env file credentials
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable($basePath);
 $dotenv->load();
 //use the credentials with $_ENV["xxxx"];
 //check https://github.com/vlucas/phpdotenv

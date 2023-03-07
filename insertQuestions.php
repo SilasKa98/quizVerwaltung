@@ -11,7 +11,7 @@
   extract($_SESSION["userData"]);
 
   //get the selected userLanguage to display the system in the right language
-  include_once "mongoService.php";
+  include_once "services/mongoService.php";
   $mongo = new MongoDBService();
   $filterQuery = (['userId' => $userId]);
   $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);
@@ -57,8 +57,8 @@
 
 
         <?php
-        include_once "questionService.php";
-        include_once "mongoService.php";
+        include_once "services/questionService.php";
+        include_once "services/mongoService.php";
 
         if (isset($_POST['import'])) {
 

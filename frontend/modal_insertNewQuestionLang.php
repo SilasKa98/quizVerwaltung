@@ -1,7 +1,7 @@
 <?php
 
 $newLanguageModal = $_SERVER['DOCUMENT_ROOT'];
-include_once ($newLanguageModal."/quizVerwaltung/translationService.php");
+include_once ($newLanguageModal."/quizVerwaltung/services/translationService.php");
 
 //hardcoding "de" as targetLanguage, because its not needed for this case..but it must be set
 $translator = new TranslationService("de");

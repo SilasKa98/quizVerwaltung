@@ -1,7 +1,8 @@
 <?php
+$basePath = dirname(__DIR__, 1);
+require $basePath. '/vendor/autoload.php';
 
-require __DIR__ . '/vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable($basePath);
 $dotenv->load();
 
 //TODO session management irgendwie machen damit es keine überschneidungen etc. gibt !!!!

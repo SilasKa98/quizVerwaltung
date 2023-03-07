@@ -5,9 +5,9 @@
  * 
  */
 
-include_once "mongoService.php";
-include_once "translationService.php";
-include_once "questionService.php";
+include_once "services/mongoService.php";
+include_once "services/translationService.php";
+include_once "services/questionService.php";
 
 
 $question = new QuestionService();
@@ -86,7 +86,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 * Insert + increase/decrease Karma and also check+handling if and how user already voted for this question is checked in here
 */
 if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
-    include_once "karmaService.php";
+    include_once "services/karmaService.php";
     $karma = new KarmaService();
     $currentKarma = $karma->getCurrentKarma($_POST["id"]);
     session_start();
@@ -180,28 +180,28 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 
 
 if(isset($_POST["method"]) && $_POST["method"] == "registerAccount"){
-    include_once "accountService.php";
+    include_once "services/accountService.php";
     $account = new AccountService();
     $account->register($_POST["username"],$_POST["mail"],$_POST["pwd"],$_POST["pwd_repeat"],$_POST["languageInput"],$_POST["firstname"],$_POST["lastname"], $_POST["requestAdmin"]);
 }
 
 
 if(isset($_POST["method"]) && $_POST["method"] == "loginAccount"){
-    include_once "accountService.php";
+    include_once "services/accountService.php";
     $account = new AccountService();
     $account->login($_POST["mailuid"],$_POST["pwd"]);
 }
 
 
 if(isset($_POST["logout"])){
-    include_once "accountService.php";
+    include_once "services/accountService.php";
     $account = new AccountService();
     $account->logout();
 }
 
 
 if(isset($_POST["language"])){
-    include_once "accountService.php";
+    include_once "services/accountService.php";
     $account = new AccountService();
     session_start();
     $account->changeLanguage($_POST["language"], $_SESSION["userData"]["userId"]);
@@ -274,7 +274,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
 
 
 if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
-    include_once "versionService.php";
+    include_once "services/versionService.php";
     $version = new VersionService();
     $version->setVersion("1.0");
     $version = $version->version;
@@ -585,8 +585,8 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
 
 
 if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
-    include_once "cartService.php";
-    include_once "accountService.php";
+    include_once "services/cartService.php";
+    include_once "services/accountService.php";
     session_start();
     $id = $_POST["questionId"];
     $cart = new CartService();
@@ -623,7 +623,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
 }
 
 if(isset($_POST["method"]) && $_POST["method"] == "emptyQuestionCart"){
-    include_once "cartService.php";
+    include_once "services/cartService.php";
     session_start();
     $cartService = new CartService();
     $clearResult = $cartService->emptyQuestionCart();
@@ -636,7 +636,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "emptyQuestionCart"){
 
 
 if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
-    include_once "cartService.php";
+    include_once "services/cartService.php";
     session_start();
     $cartService = new CartService();
     $name = $_POST["name"];
@@ -656,7 +656,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
 
 
 if(isset($_POST["method"]) && $_POST["method"] == "removeCartItem"){
-    include_once "cartService.php";
+    include_once "services/cartService.php";
     session_start();
     $cartService = new CartService();
     $id = $_POST["id"];
@@ -775,7 +775,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
     $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
 
     //update the question Version
-    include_once "versionService.php";
+    include_once "services/versionService.php";
     $version = new VersionService();
     $newVersion = $version->increaseVersion($currentQuestionVersion);
 
@@ -966,7 +966,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "requestAdminAccount"){
     $mailAdress = $searchUser->mail;
     $joinDate = $searchUser->joinDate;
 
-    include_once "accountService.php";
+    include_once "services/accountService.php";
     $account = new AccountService();
     $account->sendAdminRequestMail($username, $firstname, $lastname, $userId, $mailAdress, $joinDate);
 }

@@ -1,12 +1,13 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+$basePath = dirname(__DIR__, 1);
+require $basePath.'/vendor/autoload.php';
 //include phpmailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //get .env file
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable($basePath);
 $dotenv->load();
 
 include_once "mongoService.php";
@@ -204,7 +205,7 @@ class AccountService{
                 "username"=>$getUserinformation->username,
                 "userId"=>$getUserinformation->userId
             ];
-            header("Location: index.php?login=success");
+            header("Location: ../index.php?login=success");
             exit();
         }
     }
@@ -224,7 +225,7 @@ class AccountService{
         $filterQuery = (['userId' => $userId]);
         $update = ['$set' =>  ['userLanguage'=> $language]];
         $this->mongo->updateEntry("accounts",$filterQuery,$update);
-        #return header("Location: index.php?changeLanguage=success");
+        #return header("Location: ../index.php?changeLanguage=success");
     }
 
     function getUserQuestionLangRelation($userId, $questionId){

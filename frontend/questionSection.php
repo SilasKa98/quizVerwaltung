@@ -5,10 +5,10 @@
 ##################################################################
 ################Question auslesen und darstellung#################
 ##################################################################
-include_once "./questionService.php";
-include_once "./mongoService.php";
-include_once "./printService.php";
-include_once "./translationService.php";
+include_once "./services/questionService.php";
+include_once "./services/mongoService.php";
+include_once "./services/printService.php";
+include_once "./services/translationService.php";
 
 $question = new QuestionService();
 $printer = new Printer();

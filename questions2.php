@@ -95,7 +95,7 @@ function parseLine( $line ) {
 
 
   //language is automatically detected with the deepL Api
-  include_once "translationService.php";
+  include_once "services/translationService.php";
   $deepLDetectLanguage = new TranslationService("de");
   $language = $deepLDetectLanguage->detectLanguage($parts[1]);
 
@@ -121,7 +121,7 @@ function parseLine( $line ) {
 
   $karma = 0;
 
-  include_once "versionService.php";
+  include_once "services/versionService.php";
   $version = new VersionService();
   $version->setVersion("1.0");
   $version = $version->version;

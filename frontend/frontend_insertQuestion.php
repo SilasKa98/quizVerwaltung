@@ -6,7 +6,7 @@
   }
   extract($_SESSION["userData"]);
   //get the selected userLanguage to display the system in the right language
-  include_once "../mongoService.php";
+  include_once "../services/mongoService.php";
   $mongo = new MongoDBService();
   $filterQuery = (['userId' => $userId]);
   $selectedLanguage= $mongo->findSingle("accounts",$filterQuery,[]);

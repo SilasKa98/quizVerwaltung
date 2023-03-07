@@ -4,7 +4,7 @@
 
   //get the selected userLanguage to display the system in the right language
   $root = $_SERVER['DOCUMENT_ROOT'];
-  include_once($root.'/quizverwaltung/mongoService.php');
+  include_once($root.'/quizverwaltung/services/mongoService.php');
   $mongo = new MongoDBService();
   $filterQuery = (['userId' => $userId]);
   $getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);

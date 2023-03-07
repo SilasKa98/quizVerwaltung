@@ -6,7 +6,7 @@ if(!$_SESSION["logged_in"]){
 }
 extract($_SESSION["userData"]);
 
-include_once "../mongoService.php";
+include_once "../services/mongoService.php";
 
 $mongo = new MongoDBService();
 
@@ -33,7 +33,7 @@ if(!isset($selectedQuestion)){
 }
 $isAdmin = $userInfo["isAdmin"];
 
-include_once "../accountService.php";
+include_once "../services/accountService.php";
 $account = new AccountService();
 $lang = $account->getUserQuestionLangRelation($userId, $_GET["questionId"]);
 

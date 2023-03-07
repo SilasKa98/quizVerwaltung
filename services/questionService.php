@@ -1,5 +1,6 @@
 <?php
-include_once "questions2.php";
+$basePath = dirname(__DIR__, 1);
+include_once $basePath."/questions2.php";
 
 class QuestionService{
     var $questionToRead;
