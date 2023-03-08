@@ -36,7 +36,7 @@
     <div class="container-fluid">
 
     <div class="alert alert-danger checkHelpAlert" role="alert">
-        <p class="checkHelpAlertText">Before importing anything please kindly check our <a href="/quizVerwaltung/frontend/helpPage.php#Importstructure" class="checkHelpAlertText">Helppage</a></p>
+        <p class="checkHelpAlertText"><?php echo $checkHelpPageAlertText;?><a href="/quizVerwaltung/frontend/helpPage.php#Importstructure" class="checkHelpAlertText"><?php echo $checkHelpPageBtn;?></a></p>
     </div>
     
 

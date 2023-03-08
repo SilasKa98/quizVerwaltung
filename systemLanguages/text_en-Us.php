@@ -37,7 +37,8 @@
     $adjustButton = "Adjust";
     $finalizeImportButton = "Import questions";
     $giveTagsReminderAlert = "Attention! If you do not assign tags to the questions, it will be difficult for other users to find your questions.";
-
+    $checkHelpPageAlertText = "Before importing anything please kindly check our ";
+    $checkHelpPageBtn = "Helppage";
 
     //userProfile.php
     $userHasNoQuestionsYet = "hasn't created any questions yet.";

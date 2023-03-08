@@ -37,6 +37,8 @@
     $adjustButton = "Anpassen";
     $finalizeImportButton = "Fragen Importieren";
     $giveTagsReminderAlert = "Achtung! Wenn Sie den Fragen keine Tags zuordenen, können andere Nutzer Ihre Fragen nur schwer finden.";
+    $checkHelpPageAlertText = "Bevor Sie etwas importieren, überprüfen Sie bitte unsere ";
+    $checkHelpPageBtn = "Hilfeseite";
 
     //userProfile.php
     $userHasNoQuestionsYet = "hat noch keine Fragen erstellt.";
