@@ -1,18 +1,24 @@
 <?php
 
 session_start();
-if(!$_SESSION["logged_in"]){
-  header("Location: loginAccount.php");
-  exit();
+if(!isset($_SESSION["logged_in"])){
+  $selectedLanguage = "en-Us";
+}else{
+    extract($_SESSION["userData"]);
+    //get the selected userLanguage to display the system in the right language
+    include_once "../services/mongoService.php";
+    $mongo = new MongoDBService();
+    $filterQuery = (['userId' => $userId]);
+    $getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);
+    $selectedLanguage = $getAccountInfos->userLanguage;
 }
-extract($_SESSION["userData"]);
 
-//get the selected userLanguage to display the system in the right language
-include_once "../services/mongoService.php";
-$mongo = new MongoDBService();
-$filterQuery = (['userId' => $userId]);
-$getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);
-$selectedLanguage = $getAccountInfos->userLanguage;
+//can be removed later when es is added.
+if($selectedLanguage == "es"){
+    echo "Currently Spanish is not supported for the Helppage, please select a different Language.";
+    exit();
+}
+
 include "../systemLanguages/text_".$selectedLanguage.".php";
 
 ?>

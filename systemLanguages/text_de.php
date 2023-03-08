@@ -114,7 +114,7 @@
 
     //helpPage.php
     $quizManagerHelpHeading = "QuizManager Hilfe";
-    $questionTypesText = "Die Quiz Manager Plattform unterstützt unterschiedliche Frageformate. Im folgenden werden diese genauer gezeigt und beschrieben";
+    $questionTypesText = "Die Quiz Manager Plattform unterstützt unterschiedliche Frageformate. Im folgenden werden diese genauer gezeigt und beschrieben.";
 
     $helpMenuImport = "Importieren";
     $helpMenuSubImportPossibilitys = "Import Möglichkeiten";
@@ -159,7 +159,7 @@
     Die zweite Sektion beinhaltet den Fragetext. Alle weiteren Sektionen sind je nach Fragetyp unterschiedlich und werden nachfolgend genauer beschrieben.";
     
     $liYesNoQuestionStructureExample = "Bei einer Ja/Nein Frage beinhaltet die dritte Sektion die Antwort auf die Frage. 
-    Diese kann nur einen der folgenden Werte haben: <b>true</b> / <b>false</b> ";
+    Diese kann nur einen der folgenden Werte haben: <b>True</b> / <b>False</b> ";
     $liOpenQuestionStructureExample = "Bei einer Offenen Frage beinhaltet die dritte Sektion die Antwort bzw. \"Musterlösung\" auf die Frage. 
     Diese kann jeden beliebigen Wert haben";
     $liOptionsQuestionStructureExample = "Bei einer auswahl Frage beinhaltet die dritte Sektion den Index der korrekten Antwort auf die Frage. 
