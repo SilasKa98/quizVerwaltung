@@ -84,25 +84,25 @@ class AccountService{
 
         //check of errors in the given informations
         if(empty($username)|| empty($mail) || empty($pwd) || empty($pwd_repeat)|| empty($language) || empty($firstname) || empty($lastname)){
-            header("Location: frontend/registerAccount.php?error=emptyfields&user_id=".$username."&mail=".$mail);
+            header("Location: /quizVerwaltung/frontend/registerAccount.php?error=emptyfields&user_id=".$username."&mail=".$mail);
             exit();
         }
         
         else if(!filter_var($mail, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $username)){
-            header("Location: frontend/registerAccount.php?error=invalidmailuser_id");
+            header("Location: /quizVerwaltung/frontend/registerAccount.php?error=invalidmailuser_id");
             exit();
         }
         
         else if(!filter_var($mail, FILTER_VALIDATE_EMAIL)){
-            header("Location: frontend/registerAccount.php?error=invalidmail&user_id=".$username);
+            header("Location: /quizVerwaltung/frontend/registerAccount.php?error=invalidmail&user_id=".$username);
             exit();
         }
         else if(!preg_match("/^[a-zA-Z0-9]*$/", $username) || !preg_match("/^[a-zA-Z0-9]*$/", $firstname) || !preg_match("/^[a-zA-Z0-9]*$/", $lastname)){
-            header("Location: frontend/registerAccount.php?error=invalidUsernameOrFirstnameOrLastname&mail=".$mail);
+            header("Location: /quizVerwaltung/frontend/registerAccount.php?error=invalidUsernameOrFirstnameOrLastname&mail=".$mail);
             exit();
         }
         else if($pwd !== $pwd_repeat){
-            header("Location: frontend/registerAccount.php?error=passwordcheck&user_id=".$username."&mail=".$mail);
+            header("Location: /quizVerwaltung/frontend/registerAccount.php?error=passwordcheck&user_id=".$username."&mail=".$mail);
             exit();
         }
 
@@ -115,7 +115,7 @@ class AccountService{
         $checkMailExists = $this->mongo->findSingle("accounts",$filterQuery2,$options);
 
         if(isset($checkUserExists) || isset($checkMailExists)){
-            header("Location: frontend/registerAccount.php?error=userormailtaken");
+            header("Location: /quizVerwaltung/frontend/registerAccount.php?error=userormailtaken");
             exit();
         }
 
@@ -151,7 +151,7 @@ class AccountService{
             $this->sendAdminRequestMail($username,$firstname,$lastname,$userId,$mail,date("Y-m-d"));
         }
 
-        return header("Location: frontend/loginAccount.php?signUp=success");
+        return header("Location: /quizVerwaltung/frontend/loginAccount.php?signUp=success");
     } 
 
 
@@ -173,7 +173,7 @@ class AccountService{
 
         //back to login if neither the mail or username exists
         if(!isset($checkMail) && !isset($checkUsername)){
-            header("Location: frontend/loginAccount.php?error=noUserfound");
+            header("Location: /quizVerwaltung/frontend/loginAccount.php?error=noUserfound");
             exit();
         }else{
             //get the id of the user if the given infos are correct
@@ -194,7 +194,7 @@ class AccountService{
         //compare and verify the given password with the password fetched from the db
         $pwdCheck = password_verify($pwd, $getPwd);
         if($pwdCheck == false){
-            header("Location: frontend/loginAccount.php?error=wrongpwd");
+            header("Location: /quizVerwaltung/frontend/loginAccount.php?error=wrongpwd");
             exit();
         }elseif($pwdCheck == true){
             session_start();
@@ -205,7 +205,7 @@ class AccountService{
                 "username"=>$getUserinformation->username,
                 "userId"=>$getUserinformation->userId
             ];
-            header("Location: ../index.php?login=success");
+            header("Location: /quizVerwaltung/index.php?login=success");
             exit();
         }
     }
@@ -217,7 +217,7 @@ class AccountService{
     function logout(){
         session_start();
         session_destroy();
-        header("Location: frontend/loginAccount.php?logout=success");
+        header("Location: /quizVerwaltung/frontend/loginAccount.php?logout=success");
         exit();
     }
 
