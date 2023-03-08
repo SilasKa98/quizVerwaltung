@@ -32,7 +32,14 @@
     <?php include_once "navbar.php";?>
     <?php include_once "notificationToast.php";?>
 
+
     <div class="container-fluid">
+
+    <div class="alert alert-danger checkHelpAlert" role="alert">
+        <p class="checkHelpAlertText">Before importing anything please kindly check our <a href="/quizVerwaltung/frontend/helpPage.php#Importstructure" class="checkHelpAlertText">Helppage</a></p>
+    </div>
+    
+
         <div class="container">
             <div class="center">
                 <form method="post" action="/quizVerwaltung/insertQuestions.php" enctype="multipart/form-data">

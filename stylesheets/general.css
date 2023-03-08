@@ -427,6 +427,17 @@ body{
     font-style: italic;
   }
 
+  .checkHelpAlert{
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 10%;
+    text-align: center;
+    font-size: 15pt;
+  }
+
+  .checkHelpAlertText{
+    color: black;
+  }
 
 
   .innerImportCard{
