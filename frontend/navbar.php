@@ -24,7 +24,7 @@ if (!isset($cartCount)){$cartCount = 0;}
         <div class="collapse navbar-collapse" id="navbarRight">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="/quizVerwaltung/frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
-                <a class="nav-link" href="#">Help</a>
+                <a class="nav-link" href="/quizVerwaltung/frontend/helpPage.php">Help</a>
             </div>
             
             <ul class="navbar-nav ms-auto">

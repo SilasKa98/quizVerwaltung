@@ -108,4 +108,68 @@
     $tagsField = "Tags";
     $downloadsNumberField = "Downloads";
     $authorField = "Autor";
+
+
+
+
+    //helpPage.php
+    $quizManagerHelpHeading = "QuizManager Hilfe";
+    $questionTypesText = "Die Quiz Manager Plattform unterstützt unterschiedliche Frageformate. Im folgenden werden diese genauer gezeigt und beschrieben";
+
+    $helpMenuImport = "Importieren";
+    $helpMenuSubImportPossibilitys = "Import Möglichkeiten";
+    $helpMenuSubQuestionTypes = "Frage Typen";
+    $helpMenuSubImportStructure = "Import Struktur";
+
+    $helpMenuExport = "Exportieren";
+
+    $helpMenuTranslation = "Übersetzen";
+
+
+    $helpContentsHeading = "Inhalt";
+
+    $importPossibility1 = "Einfügen von Fragen mittels Datei Import";
+    $importPossibility2 = "Einfügen von Fragen über das Webformular (coming soon)";
+    $importPossibility1Description = "Mit dieser Funktion können Sie eine oder mehrere Fragen gleichzeitig importieren. 
+    Welches format unterstützt ist und auf was Sie genau achten müssen, wird in dem Kapitel <a href='#Importstructure'>Import Struktur</a> erklärt";
+
+    $importPossibility2Description = "Diese Funktion ist noch nicht implementiert, aber in naher Zukunft geplant.";
+
+    $liYesNoQuestion = "Ja/Nein Frage";
+    $liYesNoQuestionExample = "Bei diesem Fragetyp handelt es sich um einfach Fragen, 
+    welche nur mit Ja oder Nein beantwortet werden können. Die Antwort im Quiz Manager System auf eine Solche Frage heißt deshalb immer True(Ja) oder False(Nein)";
+
+    $liOpenQuestion = "Offene Frage";
+    $liOpenQuestionExample = "Bei diesem Fragetyp handelt es sich eine eine offen gestellte Frage. 
+    Das heißt es gibt keine festen Antwortmöglichkeiten für den Nutzer. Stattdessen kann der Nutzer selbst frei antworten.
+    Dem Fragetyp wird dennoch eine Antwort als \"Musterlösung\" mitgegeben.";
+
+    $liOptionsQuestion = "Auswahl Frage";
+    $liOptionsQuestionExample = "Bei diesem Fragetyp handelt es sich um eine Frage mit fest vorgegebenen Antwortmöglichkeiten. 
+    Von diesen Antworten ist allerdings zwingend nur eine Richtig. Die richtige Antwort ist grün markiert.";
+
+    $liMultiOptionsQuestion = "Mehrfachauswahl Frage";
+    $liMultiOptionsQuestionExample = "Bei diesem Fragetyp handelt es sich um eine Frage mit fest vorgegebenen Antwortmöglichkeiten, wie auch bei der Auswahl Frage. 
+    Von diesen Antworten können allerdings mehrere richtig sein. Die richtigen Antworten sind grün markiert.";
+
+
+    $helpTextImportStructure = "Für das Importieren von Fragen wird ein spezielles Format verwendet. 
+    Momentan können nur .txt Dateien importiert werden, welche dieser Struktur entsprechen.";
+    $generalQuestionStructureExample = "Jede Frage wird mittels dem \"#\" Zeichen in unterschiedliche Sektionen aufgeteilt. Die erste Sektion stellt den Fragetyp dar. 
+    Die zweite Sektion beinhaltet den Fragetext. Alle weiteren Sektionen sind je nach Fragetyp unterschiedlich und werden nachfolgend genauer beschrieben.";
+    
+    $liYesNoQuestionStructureExample = "Bei einer Ja/Nein Frage beinhaltet die dritte Sektion die Antwort auf die Frage. 
+    Diese kann nur einen der folgenden Werte haben: <b>true</b> / <b>false</b> ";
+    $liOpenQuestionStructureExample = "Bei einer Offenen Frage beinhaltet die dritte Sektion die Antwort bzw. \"Musterlösung\" auf die Frage. 
+    Diese kann jeden beliebigen Wert haben";
+    $liOptionsQuestionStructureExample = "Bei einer auswahl Frage beinhaltet die dritte Sektion den Index der korrekten Antwort auf die Frage. 
+    Es kann nur eine richtige Antwort geben. 
+    Die Sektionen, welche auf die Antwort folgen, stellen jeweils Antwortmöglichkeiten dar. Im oben gezeigten Beispiel gibt es zwei Antwortmöglichkeiten. 
+    Die Indizierung startet bei 0, das heißt die Antwort \"answer Option2\" wäre in diesem Beispiel die richtige Antwort.";
+    $liMultiOptionsQuestionStructureExample = "Bei einer mehrfachauswahl Frage beinhaltet die dritte Sektion die Indizes der korrekten Antworten auf die Frage. 
+    Es gibt also mehere richtige Antworten auf die Frage.
+    Die Sektionen, welche auf die Antwort folgen, stellen jeweils Antwortmöglichkeiten dar. Im oben gezeigten Beispiel gibt es drei Antwortmöglichkeiten. 
+    Die Indizierung startet bei 0, das heißt die Antworten \"Answer1\" und \"Answer2\" wäre in diesem Beispiel die richtigen Antworten.";
+
+
 ?>
