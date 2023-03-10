@@ -107,8 +107,8 @@ class CartService{
         $filterQuery = (['userId' => $this->userId]);
         $getAccountInfos= $this->mongo->findSingle("accounts",$filterQuery,[]);
         $selectedLanguage = $getAccountInfos->userLanguage;
-        $root = $_SERVER['DOCUMENT_ROOT'];
-        include $root."/quizverwaltung/systemLanguages/text_".$selectedLanguage.".php";
+        $basePath = dirname(__DIR__, 1);
+        include $basePath."/systemLanguages/text_".$selectedLanguage.".php";
 
         if (empty($cart)){
             print"<p id='cartInfoText'>$cartInfoText</p>";

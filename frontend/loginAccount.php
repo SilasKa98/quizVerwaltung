@@ -164,7 +164,7 @@
                         Our import overview helps you to keep track of the Questions and its values you are about to upload.
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-  
+                        <a type="button" class="btn btn-primary" href="helpPage.php#importPosibilitys">Read more</a>
                     </div>
                 </div>
             </div>
@@ -182,6 +182,7 @@
                         Questions that might have been uninteressting for you, are now usable and can also be used by you.
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <a type="button" class="btn btn-primary" href="helpPage.php">Read more</a>
                     </div>
                 </div>
                 <div class="col-10 col-sm-8 col-lg-6">
@@ -206,7 +207,7 @@
                         In addition, questions can be rated by other users, maybe you are the one who uploads the best and most popular questions of the community.
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-  
+                        <a type="button" class="btn btn-primary" href="helpPage.php">Read more</a>
                     </div>
                 </div>
             </div>
@@ -226,6 +227,7 @@
                        Easily select which format you would like to get in the Dropdown-Menu of the Export.
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <a type="button" class="btn btn-primary" href="helpPage.php">Read more</a>
                     </div>
                 </div>
                 <div class="col-10 col-sm-8 col-lg-6">
@@ -250,7 +252,7 @@
                         Simply create a catalog, which can later be exported as a whole. By means of the visibility setting you can determine whether other users can see this catalog or not.
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-  
+                        <a type="button" class="btn btn-primary" href="helpPage.php">Read more</a>
                     </div>
                 </div>
             </div>

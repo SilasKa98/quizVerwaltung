@@ -27,9 +27,9 @@ class Printer{
         $isUserAdmin = $searchUser["isAdmin"];
 
         //account language from the user 
-        $root = $_SERVER['DOCUMENT_ROOT'];
+        $basePath = dirname(__DIR__, 1);
         $selectedLanguage = $searchUser->userLanguage;
-        include $root."/quizverwaltung/systemLanguages/text_".$selectedLanguage.".php";
+        include $basePath."/systemLanguages/text_".$selectedLanguage.".php";
 
         for($i=0;$i<count($questionObject);$i++){
             
