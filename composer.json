@@ -3,7 +3,8 @@
         "deeplcom/deepl-php": "^1.2",
         "vlucas/phpdotenv": "^5.5",
         "mongodb/mongodb": "^1.12",
-        "phpmailer/phpmailer": "^6.7"
+        "phpmailer/phpmailer": "^6.7",
+        "ezyang/htmlpurifier": "^4.16"
     }
 
 }
