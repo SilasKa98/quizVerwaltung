@@ -88,7 +88,14 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
     include_once "services/karmaService.php";
     $karma = new KarmaService();
-    $currentKarma = $karma->getCurrentKarma($_POST["id"]);
+
+
+    //sanitise id for xss security
+    $sanitiser = new SanitiseInputService();
+    $id = $sanitiser->sanitiseInput($_POST["id"]);
+
+
+    $currentKarma = $karma->getCurrentKarma($id);
     session_start();
     $currentUserId = $_SESSION["userData"]["userId"];
 
@@ -100,7 +107,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
         exit();
     }
 
-    $filterQueryQuestions = (['id' => $_POST["id"]]);
+    $filterQueryQuestions = (['id' => $id]);
 
     if($_POST["job"] == "increaseKarma"){
         $currentHandle = "up";
@@ -112,18 +119,18 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 
 
     //search for the questionId in the karma->up array
-    $isQuestionVoteExisting = array_search($_POST["id"],(array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle]);
+    $isQuestionVoteExisting = array_search($id,(array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle]);
     
     if($isQuestionVoteExisting === false){
         $newKarmaArray = (array)$searchUser["questionsUserGaveKarmaTo"][$currentHandle];
-        array_push($newKarmaArray,$_POST["id"]);
+        array_push($newKarmaArray,$id);
         $fieldQuery = "questionsUserGaveKarmaTo.".$currentHandle;
         $updateUserKarma = ['$set' =>  [$fieldQuery=> $newKarmaArray]];
         $mongo->updateEntry("accounts",$searchUserFilter,$updateUserKarma);
 
         
         //search in other vote category(up/down) for existence
-        $isQuestionExistingInOppositVote = array_search($_POST["id"],(array)$searchUser["questionsUserGaveKarmaTo"][$oppositHandle]);
+        $isQuestionExistingInOppositVote = array_search($id,(array)$searchUser["questionsUserGaveKarmaTo"][$oppositHandle]);
         //if found delete it and give a additional upvote to correct the previous entry
         $correctPreviousSelection = false;
         if($isQuestionExistingInOppositVote !== false){
@@ -145,9 +152,9 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
 
         //increase/decrease the Karma int of the quesition (karma of the question in the questions collection)
         if($_POST["job"] == "increaseKarma"){
-            $newKarma = $karma->increaseKarma($_POST["id"]);
+            $newKarma = $karma->increaseKarma($id);
         }else{
-            $newKarma = $karma->decreaseKarma($_POST["id"]);
+            $newKarma = $karma->decreaseKarma($id);
         }
         
 
@@ -167,9 +174,9 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeKarma"){
         $mongo->updateEntry("accounts",$searchUserFilter,$updateUserKarmaNeutralize);
 
         if($_POST["job"] == "increaseKarma"){
-            $newKarma = $karma->decreaseKarma($_POST["id"]);
+            $newKarma = $karma->decreaseKarma($id);
         }else{
-            $newKarma = $karma->increaseKarma($_POST["id"]);
+            $newKarma = $karma->increaseKarma($id);
         }
         //echo is needed for displaying the correct Karma
         echo $newKarma;
@@ -204,7 +211,14 @@ if(isset($_POST["language"])){
     include_once "services/accountService.php";
     $account = new AccountService();
     session_start();
-    $account->changeLanguage($_POST["language"], $_SESSION["userData"]["userId"]);
+
+    //sanitise language for xss security
+    $sanitiser = new SanitiseInputService();
+    $language = $sanitiser->sanitiseInput($_POST["language"]);
+
+    $account->changeLanguage($language, $_SESSION["userData"]["userId"]);
+
+    //TODO maybe also sanitise the destionation? needs to be checked what happens to the string
     header("Location: ".$_POST["destination"]);
 }
 
@@ -323,6 +337,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
 if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
     session_start();
     $userThatHasBeenFollowed = $_POST["followedUserId"];
+
+    //sanitise userThatHasBeenFollowed for xss security
+    $sanitiser = new SanitiseInputService();
+    $userThatHasBeenFollowed = $sanitiser->sanitiseInput($userThatHasBeenFollowed);
+
     $currentUserId = $_SESSION["userData"]["userId"];
 
     //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
@@ -395,6 +414,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFollower"){
 if(isset($_POST["method"]) && $_POST["method"] == "showFollower"){
     $profileUserId = $_POST["profileUserId"];
 
+    //sanitise profileUserId for xss security
+    $sanitiser = new SanitiseInputService();
+    $profileUserId = $sanitiser->sanitiseInput($profileUserId);
+
     //check for security reasons if the id contains any illegal chars or if it is existing at all
     if(!preg_match("/^[a-zA-Z0-9]*$/", strval($profileUserId))){
         echo "Illegal chars detected!";
@@ -427,6 +450,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "showFollower"){
 
 if(isset($_POST["method"]) && $_POST["method"] == "showFollowing"){
     $profileUserId = $_POST["profileUserId"];
+
+    //sanitise profileUserId for xss security
+    $sanitiser = new SanitiseInputService();
+    $profileUserId = $sanitiser->sanitiseInput($profileUserId);
 
     //check for security reasons if the id contains any illegal chars or if it is existing at all
     if(!preg_match("/^[a-zA-Z0-9]*$/", strval($profileUserId))){
@@ -572,8 +599,15 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
 
 if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
 
+    $selectedTags = $_POST["selectedTag"];
+
+    // sanitise selectedTags to prevent XSS
+    $sanitiser = new SanitiseInputService();
+    $selectedTags = $sanitiser->sanitiseInput($selectedTags);
+
+
     //check if the given tag isnt containing any illegal chars (catch exploits)
-    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($_POST["selectedTag"]))){
+    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($selectedTags))){
         echo "Illegal chars detected!";
         exit();
     }
@@ -584,11 +618,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
     $searchUser = $mongo->findSingle("accounts",$searchUserFilter);
     $userTags = (array)$searchUser->favoritTags;
 
-    $checkIfTagExists = array_search($_POST["selectedTag"],$userTags);
+    $checkIfTagExists = array_search($selectedTags,$userTags);
 
     //if it doesnt exist push it and insert it else drop it
     if($checkIfTagExists === false){
-        array_push($userTags, $_POST["selectedTag"]);
+        array_push($userTags, $selectedTags);
     }else{
         unset($userTags[$checkIfTagExists]);
     }
@@ -607,6 +641,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "addToCart"){
     include_once "services/accountService.php";
     session_start();
     $id = $_POST["questionId"];
+
+    // sanitise id to prevent XSS
+    $sanitiser = new SanitiseInputService();
+    $id = $sanitiser->sanitiseInput($id);
+
     $cart = new CartService();
     $account = new accountService();
     $addResult = $cart->addItem($id);
@@ -659,6 +698,13 @@ if(isset($_POST["method"]) && $_POST["method"] == "createCatalog"){
     $cartService = new CartService();
     $name = $_POST["name"];
     $status = $_POST["status"];
+
+    //sanitise name and status for xss security
+    $sanitiser = new SanitiseInputService();
+    $name = $sanitiser->sanitiseInput($name);
+    $status = $sanitiser->sanitiseInput($status);
+
+
     $createResult = $cartService->createCatalog($name, $status);
 
     $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
@@ -678,6 +724,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "removeCartItem"){
     session_start();
     $cartService = new CartService();
     $id = $_POST["id"];
+
+    //sanitise id for xss security
+    $sanitiser = new SanitiseInputService();
+    $id = $sanitiser->sanitiseInput($id);
+
     $removeResult = $cartService->removeItem($id);
 
     $searchUserFilter = (['userId'=> $_SESSION["userData"]["userId"]]);
@@ -708,8 +759,9 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
         $selectedTags = [];
     }
     
-    //check if one of the give tags contains illegal chars (catch exploits) --> also use the SanisiseInputService for XSS safty
+    //check if one of the give tags or the id contains illegal chars (catch exploits) --> also use the SanitiseInputService for XSS safty
     $sanitiser = new SanitiseInputService();
+    $questionId = $sanitiser->sanitiseInput($questionId);
 
     foreach($selectedTags as $tag){
         $tag = $sanitiser->sanitiseInput($tag);
@@ -756,7 +808,6 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
     $sanitiser = new SanitiseInputService();
     $questionId = $sanitiser->sanitiseInput($questionId);
     $questionText = $sanitiser->sanitiseInput($questionText);
-    #$questionLanguage = $sanitiser->sanitiseInput($questionLanguage);
 
     $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
     //catching falsly given languages from the user 
@@ -821,6 +872,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "deleteQuestion"){
         exit();
     }
 
+
     //check if id even exists
     $searchQuestionFilter = (['id'=>$questionId]);
     $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
@@ -829,6 +881,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "deleteQuestion"){
         echo "No Question found for this Id!";
         exit();
     }
+
+    //sanitise id for xss security
+    $sanitiser = new SanitiseInputService();
+    $questionId = $sanitiser->sanitiseInput($questionId);
 
     $questionAuthor = $searchQuestion->author;
 
