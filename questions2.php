@@ -99,6 +99,10 @@ function parseLine( $line ) {
   $deepLDetectLanguage = new TranslationService("de");
   $language = $deepLDetectLanguage->detectLanguage($parts[1]);
 
+  if($language == "en"){
+    $language = "en-us";
+  }
+
   
   //check the inserted questions for illegal stuff and escape chars that need to be escaped
   $parts[1] = str_replace("<span>", "<br><span class='displayCodeInQuestion' translate=\"no\">", $parts[1]);
