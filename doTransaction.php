@@ -461,8 +461,13 @@ if(isset($_POST["method"]) && $_POST["method"] == "showFollowing"){
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
     $userEntry = $_POST["value"];
 
-     //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
-     if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
+    // sanitise value to prevent XSS
+    $sanitiser = new SanitiseInputService();
+    $userEntry = $sanitiser->sanitiseInput($userEntry);
+
+
+    //check for security reasons if the userEntry contains any illegal chars or if it is existing at all
+    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
         echo "Illegal chars detected!";
         exit();
     }
@@ -524,11 +529,15 @@ if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForQuestions"){
 if(isset($_POST["method"]) && $_POST["method"] == "searchInSystemForUsers"){
     $userEntry = $_POST["value"];
 
-    //check for security reasons if the followedUserId contains any illegal chars or if it is existing at all
+    // sanitise value to prevent XSS
+    $sanitiser = new SanitiseInputService();
+    $userEntry = $sanitiser->sanitiseInput($userEntry);
+
+    //check for security reasons if the userEntry contains any illegal chars or if it is existing at all
     if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($userEntry))){
        echo "Illegal chars detected!";
        exit();
-   }
+    }
 
    $getAllUsers= $mongo->read("accounts",[]);
    $getAllUsersArray = (array)$getAllUsers;
