@@ -35,8 +35,8 @@
 
 </head>
 <body onload="getLatestQuestionsOfFollowedUsers();getPersonRecommendations()">
-<?php include_once "frontend/navbar.php";?>
 
+  <?php include_once "frontend/navbar.php";?>
   <div class="container-fluid">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">

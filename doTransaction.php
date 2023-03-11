@@ -8,7 +8,7 @@
 include_once "services/mongoService.php";
 include_once "services/translationService.php";
 include_once "services/questionService.php";
-
+include_once "services/sanitiseInputService.php";
 
 $question = new QuestionService();
 $mongo = new MongoDBService();
@@ -273,14 +273,23 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeQuestionLanguageRelatio
 }
 
 
-if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
+if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){    
     include_once "services/versionService.php";
+    $sanitiser = new SanitiseInputService();
     $version = new VersionService();
     $version->setVersion("1.0");
     $version = $version->version;
     session_start();
     $fetchedData = $_POST["allQuestions"];
     foreach($fetchedData as $key => $value){
+
+        //sanitise the values to prevent possible XSS attacks (output should be encoded with htmlspecialchars before outputting! strip_tags isnt 100%save, just a first step!)
+        $sanitisedValue =[];
+        foreach($value as $innerKey => $innerVal){
+            $sanitisedValue[$innerKey] = $sanitiser->sanitiseInput($innerVal);
+        }
+        $value = $sanitisedValue;
+        
         $question = $value["question"];
         $language = $value["language"];
         if(isset($value["options"])){
@@ -303,7 +312,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "finalizeImport"){
         $value["author"] = $_SESSION["userData"]["username"];
         $value["verification"] = "not verified";
         $value["downloadCount"] = 0;
-        print_r($value);
+        #print_r($value);
         $mongo->insertMultiple("questions",[$value]);
     }
 
@@ -690,8 +699,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionTags"){
         $selectedTags = [];
     }
     
-    //check if one of the give tags contains illegal chars (catch exploits)
+    //check if one of the give tags contains illegal chars (catch exploits) --> also use the SanisiseInputService for XSS safty
+    $sanitiser = new SanitiseInputService();
+
     foreach($selectedTags as $tag){
+        $tag = $sanitiser->sanitiseInput($tag);
         if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($tag))){
             echo "Illegal chars detected!";
             exit();
@@ -729,13 +741,13 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionText"){
         exit();
     }
 
-    /*
-    //maybe the regex needs to be adjusted here to allow more --> its too limiting with that 
-    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($questionText))){
-        echo "Illegal chars in Question given!";
-        exit();
-    }
-    */
+    /**
+     * sanitise the give values for XSS exploits
+     */
+    $sanitiser = new SanitiseInputService();
+    $questionId = $sanitiser->sanitiseInput($questionId);
+    $questionText = $sanitiser->sanitiseInput($questionText);
+    #$questionLanguage = $sanitiser->sanitiseInput($questionLanguage);
 
     $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
     //catching falsly given languages from the user 
