@@ -42,7 +42,7 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
 
     .questionInfoText{
         margin-top: 1%;
-        margin-bottom: 10%;
+        margin-bottom: 8%;
     }
 
     .importPossibilityText{
@@ -402,6 +402,14 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
                     <img src="/quizVerwaltung/media/multiOptionsQuestionStructure.PNG" class="exampleImage">
                     <div class="alert alert-dark questionInfoText" role="alert">
                         <p><?php echo $liMultiOptionsQuestionStructureExample;?></p>
+                    </div>
+                </li>
+                <li>
+                    <h2 class="questionTypeHeading"><?php echo $liStructureCode;?></h2>
+                    <img src="/quizVerwaltung/media/codeStructureImportExample.PNG" class="exampleImage">
+                    <img src="/quizVerwaltung/media/codeStructureResultExample.PNG" class="exampleImage">
+                    <div class="alert alert-dark questionInfoText" role="alert">
+                        <p><?php echo $liStructureCodeExample;?></p>
                     </div>
                 </li>
         </div>

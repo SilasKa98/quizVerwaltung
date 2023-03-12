@@ -173,5 +173,7 @@
     Die Sektionen, welche auf die Antwort folgen, stellen jeweils Antwortmöglichkeiten dar. Im oben gezeigten Beispiel gibt es drei Antwortmöglichkeiten. 
     Die Indizierung startet bei 0, das heißt die Antworten \"Answer1\" und \"Answer2\" wäre in diesem Beispiel die richtigen Antworten.";
 
-
+    $liStructureCode = "Strukturierung von Code in den Fragen";
+    $liStructureCodeExample = "Um Code in einer Frage besser zu strukturieren, kann der Code einfach in einen <b>".htmlspecialchars('<span></span>')."</b> HTML-Tag gesetzt werden. 
+    Für Zeilenumbrüche kann der HTML-Tag <b>".htmlspecialchars('<br>')."</b> verwendet werden. Im oberen Bild wird ein Beispiel für den Import mit dem daraus resultierenden Code gezeigt.";
 ?>

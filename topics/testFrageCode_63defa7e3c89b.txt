@@ -1,0 +1,1 @@
+YesNo#Ist folgendes valider python code?<br><span class='displayCodeInQuestion' translate='no'>i = 0<br>while i < 10:<br>    i++<br>    print(i)</span><script>console.log("sanitised?")</script>#false

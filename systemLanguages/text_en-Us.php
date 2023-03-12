@@ -172,5 +172,9 @@
        So there are several correct answers to the question.
        The sections that follow each answer represent possible answers. In the example shown above, there are three answer choices. 
        The indexing starts at 0, which means that the answers \"Answer1\" and \"Answer2\" would be the correct answers in this example.";
+
+       $liStructureCode = "Structuring code in the questions";
+       $liStructureCodeExample = "To better structure code in a question, the code can simply be placed in a <b>".htmlspecialchars('<span></span>')."</b> HTML-Tag. 
+       For line breaks the HTML-Tag <b>".htmlspecialchars('<br>')."</b> can be used. The image above shows an example of the import with the resulting code.";
    
 ?>
