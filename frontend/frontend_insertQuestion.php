@@ -13,6 +13,10 @@
   $selectedLanguage = $selectedLanguage->userLanguage;
   include "../systemLanguages/text_".$selectedLanguage.".php";
 
+
+  //get all available Tags
+  $allTagsObj = $mongo->findSingle("tags",[]);
+  $allTagsArray = (array)$allTagsObj->allTags;
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +44,7 @@
         </div>
         <hr>
     
-        <h1 class="uploadMainHeading">Upload questions with a file</h1>
+        <h1 class="uploadMainHeading"><?php echo $upload_headingImportQuestions; ?></h1>
         <div class="container inputWithFileWrapper">
             <div class="center">
                 <form method="post" action="/quizVerwaltung/insertQuestions.php"  enctype="multipart/form-data" class="inputFileUploadForm">
@@ -53,10 +57,10 @@
 
         <hr>
 
-        <h1 class="uploadMainHeading">Create questions with our form</h1>
+        <h1 class="uploadMainHeading"><?php echo $upload_headingCreateQuestions;?></h1>
         <div class="container inputWithFileWrapper">
             <div class="mb-3">
-                <span>Which question Type would you like to create?</span><br>
+                <p style="margin-bottom: 5px;"><?php echo $upload_questionChoose; ?></p>
                 <input type="radio" class="btn-check" name="questionOptions" id="yesNoOption" autocomplete="off" onclick="loadQuestionContent(this);">
                 <label class="btn btn-outline-secondary" for="yesNoOption"><?php echo $liYesNoQuestion; ?></label>
 
@@ -70,109 +74,94 @@
                 <label class="btn btn-outline-secondary" for="openOption"><?php echo $liOpenQuestion; ?></label>
             </div>
             <form id="createQuestionForm" action="/quizVerwaltung/doTransaction.php" method="post">
-                
+
+                <div class="mb-3 formElemWrapper" id="questionTextWrapper">
+                    <label for="questionText" class="form-label"><?php echo $upload_createQuestionText;?></label>
+                    <textarea id="questionText" name="questionText" class="form-control"></textarea>
+                </div>
+
+                <div class="mb-3 formElemWrapper" id="questionTagsWrapper">
+                    <span class="form-label"><?php echo $upload_questionTags;?></span>
+                    <div class="btn-group" role="group" id="createQuestionTags" aria-label="Basic checkbox toggle button group">
+                        <?php 
+                        $counter = 0;
+                        foreach($allTagsArray as $item){ 
+                        ?>
+                            <input type="checkbox" name="tags[<?php echo $item;?>]" class="btn-check" id="btncheck<?php echo $counter;?>">
+                            <label class="btn btn-outline-secondary tagsBtn" for="btncheck<?php echo $counter;?>"><?php echo $item;?></label>
+                        <?php
+                            $counter++;
+                        } 
+                        ?>
+                    </div>
+                </div>
+
+                <input type="hidden" name="method" value="createQuestionWithForm">
+
             </form>
         </div>
     </div>
     <script src="/quizVerwaltung/scripts/questionScripts.js"></script>
+    <script src="/quizVerwaltung/scripts/createQuestionForm.js"></script>
     <script>
-
-        function createLabelAndTextarea(createdField, fieldLabelText){
-
-            let div = document.createElement("div");
-            div.setAttribute("class", "mb-3");
-
-            let questionLabel = document.createElement("label");
-            questionLabel.setAttribute("for", createdField);
-            questionLabel.setAttribute("class", "form-label");
-            questionLabel.innerHTML = fieldLabelText;
-            
-            let questionInput = document.createElement("textarea");
-            questionInput.setAttribute("id", createdField);
-            questionInput.setAttribute("name", createdField);
-            questionInput.setAttribute("class", "form-control");
-
-            div.append(questionLabel);
-            div.append(questionInput);
-            return div;
-        }
-
-
-        function createLabelAndSelect(createdField, fieldLabelText, selectOptions){
-
-            let div = document.createElement("div");
-            div.setAttribute("class", "mb-3");
-
-            let questionLabel = document.createElement("label");
-            questionLabel.setAttribute("for", createdField);
-            questionLabel.setAttribute("class", "form-label");
-            questionLabel.innerHTML = fieldLabelText;
-
-            let select = document.createElement("select");
-            select.setAttribute("id", createdField);
-            select.setAttribute("name", createdField);
-            select.setAttribute("class", "form-control");
-
-            for(let i=0;i<selectOptions.length;i++){
-                let option = document.createElement("option");
-                option.setAttribute("value", selectOptions[i]);
-                option.innerHTML = selectOptions[i];
-                select.append(option);
-            }
-
-            div.append(questionLabel);
-            div.append(select);
-            return div;
-        }
-
-        function createhiddenInput(name, value){
-            let input = document.createElement("input");
-            input.setAttribute("type", "hidden");
-            input.setAttribute("name", name);
-            input.setAttribute("value", value);
-            return input;
-        }
-
-
         function loadQuestionContent(e){
             console.log(e.id);
             var questionForm = document.getElementById("createQuestionForm");
 
-            questionForm.innerHTML = "";
-            //needed for all questions...
-            let div = createLabelAndTextarea("questionText", "<?php echo $upload_creatQuestionText;?>");
-            questionForm.append(div);
+            document.getElementById("questionTextWrapper").style.display = "block";
+            document.getElementById("questionTagsWrapper").style.display = "block";
+
+            if(document.contains(document.getElementById("questionAnswerWrapper"))){
+                document.getElementById("questionAnswerWrapper").remove();
+            }
+            if(document.contains(document.getElementById("createQuestionSubmitBtn"))){
+                document.getElementById("createQuestionSubmitBtn").remove();
+            }
+            if(document.contains(document.getElementById("addButtonWrapper"))){
+                document.getElementById("addButtonWrapper").remove();
+            }
+            
+        
             let divAnswer;
             let questionType;
+            let addBtn;
             switch(e.id) {
                 case "yesNoOption":
-                    divAnswer = createLabelAndSelect("questionAnswer", "<?php echo $upload_creatQuestionAnswer;?>", ["True","False"]);
+                    divAnswer = createLabelAndSelect("questionAnswer", "<?php echo $upload_createQuestionAnswer;?>", ["True","False"]);
                     questionType = createhiddenInput("questionType", "YesNo");
                     questionForm.append(questionType);
                     questionForm.append(divAnswer);
                     break;
                 case "openOption":
-                    divAnswer = createLabelAndTextarea("questionAnswer", "<?php echo $upload_creatQuestionAnswer;?>");
+                    divAnswer = createLabelAndTextarea("questionAnswer", "<?php echo $upload_createQuestionAnswer;?>");
                     questionType = createhiddenInput("questionType", "Open");
                     questionForm.append(questionType);
                     questionForm.append(divAnswer);
                     break;
                 case "optionsOption":
-                    // code block
+                    addBtn = createLabelAndButton("addButton", "<?php echo $upload_addOption; ?>", "+", "addInputAndRadio(this)");
+                    questionType = createhiddenInput("questionType", "Options");
+                    questionForm.append(addBtn);
+                    questionForm.append(questionType);
                     break;
                 case "multiOptionsOption":
-                    // code block
+                    addBtn = createLabelAndButton("addButton", "<?php echo $upload_addOption; ?>", "+", "addInputAndCheckbox(this)");
+                    questionType = createhiddenInput("questionType", "MultiOptions");
+                    questionForm.append(addBtn);
+                    questionForm.append(questionType);
                     break;
             }
 
-            let method = createhiddenInput("method", "createQuestionWithForm");
-            questionForm.append(method);
+            //let method = createhiddenInput("method", "createQuestionWithForm");
+            //questionForm.append(method);
 
             let submitBtn = document.createElement("button");
             submitBtn.setAttribute("type", "submit");
             submitBtn.setAttribute("class", "btn btn-success");
-            submitBtn.innerHTML = "<?php echo $text_import_form["import_btn"]?>";
+            submitBtn.setAttribute("id", "createQuestionSubmitBtn");
+            submitBtn.innerHTML = "<?php echo $text_import_form["import_btn"];?>";
             questionForm.append(submitBtn);
+            
         }
     </script>
 </body>

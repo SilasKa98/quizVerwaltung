@@ -13,8 +13,15 @@
         "import_btn"=> "Importieren",
         "clean_db_btn"=> "Datenbank leeren (dev only)"
     ];
-    $upload_creatQuestionText = "Frage Text";
-    $upload_creatQuestionAnswer= "Frage Antwort";
+
+    $upload_headingCreateQuestions = "Erstellen Sie direkt eine Frage mit unserem Formular";
+    $upload_headingImportQuestions = "Laden Sie eine oder mehrer Fragen mit unserem Datei-Upload hoch";
+
+    $upload_questionChoose = "Welche art von Frage wollen Sie erstellen?";
+    $upload_createQuestionText = "Fragentext";
+    $upload_createQuestionAnswer= "Antwort auf die Frage";
+    $upload_addOption = "Option hinzufügen (richtige Antworten ankreuzen)";
+    $upload_questionTags = "Fragen Tags";
 
     //index.php
     $text_logout_btn = "Abmelden";

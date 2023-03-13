@@ -1311,9 +1311,11 @@ if(isset($_POST["method"]) && $_POST["method"] == "createQuestionWithForm"){
     session_start();
 
     $questionText = $sanitiser->sanitiseInput($_POST["questionText"]);
-    $questionAnswer = $sanitiser->sanitiseInput($_POST["questionAnswer"]);
     $questionType = $sanitiser->sanitiseInput($_POST["questionType"]);
-
+    if(isset($_POST["questionAnswer"])){
+       $questionAnswer = $sanitiser->sanitiseInput($_POST["questionAnswer"]); 
+    }
+    
 
     //check if the question type is allowed to dectect illegally user modified types
     $legalQuestionTypes = ["YesNo", "Order", "Open", "Options", "MultiOptions"];
@@ -1324,12 +1326,51 @@ if(isset($_POST["method"]) && $_POST["method"] == "createQuestionWithForm"){
 
     //check for yes no question if the given answer is true or false --> catch ilegally modified answers
     if($questionType == "YesNo"){
-        if($questionAnswer != "True" || $questionAnswer != "False"){
+        $legalAnswers = ["True", "False"];
+        if(!in_array($questionAnswer, $legalAnswers)){
             header("Location: frontend/frontend_insertQuestion.php?illegalQuestionAnswer");
             exit();
         }
     }
 
+    $questionTags = [];
+    if(isset($_POST["tags"])){
+        $givenTags = $_POST["tags"];
+    }else{
+        $givenTags = [];
+    }
+    //tag names are handed over in html with tags["tagname"] thats why $key is used
+    foreach($givenTags as $key => $tag){
+        array_push($questionTags, $sanitiser->sanitiseInput($key));
+    }
+
+
+    if($questionType == "Options" || $questionType == "MultiOptions"){
+        $questionAnswer = "";
+        $questionOptions = [];
+        foreach($_POST["options"] as $key => $option){
+            array_push($questionOptions, $sanitiser->sanitiseInput($option));
+            if($questionType == "Options"){
+                if($_POST["correctOptions"] == $option){
+                    $questionAnswer = strval($key);
+                }
+            }
+            elseif($questionType == "MultiOptions"){
+                if(in_array($option, $_POST["correctOptions"])){
+                    if($questionAnswer == ""){
+                        $questionAnswer .= $key;
+                    }else{
+                        $questionAnswer .= ",".$key;
+                    }
+                }
+            }
+        }
+    }
+
+    if($questionAnswer == ""){
+        header("Location: frontend/frontend_insertQuestion.php?noAnswerGiven");
+        exit();
+    }
 
     //language is automatically detected with the deepL Api
     $deepLDetectLanguage = new TranslationService("de");
@@ -1347,7 +1388,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "createQuestionWithForm"){
 
     $questionToInsert = [
         "answer" => $questionAnswer,
-        "tags" => [],
+        "tags" => $questionTags,
         "questionType" => $questionType,
         "question" => [$language=>$questionText],
         "id" => uniqid(),
@@ -1359,6 +1400,10 @@ if(isset($_POST["method"]) && $_POST["method"] == "createQuestionWithForm"){
         "verification" => "not verified",
         "downloadCount" => 0
     ];
+
+    if($questionType == "Options" || $questionType == "MultiOptions"){
+        $questionToInsert["options"] = [$language=>$questionOptions];
+    }
 
     $mongo->insertSingle("questions",$questionToInsert);
     header("Location: frontend/frontend_insertQuestion.php?import=success");

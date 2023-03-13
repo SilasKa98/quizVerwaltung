@@ -13,6 +13,15 @@
         "clean_db_btn"=> "Clean Database (dev only)"
     ];
 
+    $upload_headingCreateQuestions = "Create a question directly with our form";
+    $upload_headingImportQuestions = "Upload one or more questions with our file upload";
+
+    $upload_questionChoose = "What kind of question do you want to create?";
+    $upload_createQuestionText = "Question text";
+    $upload_createQuestionAnswer= "Answer to the question";
+    $upload_addOption = "Add option (check the correct answers)";
+    $upload_questionTags = "Questions tags";
+
 
     //index.php
     $text_logout_btn = "Logout";

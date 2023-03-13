@@ -324,6 +324,36 @@ body{
     display: block !important;
   }
 
+  #createQuestionTags{
+    max-width: 40%;
+    display: block !important;
+    margin-left: 1px;
+    margin-top: 5px;
+  }
+
+  .createQuestionOption{
+    display: inline !important;
+    width: 50% !important;
+    margin-right: 1% !important;
+  }
+
+  .btn-circle {
+    width: 25px !important;
+    height: 25px !important;
+    padding: 1px 0px !important;
+    border-radius: 15px !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    line-height: 0 !important;
+    margin-left: 10px !important;
+    margin-top: -5px !important;
+}
+
+  .formElemWrapper{
+    overflow: auto;
+    display: none;
+  }
+
   #cartInfoText{
     width: 90%;
     margin: 0 auto;
