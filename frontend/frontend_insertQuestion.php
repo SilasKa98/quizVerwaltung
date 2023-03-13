@@ -102,6 +102,7 @@
         </div>
     </div>
     <script src="/quizVerwaltung/scripts/questionScripts.js"></script>
+    <script src="/quizVerwaltung/scripts/searchSystemScript.js"></script>
     <script src="/quizVerwaltung/scripts/createQuestionForm.js"></script>
     <script>
         function loadQuestionContent(e){
