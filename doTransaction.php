@@ -1300,4 +1300,68 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
     }
 }
 
+
+if(isset($_POST["method"]) && $_POST["method"] == "createQuestionWithForm"){
+
+    include_once "services/versionService.php";
+    $sanitiser = new SanitiseInputService();
+    $version = new VersionService();
+    $version->setVersion("1.0");
+    $version = $version->version;
+    session_start();
+
+    $questionText = $sanitiser->sanitiseInput($_POST["questionText"]);
+    $questionAnswer = $sanitiser->sanitiseInput($_POST["questionAnswer"]);
+    $questionType = $sanitiser->sanitiseInput($_POST["questionType"]);
+
+
+    //check if the question type is allowed to dectect illegally user modified types
+    $legalQuestionTypes = ["YesNo", "Order", "Open", "Options", "MultiOptions"];
+    if(!in_array($questionType, $legalQuestionTypes)){
+        header("Location: frontend/frontend_insertQuestion.php?illegalQuestionType");
+        exit();
+    }
+
+    //check for yes no question if the given answer is true or false --> catch ilegally modified answers
+    if($questionType == "YesNo"){
+        if($questionAnswer != "True" || $questionAnswer != "False"){
+            header("Location: frontend/frontend_insertQuestion.php?illegalQuestionAnswer");
+            exit();
+        }
+    }
+
+
+    //language is automatically detected with the deepL Api
+    $deepLDetectLanguage = new TranslationService("de");
+    $language = $deepLDetectLanguage->detectLanguage($questionText);
+
+    if($language == "en"){
+        $language = "en-us";
+    }
+
+  
+    //check the inserted questions for illegal stuff and escape chars that need to be escaped
+    $questionText = str_replace("<span>", "<span class='displayCodeInQuestion' translate=\"no\">", $questionText);
+    $questionText = str_replace("\"", "'", $questionText);
+
+
+    $questionToInsert = [
+        "answer" => $questionAnswer,
+        "tags" => [],
+        "questionType" => $questionType,
+        "question" => [$language=>$questionText],
+        "id" => uniqid(),
+        "creationDate" => date("Y-m-d"),
+        "modificationDate" => "",
+        "version" => $version,
+        "karma" => 0,
+        "author" => $_SESSION["userData"]["username"],
+        "verification" => "not verified",
+        "downloadCount" => 0
+    ];
+
+    $mongo->insertSingle("questions",$questionToInsert);
+    header("Location: frontend/frontend_insertQuestion.php?import=success");
+}
+
 ?>

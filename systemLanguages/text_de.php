@@ -13,7 +13,8 @@
         "import_btn"=> "Importieren",
         "clean_db_btn"=> "Datenbank leeren (dev only)"
     ];
-
+    $upload_creatQuestionText = "Frage Text";
+    $upload_creatQuestionAnswer= "Frage Antwort";
 
     //index.php
     $text_logout_btn = "Abmelden";
