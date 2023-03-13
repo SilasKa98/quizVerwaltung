@@ -42,9 +42,9 @@
 
         <div class="container">
             <div class="center">
-                <form method="post" action="/quizVerwaltung/insertQuestions.php" enctype="multipart/form-data">
+                <form method="post" action="/quizVerwaltung/insertQuestions.php"  enctype="multipart/form-data" class="inputFileUploadForm">
                     <input class="inputfile" type="file" name="inputFileData" onchange="setFilename(this)">
-                    <button class="button-5" type="submit" name="import"><?php echo $text_import_form["import_btn"]?></button>
+                    <button type="submit" name="import" class="btn btn-success"><?php echo $text_import_form["import_btn"]?></button>
                 </form>
             </div>
         </div>
