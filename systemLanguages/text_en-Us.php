@@ -140,11 +140,11 @@
        $helpContentsHeading = "Content";
    
        $importPossibility1 = "Insert questions by file import";
-       $importPossibility2 = "Inserting questions via the web form (coming soon)";
+       $importPossibility2 = "Inserting questions via the web form";
        $importPossibility1Description = "With this function you can import one or more questions at the same time.
        Which format is supported and what you have to pay attention to exactly is explained in the chapter <a href='#Importstructure'>Import Structure</a>";
    
-       $importPossibility2Description = "This feature is not implemented yet, but it is planned in the near future.";
+       $importPossibility2Description = "With this function you can create a question directly in our web form. To do this, simply fill in the specified fields.";
    
        $liYesNoQuestion = "Yes/No Question";
        $liYesNoQuestionExample = "This type of question is a simple question, 

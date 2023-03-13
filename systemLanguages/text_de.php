@@ -139,11 +139,11 @@
     $helpContentsHeading = "Inhalt";
 
     $importPossibility1 = "Einfügen von Fragen mittels Datei Import";
-    $importPossibility2 = "Einfügen von Fragen über das Webformular (coming soon)";
+    $importPossibility2 = "Erstellen von Fragen über das Webformular";
     $importPossibility1Description = "Mit dieser Funktion können Sie eine oder mehrere Fragen gleichzeitig importieren. 
     Welches format unterstützt ist und auf was Sie genau achten müssen, wird in dem Kapitel <a href='#Importstructure'>Import Struktur</a> erklärt";
 
-    $importPossibility2Description = "Diese Funktion ist noch nicht implementiert, aber in naher Zukunft geplant.";
+    $importPossibility2Description = "Mit dieser Funktion können Sie eine Frage direkt in unserem Webformular erstellen. Füllen Sie dazu einfach die angegeben Felder aus.";
 
     $liYesNoQuestion = "Ja/Nein Frage";
     $liYesNoQuestionExample = "Bei diesem Fragetyp handelt es sich um einfach Fragen, 
