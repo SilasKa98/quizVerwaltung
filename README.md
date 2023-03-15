@@ -63,6 +63,17 @@ These are the most of the key features of the Platform. For more Features explan
 
 ---
 ## Installation / Deployment:
+For the installation and operation of this platform a few things are needed first. 
+1. Set up a MongoDB database (https://www.mongodb.com/try/download/community). 
+    - Note: It is also worth downloading the MongoDB Compass (https://www.mongodb.com/products/compass), this offers a GUI to manage the database.
+2. Setup a webserver, e.g. with XAMPP (https://www.apachefriends.org/de/index.html)
+    - Install the mongodb extension for php (https://www.mongodb.com/docs/drivers/php/).
+3. Download the GitHub repository and put it in the webserver folder (htdocs folder in XAMPP)
+4. Adding a .env file in quizVerwaltung/.env
+    - create new file if it doesn't exist (template given in .env.example)
+    - add a api-key from DeepL
+    - add the db connection for the MongoDB
+5. Start the webserver and then call the respective address (e.g. http://localhost/quizVerwaltung for local installation)
 
 ---
 ## Technologies:
