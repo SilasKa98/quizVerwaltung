@@ -69,11 +69,11 @@ These are the most of the key features of the Platform. For more Features explan
 Die Technologien die für das Erstellen dieser Platform sind recht simple und sind nicht sehr viele. 
 
 **Database**:
-<img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/DeepL_logo.svg"  width="100" height="20"> <br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg"  width="100" height="20"> <br>
 Als Datenbank Nutzen wir MongoDB (NoSQL), für die Flexibilität einer NoSQL Datenbank, und da sich diese besser für unseren Anwendungszweck eigenet.
 
 **Translation**:
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg"  width="100" height="20"> <br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/DeepL_logo.svg"  width="100" height="20"> <br>
 Als Übersetzungs Tool nutzen wir die freie Version der DeepL Api (500k Zeichen). Diese stellt sich als besstes Tool heraus um den Context eines Textes (Frage) möglichst gut zu erhalten wenn sie in verschiedene Sprachen übersetzt werden.
 
 **Languages**: <br>
