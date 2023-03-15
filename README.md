@@ -7,8 +7,8 @@ A flexible quiz repository for many question formats with a simple to learn inpu
 - [Features](#features--distinctions)
 - [Installation](#installation--deployment)
 - [Technologies](#technologies)
-- [Wiki](#futher-information--wiki)
 - [Feature Work](#future-work--features)
+- [Wiki](#futher-information--wiki)
 
 ---
 ---
@@ -66,12 +66,58 @@ These are the most of the key features of the Platform. For more Features explan
 
 ---
 ## Technologies:
+Die Technologien die für das Erstellen dieser Platform sind recht simple und sind nicht sehr viele. 
 
----
-## Futher Information / Wiki: 
+**Database**:
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/DeepL_logo.svg"  width="100" height="20"> <br>
+Als Datenbank Nutzen wir MongoDB (NoSQL), für die Flexibilität einer NoSQL Datenbank, und da sich diese besser für unseren Anwendungszweck eigenet.
+
+**Translation**:
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg"  width="100" height="20"> <br>
+Als Übersetzungs Tool nutzen wir die freie Version der DeepL Api (500k Zeichen). Diese stellt sich als besstes Tool heraus um den Context eines Textes (Frage) möglichst gut zu erhalten wenn sie in verschiedene Sprachen übersetzt werden.
+
+**Languages**: <br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg"  width="80" height="80">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Javascript_badge.svg"  width="80" height="80">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg"  width="80" height="80">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg"  width="80" height="80">
+
+**Additional Info**: <br>
+Additionaly we used some php extensions. For expample to use the mongoDB functions inside php. More can be found here [here](#futher-information--wiki)
 
 ---
 ## Future work & Features:
+To Note the programm / platform isn't finished and we still have a lot of ideas to improve and expand the functionalies as well as adding new functions to the platform.
+
+**Near Future**:
+
+Adding <ins>*versioning capabilities*</ins> so that older versions of questions can be saved and restored in case of emergency.
+
+<ins>*Expand on the Tag*</ins> functionalities. This means adding alot more Tags from which the user can choose from. Also enable the user to make requests for tags to be added to the platform.
+
+<ins>*Expand the rolesystem*</ins> with an guest- and moderator account. The guest account can acces the startpage ans see all questions but doesn't have the ability to import or export questions etc.
+
+Better and a lot more <ins>*Importfilter*</ins> so that we check the imports for hatespeech, swear words and more. Also to avoid duplicates of questions which are identical or are identical in the content.
+
+Finally we want to <ins>*overhall some of the ui-elements and the style*</ins> of the platform to make it more accessible for all users and easier to use. 
+
+**Distance Future**:
+
+Adding <ins>*better search and filter*</ins> options and functionalities to imporve the user experience when searchin for specific questions types and or themes.
+
+Expand the tagging system even further to <ins>*automatic tagging*</ins>. The idea is to use NLP tecniques to automaticcly assing tags to questions or to be able to suggest so determined tags for each question to the user.
+
+Add <ins>*admin page*</ins> with own rights and overview of various statistics, as well as full access to database collections.
+
+---
+## Futher Information / Wiki: 
+There exists also a Wiki via Github which can be used to get a more detailed look at the stukture of the programm an it's classes and files. <br>
+The wiki is mainly intended to be used by developers. Since this contains information that should be rather uninteresting for most users of the platform and are not necessary for the use or installation of the software.
+
+Wiki Link: **TODO**
+
+
+
 
 
  
