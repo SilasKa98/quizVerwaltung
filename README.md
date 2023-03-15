@@ -66,7 +66,7 @@ These are the most of the key features of the Platform. For more Features explan
 
 ---
 ## Technologies:
-Die Technologien die für das Erstellen dieser Platform sind recht simple und sind nicht sehr viele. 
+The technologies used for creating this platform are quite simple and are not very many. 
 
 **Database**:
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg"  width="100" height="20"> <br>
