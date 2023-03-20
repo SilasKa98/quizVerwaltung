@@ -273,7 +273,7 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
       <li class="my-2">
         <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#forms-collapse" aria-controls="forms-collapse"><?php echo $helpMenuExport;?></button>
         <ul class="list-unstyled ps-3 collapse" id="forms-collapse" style="">
-          <li><a class="d-inline-flex align-items-center rounded active" href="#exportPossibilitys"><?php echo $helpMenuSubExportPossibilitys;?></a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#exportPossibilitys"><?php echo $helpMenuSubExportPossibilitys;?></a></li>
           <li><a class="d-inline-flex align-items-center rounded" href="#exportTypes"><?php echo $helpMenuSubExportTypes;?></a></li>
         </ul>
       </li>
