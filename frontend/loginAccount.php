@@ -227,7 +227,7 @@
                        Easily select which format you would like to get in the Dropdown-Menu of the Export.
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <a type="button" class="btn btn-primary" href="helpPage.php">Read more</a>
+                        <a type="button" class="btn btn-primary" href="helpPage.php#exportPossibilitys">Read more</a>
                     </div>
                 </div>
                 <div class="col-10 col-sm-8 col-lg-6">
