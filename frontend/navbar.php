@@ -7,6 +7,18 @@ $filterQuery = (['userId' => $userId]);
 $getAccountInfos= $mongo->findSingle("accounts",$filterQuery,[]);
 $cartCount = count((array)$getAccountInfos->questionCart);
 if (!isset($cartCount)){$cartCount = 0;}
+
+
+//check if app is running on http or https
+if (isset($_SERVER['HTTPS']) &&
+    ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
+    isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+    $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+  $protocol = 'https://';
+}
+else {
+  $protocol = 'http://';
+}
 ?>
 
 
@@ -97,7 +109,7 @@ if (!isset($cartCount)){$cartCount = 0;}
                             </li>
                             <li>
                             <form class="navbar-form navbar-right" method="post" action="/quizVerwaltung/doTransaction.php">
-                                <input type="hidden" name="destination" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">     
+                                <input type="hidden" name="destination" value="<?php echo $protocol.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>">     
                                 <select name="language" class="form-select" id="changeLangSel" onchange="this.form.submit()">
                                     <?php
                                         foreach($all_languages as $key => $value){
