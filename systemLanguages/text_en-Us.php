@@ -185,5 +185,48 @@
        $liStructureCode = "Structuring code in the questions";
        $liStructureCodeExample = "To better structure code in a question, the code can simply be placed in a <b>".htmlspecialchars('<span></span>')."</b> HTML-Tag. 
        For line breaks the HTML-Tag <b>".htmlspecialchars('<br>')."</b> can be used. The image above shows an example of the import with the resulting code.";
-   
+
+
+        $helpMenuSubExportPossibilitys = "Export Possibilities";
+        $helpTextExportPossibilitys = "All questions that you have collected in your question basket or that you have saved as a question catalog can be exported.";
+        
+        $exportPossibility1 = "Direct export from the question basket";
+        $exportPossibility1Description = "For direct export from the question basket, simply use the  
+        <button type='button' class='btn btn-danger' disabled>Export</button> button.";
+
+        $exportPossibility2 = "Export of a created question catalog";
+        $exportPossibility2Description = "To export a question catalog from you or also from other users, navigate to the corresponding profile in the first step and click on the tab \"Catalogs\". 
+        Behind each catalog you will find a <button type='button' class='btn btn-secondary' disabled>Export</button> button, with which the entire catalog can be exported.";
+
+        $exportModalExplanationHeader = "Explanation of the export window";
+        $exportModalExplanationDescription  = "In the window shown, you can use the first field to select the format in which you want to export your questions. 
+        With the second free text field you can specify the name you want to give to your export file.";
+
+
+        $helpMenuSubExportTypes = "Export types";
+        $helpTextExportTypes = "Various formats are available for the export, which are shown and described below.";
+
+        $exportType1 = "Moodle XML";
+        $moodleDocLink = "Moodle Documentation";
+        $exportType1Description = "It is possible to export your selected questions into the common Moodle XML format. 
+        The created XML file can be imported directly into Moodle without any further steps.";
+
+        $exportType2 = "Latex";
+        $latexDocLink = "Latex Documentation";
+        $exportType2Description = "The questions can also be translated or converted into the latex format. 
+        With this export form, however, not all values of the question are converted into the latex format. 
+        Only the question with all answers will be converted. By this kind of export, you can bring the questions directly into a kind of \"exam form\".
+        The resulting latex file can then be translated by any common latex compiler.";
+
+        $exportType3 = "JSON";
+        $jsonDocLink = "JSON Documentation";
+        $exportType3Description = "Since JSON is a very common format in the webumweld, it is also supported as a possible export format. 
+        When exporting, you will get the entire question with all its values as a JSON object.";
+
+
+        $exportType4 = "SimpQui/Standard";
+        $simpQuiDocLink = "SimpQui Documentation";
+        $exportType4Description = "Our standard format, which is also known as SimpQui format, is also supported as an export format. 
+        It is the same format as for import. For reference to this format we refer to the Quiz application <a href='https://hosting.iem.thm.de/user/euler/quiz/index.php?inhalt=home' target='_blank'>SimpQui</a>";
+
 ?>

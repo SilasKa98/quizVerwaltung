@@ -273,17 +273,16 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
       <li class="my-2">
         <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#forms-collapse" aria-controls="forms-collapse"><?php echo $helpMenuExport;?></button>
         <ul class="list-unstyled ps-3 collapse" id="forms-collapse" style="">
-          <li><a class="d-inline-flex align-items-center rounded active" href="#foo">Foo</a></li>
-          <li><a class="d-inline-flex align-items-center rounded" href="#bar">Bar</a></li>
-          <li><a class="d-inline-flex align-items-center rounded" href="#buz">Buz</a></li>
+          <li><a class="d-inline-flex align-items-center rounded active" href="#exportPossibilitys"><?php echo $helpMenuSubExportPossibilitys;?></a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#exportTypes"><?php echo $helpMenuSubExportTypes;?></a></li>
         </ul>
       </li>
       <li class="my-2">
         <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#components-collapse" aria-controls="components-collapse"><?php echo $helpMenuTranslation;?></button>
         <ul class="list-unstyled ps-3 collapse" id="components-collapse">
-          <li><a class="d-inline-flex align-items-center rounded" href="#foo2">Foo</a></li>
-          <li><a class="d-inline-flex align-items-center rounded" href="#bar2">Bar</a></li>
-          <li><a class="d-inline-flex align-items-center rounded" href="#buz2">Buz</a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#foo2">coming soon</a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#bar2">coming soon</a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#buz2">coming soon</a></li>
         </ul>
       </li>
     </ul>
@@ -371,7 +370,7 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
 
         <div>
             <br>
-            <p><?php echo $helpTextImportStructure;?></p>
+            <h2 class="questionTypeHeading"><?php echo $helpTextImportStructure;?></h2>
             <div class="alert alert-dark" role="alert">
                 <p><?php echo $generalQuestionStructureExample;?></p>
             </div>
@@ -412,6 +411,98 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
                         <p><?php echo $liStructureCodeExample;?></p>
                     </div>
                 </li>
+        </div>
+
+    </article>
+
+
+
+    <article class="my-3" id="exportPossibilitys">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+            <h3><?php echo $helpMenuSubExportPossibilitys;?></h3>
+        </div>
+
+        <div>
+            <br>
+            <h2 class="importPossibility"><?php echo $helpTextExportPossibilitys;?></h2>
+            <h2 class="importPossibility"><?php echo $exportPossibility1;?></h2>
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $exportPossibility1Description;?>
+                </p>
+            </div>
+            <h2 class="importPossibility"><?php echo $exportPossibility2;?></h2>
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $exportPossibility2Description;?>
+                </p>
+            </div>
+
+            <h2 class="importPossibility"><?php echo $exportModalExplanationHeader;?></h2>
+            <img src="/quizVerwaltung/media/exportModalExample.PNG"  style="width: 40%; margin-top: 1%;">
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $exportModalExplanationDescription;?>
+                </p>
+            </div>
+        </div>
+
+    </article>
+    
+    <article class="my-3" id="exportTypes">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+            <h3><?php echo $helpMenuSubExportTypes;?></h3>
+        </div>
+
+        <div>
+            <br>
+            <h2 class="questionTypeHeading"><?php echo $helpTextExportTypes;?></h2>
+
+            <ul class="questionUl">
+                <li>
+                    <h2 class="questionTypeHeading"><?php echo $exportType1;?></h2>
+                    <div class="bd-heading mt-5 mb-3 mt-xl-0 mb-xl-2">
+                      <a class="d-flex align-items-center" target="_blank" href="https://docs.moodle.org/401/de/Moodle_XML-Format"><?php echo $moodleDocLink;?></a>
+                    </div>
+                    <img src="/quizVerwaltung/media/moodleExportExample.PNG" class="exampleImage">
+                    <div class="alert alert-dark questionInfoText" role="alert">
+                        <p><?php echo $exportType1Description;?></p>
+                    </div>
+                </li>
+
+                <li>
+                    <h2 class="questionTypeHeading"><?php echo $exportType2;?></h2>
+                    <div class="bd-heading mt-5 mb-3 mt-xl-0 mb-xl-2">
+                      <a class="d-flex align-items-center" target="_blank" href="https://www.latex-project.org/help/documentation/"><?php echo $latexDocLink;?></a>
+                    </div>
+                    <img src="/quizVerwaltung/media/latexExportExample.PNG" class="exampleImage">
+                    <div class="alert alert-dark questionInfoText" role="alert">
+                        <p><?php echo $exportType2Description;?></p>
+                    </div>
+                </li>
+
+                <li>
+                    <h2 class="questionTypeHeading"><?php echo $exportType3;?></h2>
+                    <div class="bd-heading mt-5 mb-3 mt-xl-0 mb-xl-2">
+                      <a class="d-flex align-items-center" target="_blank" href="https://www.json.org/json-en.html"><?php echo $jsonDocLink;?></a>
+                    </div>
+                    <img src="/quizVerwaltung/media/jsonExportExample.PNG" class="exampleImage">
+                    <div class="alert alert-dark questionInfoText" role="alert">
+                        <p><?php echo $exportType3Description;?></p>
+                    </div>
+                </li>
+
+                <li>
+                    <h2 class="questionTypeHeading"><?php echo $exportType4;?></h2>
+                    <div class="bd-heading mt-5 mb-3 mt-xl-0 mb-xl-2">
+                      <a class="d-flex align-items-center" target="_blank" href="https://hosting.iem.thm.de/user/euler/quiz/index.php?inhalt=info"><?php echo $simpQuiDocLink;?></a>
+                    </div>
+                    <img src="/quizVerwaltung/media/simpQuiExportExample.PNG" class="exampleImage">
+                    <div class="alert alert-dark questionInfoText" role="alert">
+                        <p><?php echo $exportType4Description;?></p>
+                    </div>
+                </li>
+            </ul>
         </div>
 
     </article>

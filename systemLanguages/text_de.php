@@ -184,4 +184,51 @@
     $liStructureCode = "Strukturierung von Code in den Fragen";
     $liStructureCodeExample = "Um Code in einer Frage besser zu strukturieren, kann der Code einfach in einen <b>".htmlspecialchars('<span></span>')."</b> HTML-Tag gesetzt werden. 
     Für Zeilenumbrüche kann der HTML-Tag <b>".htmlspecialchars('<br>')."</b> verwendet werden. Im oberen Bild wird ein Beispiel für den Import mit dem daraus resultierenden Code gezeigt.";
+
+
+
+
+    $helpMenuSubExportPossibilitys = "Export Möglichkeiten";
+    $helpTextExportPossibilitys = "Alle Fragen die Sie in Ihrem FragenKorb gesammelt haben oder die Sie als Fragenkatalog abgespeichert haben, können exportiert werden.";
+    
+    $exportPossibility1 = "Direkter Export aus dem Fragenkorb";
+    $exportPossibility1Description = "Für den direkten Export aus dem Fragenkorb, verwenden Sie einfach den 
+    <button type='button' class='btn btn-danger' disabled>Exportieren</button> Knopf.";
+
+    $exportPossibility2 = "Export eines erstellten Fragenkatalogs";
+    $exportPossibility2Description = "Für den Export eines Fragenkatalogs von Ihnen oder auch von anderen Nutzern, navigieren Sie im ersten Schritt auf das entsprechende Profil und klicken auf den Reiter \"Kataloge\". 
+    Hinter jedem Katalog finden Sie einen <button type='button' class='btn btn-secondary' disabled>Export</button> Knopf, mit welchem der gesamte Katalog exportiert werden kann.";
+
+    $exportModalExplanationHeader = "Erklärung des Exportfenster";
+    $exportModalExplanationDescription  = "Im gezeigten Fenster können Sie mit dem Ersten Feld auswählen, in welches Format Sie Ihre Fragen exportieren wollen. 
+    Mit dem zweite Freitextfeld können Sie den Namen festlegen, welchen Ihre Exportdatei erhalten soll.";
+
+
+    $helpMenuSubExportTypes = "Export Typen";
+    $helpTextExportTypes = "Für den Export stehen verschiedene Formate bereit, welche im Folgenden aufgezeigt und beschrieben werden.";
+
+    $exportType1 = "Moodle XML";
+    $moodleDocLink = "Moodle Dokumentation";
+    $exportType1Description = "Es besteht die Möglichkeit Ihre ausgewählten Fragen in das gängige Moodle XML Format zu exportieren. 
+    Die erstellte XML Datei, kann ohne weitere Schritte direkt in Moodle importiert werden.";
+
+    $exportType2 = "Latex";
+    $latexDocLink = "Latex Dokumentation";
+    $exportType2Description = "Die Fragen können auch in das Latex Format übersetz bzw. umgewandelt werden. 
+    Bei dieser Exportform werden allerdings nicht alle Werte der Frage in das Latexformat umgewandelt. 
+    Es wird lediglich die Frage mit allen antworten umgewandelt. Durch diese Art des Exports, können Sie die Fragen direkt in eine Art \"Klausurform\" bringen.
+    Die entstandene Latex Datei können Sie anschließend von jedem gängigen Latex compiler übersetzen lassen.";
+
+    $exportType3 = "JSON";
+    $jsonDocLink = "JSON Dokumentation";
+    $exportType3Description = "Da JSON ein sehr gängiges Format im Webumweld ist, wird dieses auch als mögliches Exportformat unterstützt. 
+    Beim Export erhalten Sie die gesamte Frage mit all ihren Werten als JSON-Object.";
+
+
+    $exportType4 = "SimpQui/Standard";
+    $simpQuiDocLink = "SimpQui Dokumentation";
+    $exportType4Description = "Unser Standard Format, welches auch als SimpQui Format bekannt ist, wird ebenfalls als Exportformat unterstützt. 
+    Es handelt sich um das selbe Format wie beim Import. Als Referenz zu diesem Format verweisen wir auf die Quiz Anwendung <a href='https://hosting.iem.thm.de/user/euler/quiz/index.php?inhalt=home' target='_blank'>SimpQui</a>";
+
+
 ?>
