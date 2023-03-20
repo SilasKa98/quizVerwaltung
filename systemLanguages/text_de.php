@@ -214,10 +214,10 @@
 
     $exportType2 = "Latex";
     $latexDocLink = "Latex Dokumentation";
-    $exportType2Description = "Die Fragen können auch in das Latex Format übersetz bzw. umgewandelt werden. 
+    $exportType2Description = "Die Fragen können auch in das Latex Format übersetzt bzw. umgewandelt werden. 
     Bei dieser Exportform werden allerdings nicht alle Werte der Frage in das Latexformat umgewandelt. 
-    Es wird lediglich die Frage mit allen antworten umgewandelt. Durch diese Art des Exports, können Sie die Fragen direkt in eine Art \"Klausurform\" bringen.
-    Die entstandene Latex Datei können Sie anschließend von jedem gängigen Latex compiler übersetzen lassen.";
+    Es wird lediglich die Frage mit allen Antworten umgewandelt. Durch diese Art des Exports, können Sie die Fragen direkt in eine Art \"Klausurform\" bringen.
+    Die entstandene Latex-Datei können Sie anschließend von jedem gängigen Latex-compiler übersetzen lassen.";
 
     $exportType3 = "JSON";
     $jsonDocLink = "JSON Dokumentation";
