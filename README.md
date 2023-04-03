@@ -81,11 +81,11 @@ The technologies used for creating this platform are quite simple and are not ve
 
 **Database**:
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg"  width="100" height="20"> <br>
-Als Datenbank Nutzen wir MongoDB (NoSQL), für die Flexibilität einer NoSQL Datenbank, und da sich diese besser für unseren Anwendungszweck eigenet.
+As database we use MongoDB (NoSQL), for the flexibility of a NoSQL database, and because it is better suited for our application purpose.
 
 **Translation**:
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/DeepL_logo.svg"  width="100" height="20"> <br>
-Als Übersetzungs Tool nutzen wir die freie Version der DeepL Api (500k Zeichen). Diese stellt sich als besstes Tool heraus um den Context eines Textes (Frage) möglichst gut zu erhalten wenn sie in verschiedene Sprachen übersetzt werden.
+As a translation tool we use the free version of DeepL Api (500k characters). This turns out to be the best tool to keep the context of a text (question) as good as possible when translated into different languages.
 
 **Languages**: <br>
 <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg"  width="80" height="80">
