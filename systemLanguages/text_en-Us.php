@@ -73,7 +73,10 @@
 
     //editQuestion.php
     $writeNewQuestionHeader = "Change the question text";
-
+    $changeVerificationModalHeader = "Change the verification status";
+    $currentVerificationStatusText = "Current Status: ";
+    $verifiedStatus = "Verified";
+    $notVerifiedStatus = "Not verified";
 
      //usersSettings.php
      $deleteAccountText = "Permanently delete your account";
@@ -119,7 +122,8 @@
     $tagsField = "Tags";
     $downloadsNumberField = "Downloads";
     $authorField = "Author";
-
+    $questionVerifiedStatusDisplay = " The question has been verified by an admin.";
+    $questionNotVerifiedStatusDisplay = " The question has not yet been verified by an admin.";
 
 
 

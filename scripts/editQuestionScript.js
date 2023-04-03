@@ -21,7 +21,6 @@ async function changeQuestionTags(id){
 }
 
 
-
 async function changeQuestion(id){
     console.log(id);
 
@@ -38,6 +37,39 @@ async function changeQuestion(id){
     };
     console.log(payload);
     sendAjax("editQuestionText", payload, id);
+}
+
+function frontendChangeVerificationDisplay(e){
+    e.classList.add("active");
+    e.id = "1";
+    if(e.nextElementSibling && e.nextElementSibling.tagName == "BUTTON"){
+        e.nextElementSibling.classList.remove("active");
+        e.nextElementSibling.id = "0";
+    }else{
+        e.previousElementSibling.classList.remove("active");
+        e.previousElementSibling.id = "0";
+    }
+}
+
+async function changeVerification(id){
+    console.log(id);
+
+    $('#changeVerificationModal').modal('toggle');
+    await submitTagSelection("sumbitVerificationBtn");
+
+    var verificationStatus = [];
+    let verificationBtn = document.querySelectorAll(".verificationBtn");
+    console.log(verificationBtn);
+    for(let i=0;i<verificationBtn.length;i++){
+        console.log(verificationBtn[i].id);
+        if(verificationBtn[i].id == 1){
+            var verificationStatus = verificationBtn[i].name; 
+        }
+    }
+
+    console.log(verificationStatus);
+
+    sendAjax("editQuestionVerification", verificationStatus, id);
 }
 
 

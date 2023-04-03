@@ -121,6 +121,27 @@ if(isset($isAdmin) && $isAdmin == true){
         </div>
     </div>
 
+     <!-- modal for Verification-->
+     <div class="modal fade" id="changeVerificationModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel2"><?php echo $changeVerificationModalHeader; ?></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p style="display: inline;"><?php echo $currentVerificationStatusText; ?></p>
+                <button type="button" class="btn btn-outline-success verificationBtn <?php if($verification == "verified"){ echo "active";}?>" name="verified" onclick="frontendChangeVerificationDisplay(this)"><?php echo $verifiedStatus; ?></button>
+                <button type="button" class="btn btn-outline-danger verificationBtn <?php if($verification == "not verified"){ echo "active";}?>" name="not verified" onclick="frontendChangeVerificationDisplay(this)"><?php echo $notVerifiedStatus; ?></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="sumbitVerificationBtn"  data-bs-dismiss="modal" class="btn btn-primary">Save</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <h1 id="editQuestionHeader">Frage bearbeiten</h1>
@@ -181,8 +202,15 @@ if(isset($isAdmin) && $isAdmin == true){
                     <div class="card mb-3 innerImportCard" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">Verification</h5>         
-                            <p class="card-text"><?php echo $verification;?></p>
-                            <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                            <p class="card-text">
+                                <?php echo $verification;?>
+                                <?php if($verification == "verified"){?>
+                                    <img src="/quizVerwaltung/media/verified.png" width=25px>
+                                <?php }else{?>
+                                    <img src="/quizVerwaltung/media/notVerified.png" width=25px>
+                                <?php }?>
+                            </p>
+                            <button class="btn btn-primary" onclick="changeVerification('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
                         </div>
                     </div>
                 <?php }?>

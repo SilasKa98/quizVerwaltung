@@ -1409,4 +1409,47 @@ if(isset($_POST["method"]) && $_POST["method"] == "createQuestionWithForm"){
     header("Location: frontend/frontend_insertQuestion.php?import=success");
 }
 
+
+if(isset($_POST["method"]) && $_POST["method"] == "editQuestionVerification"){
+
+    $verificationStatus = $_POST["payload"];
+    $questionId = $_POST["id"];
+
+    /**
+     * Catching all possible exploit values to protect the database
+     */
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
+        echo "Illegal id given!";
+        exit();
+    }
+
+    /**
+     * sanitise the give values for XSS exploits
+     */
+    $sanitiser = new SanitiseInputService();
+    $questionId = $sanitiser->sanitiseInput($questionId);
+    $verificationStatus = $sanitiser->sanitiseInput($verificationStatus);
+
+
+    $allowedVerificationStatus = ["verified", "not verified"];
+    if(!in_array($verificationStatus,$allowedVerificationStatus)){
+        echo "Illegal verification status given!";
+        exit();
+    }
+
+    $searchQuestionFilter = (['id'=>$questionId]);
+    $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
+    $questionTags = (array)$searchQuestion->tags;
+    $questionAuthor = $searchQuestion->author;
+    session_start();
+    if($questionAuthor != $_SESSION["userData"]["username"]){
+        echo "You are not allowed to edit this question!";
+        exit();
+    } 
+
+    $update = ['$set' =>  ['verification'=> $verificationStatus]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
+
+    echo "Edit successfull!";
+}
 ?>

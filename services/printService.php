@@ -138,7 +138,14 @@ class Printer{
 
                                 print'<p "card-text">'.$downloadsNumberField.': '.$questionObject[$i]->downloadCount."</p>";
                                 print'<p "card-text">'.$authorField.': <a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
-                            print'</div>
+                                print'<p "card-text">';
+                                    if($questionObject[$i]->verification == "verified"){
+                                        print '<img src="/quizVerwaltung/media/verified.png" width=25px>'.$questionVerifiedStatusDisplay;
+                                    }else{
+                                        print '<img src="/quizVerwaltung/media/notVerified.png" width=25px>'.$questionNotVerifiedStatusDisplay;
+                                    }
+                                print'</p>';
+                        print'</div>
                         </div>
                     </div> 
                 </div>      
