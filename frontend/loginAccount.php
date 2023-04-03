@@ -182,7 +182,7 @@
                         Questions that might have been uninteressting for you, are now usable and can also be used by you.
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <a type="button" class="btn btn-primary" href="helpPage.php">Read more</a>
+                        <a type="button" class="btn btn-primary" href="helpPage.php#translationInfos">Read more</a>
                     </div>
                 </div>
                 <div class="col-10 col-sm-8 col-lg-6">

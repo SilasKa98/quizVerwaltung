@@ -231,4 +231,32 @@
     Es handelt sich um das selbe Format wie beim Import. Als Referenz zu diesem Format verweisen wir auf die Quiz Anwendung <a href='https://hosting.iem.thm.de/user/euler/quiz/index.php?inhalt=home' target='_blank'>SimpQui</a>";
 
 
+
+    $helpMenuSubTranslationInfos = "Infos zur Übersetzung";
+    $helpTextTranslationInfos = "Die Plattform Quiz Manager unterstützt grundsätzlich drei verschiedene Sprachen (Deutsch, Englisch, Spanisch) für die ganze Plattform.<br><br> 
+    Da die Kernfunktionalität dieser Plattform das Teilen und Verwenden von Quizfragen ist, werden für die Quizfragen auch deutlich mehr Sprachen unterstützt. 
+    Insgesamt können alle Fragen, welche auf die Plattform hochgeladen wurden, in 31 verschiedene Sprachen übersetzt werden.";
+
+    $headerTranslationDeepl = "DeepL als Tool zur Übersetzung";
+    $descriptionDeepL = "Zur Übersetung der Fragen wird die DeepL-API verwendet. DeepL verwendet maschinelle Übersetzungstechnologien,
+     wodurch alle Fragen auf der Plattform mit hoher Präzision in eine gute sprachliche Form übersetzt werden können.";
+    $deepLDocuLink = "DeepL Dokumentation";
+
+
+    $helpMenuSubNewTranslation = "Neue Übersetzung";
+    $helpTextCreateNewTranslation = "Jeder Nutzer kann für jede Frage eine neue Übersetzung erstellen.";
+    $headerCreateNewTranslation = "Eine neue Übersetzung für eine Frage erstellen";
+    $descriptionCreateNewTranslation = "Neben jeder Frage im System befindet sich ein Dropdown Menü, mit welchem verschiedenen Aktionen durchgeführt werden können. 
+    Unter anderem gibt es die Möglichkeit für die ausgewählte Frage eine neue Übersetzung hinzuzufügen. 
+    Diese Funktion kann durch Klick auf den  <img src=\"/quizVerwaltung/media/language.svg\" width=\"20px\">-Knopf aufgerufen werden. 
+    Es öffnet sich ein Pop-up Fenster (siehe nachfolgender Screenshot), in welchem dann einfach die gewünschte Sprache ausgewählt werden kann.";
+
+
+    $helpMenuSubExistingTranslation = "Vorhandene Übersetzung";
+    $helpTextExistingTranslation = "Bereits vorhandene Übersetzungen können von allen Nutzern verwendet werden.";
+    $headerExistingTranslation = "Eine vorhandene Übersetzung für eine Frage verwenden.";
+    $descriptionExistingTranslation = "Sollte am rechten Rand einer Frage ein Drop-Down Menü zu sehen sein, sind für diese Frage bereits Übersetzungen vorhanden. 
+    Andere Nutzer haben die Frage schon in verschiedene Sprachen übersetzt. Alle Übersetzungen werden gespeichert, um diese anschließend noch schneller für andere Nutzer verfügbar zu machen. 
+    Durch aufklappen des Drop-Down Menüs kann überprüft werden, ob die gewünschte Übersetzung bereits existiert. 
+    Falls ja, kann die gewünschte Sprache gewählt werden, um die Frage direkt zu übersetzen.";
 ?>

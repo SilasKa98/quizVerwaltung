@@ -280,9 +280,9 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
       <li class="my-2">
         <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#components-collapse" aria-controls="components-collapse"><?php echo $helpMenuTranslation;?></button>
         <ul class="list-unstyled ps-3 collapse" id="components-collapse">
-          <li><a class="d-inline-flex align-items-center rounded" href="#foo2">coming soon</a></li>
-          <li><a class="d-inline-flex align-items-center rounded" href="#bar2">coming soon</a></li>
-          <li><a class="d-inline-flex align-items-center rounded" href="#buz2">coming soon</a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#translationInfos"><?php echo $helpMenuSubTranslationInfos;?></a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#createNewTranslation"><?php echo $helpMenuSubNewTranslation;?></a></li>
+          <li><a class="d-inline-flex align-items-center rounded" href="#useExistingTranslation"><?php echo $helpMenuSubExistingTranslation;?></a></li>
         </ul>
       </li>
     </ul>
@@ -503,6 +503,65 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
                     </div>
                 </li>
             </ul>
+        </div>
+
+    </article>
+
+    <article class="my-3" id="translationInfos">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+            <h3><?php echo $helpMenuSubTranslationInfos;?></h3>
+        </div>
+
+        <div>
+            <br>
+            <h2 class="importPossibility"><?php echo $helpTextTranslationInfos;?></h2>
+            <h2 class="importPossibility"><?php echo $headerTranslationDeepl;?></h2>
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $descriptionDeepL;?>
+                </p>
+                <div class="bd-heading mt-5 mb-3 mt-xl-0 mb-xl-2">
+                  <a class="d-flex align-items-center" target="_blank" href="https://www.deepl.com/pro-api"><?php echo $deepLDocuLink;?></a>
+                </div>
+            </div>
+        </div>
+
+    </article>
+
+    <article class="my-3" id="createNewTranslation">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+            <h3><?php echo $helpMenuSubNewTranslation;?></h3>
+        </div>
+
+        <div>
+            <br>
+            <h2 class="importPossibility"><?php echo $helpTextCreateNewTranslation;?></h2>
+            <h2 class="importPossibility"><?php echo $headerCreateNewTranslation;?></h2>
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $descriptionCreateNewTranslation;?>
+                </p>
+            </div>
+            <img src="/quizVerwaltung/media/translateExamplePicture.PNG" style="width: 39%; margin-top: 0 !important;">
+        </div>
+
+    </article>
+
+    <article class="my-3" id="useExistingTranslation">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+            <h3><?php echo $helpMenuSubExistingTranslation;?></h3>
+        </div>
+
+        <div>
+            <br>
+            <h2 class="importPossibility"><?php echo $helpTextExistingTranslation;?></h2>
+            <h2 class="importPossibility"><?php echo $headerExistingTranslation;?></h2>
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $descriptionExistingTranslation;?>
+                </p>
+            </div>
+            <img src="/quizVerwaltung/media/translateQuestionExample.PNG" style="width: 50%; margin-top: 0 !important;">
         </div>
 
     </article>

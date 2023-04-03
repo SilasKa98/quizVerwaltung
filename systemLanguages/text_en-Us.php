@@ -229,4 +229,34 @@
         $exportType4Description = "Our standard format, which is also known as SimpQui format, is also supported as an export format. 
         It is the same format as for import. For reference to this format we refer to the Quiz application <a href='https://hosting.iem.thm.de/user/euler/quiz/index.php?inhalt=home' target='_blank'>SimpQui</a>";
 
+
+
+        $helpMenuSubTranslationInfos = "Translation info";
+        $helpTextTranslationInfos = "The Quiz Manager platform basically supports three different languages (English, German, Spanish) for the whole platform.<br><br>
+        Since the core functionality of this platform is sharing and using quiz questions, significantly more languages are also supported for the quiz questions. 
+        In total, all questions uploaded to the platform can be translated into 31 different languages.";
+
+        $headerTranslationDeepl = "DeepL as a tool for translation";
+        $descriptionDeepL = "The DeepL API is used to translate the questions. DeepL uses machine translation technologies,
+        which allows all questions on the platform to be translated into a good linguistic form with high precision.";
+        $deepLDocuLink = "DeepL Documentation";
+
+
+        $helpMenuSubNewTranslation = "New translation";
+        $helpTextCreateNewTranslation = "Each user can create a new translation for each question.";
+        $headerCreateNewTranslation = "Create a new translation for a question";
+        $descriptionCreateNewTranslation = "Next to each question in the system there is a drop-down menu with which various actions can be performed. 
+        Among other things, there is the possibility to add a new translation for the selected question. 
+        This function can be called by clicking on the <img src=\"/quizAdministration/media/language.svg\" width=\"20px\"> button. 
+        A pop-up window will open (see screenshot below), where you can then simply select the desired language.";
+
+
+        $helpMenuSubExistingTranslation = "Existing translation";
+        $helpTextExistingTranslation = "Existing translations can be used by all users.";
+        $headerExistingTranslation = "Use an existing translation for a question.";
+        $descriptionExistingTranslation = "If there is a drop-down menu on the right side of a question, there are already translations for this question. 
+        Other users have already translated the question into different languages. All translations are saved to make them available to other users even faster afterwards. 
+        By opening the drop-down menu you can check if the desired translation already exists. 
+        If yes, the desired language can be selected to translate the question directly.";
 ?>
+
