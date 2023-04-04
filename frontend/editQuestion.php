@@ -161,8 +161,18 @@ if(isset($isAdmin) && $isAdmin == true){
                 
                 <div class="card mb-3 innerImportCard" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Antwort</h5>               
-                        <p class="card-text"><?php echo $answer;?></p>
+                        <h5 class="card-title">Antwort</h5>
+                        <?php if(!isset($options[$lang])){?>        
+                            <p class="card-text"><?php echo $answer;?></p>
+                        <?php }else{?>
+                            <?php $explodedAnswers = explode(",", $answer);?>
+                            <?php  foreach($options[$lang] as $key => $value) {?>
+                                <?php if(in_array($key, $explodedAnswers)){?>                 
+                                    <span class="badge rounded-pill text-bg-success"><?php echo $value;?></span>
+                                <?php }?>
+                            <?php }?>
+                            <br><br>
+                        <?php }?>
                         <button class="btn btn-primary"><?php echo $adjustButton;?></button>
                     </div>
                 </div>
