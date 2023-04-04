@@ -171,9 +171,7 @@ if(isset($isAdmin) && $isAdmin == true){
                                     <span class="badge rounded-pill text-bg-success"><?php echo $value;?></span>
                                 <?php }?>
                             <?php }?>
-                            <br><br>
-                        <?php }?>
-                        <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                        <?php }?>                   
                     </div>
                 </div>
 
