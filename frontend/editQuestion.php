@@ -109,7 +109,7 @@ if(isset($isAdmin) && $isAdmin == true){
             </div>
             <div class="modal-body"  id="question_holder" >
                 <p id="ChangeModal-body">
-                    <textarea id="changeQuestionTextarea" id="changeQuestionText" name="questionText"><?php echo $question; ?></textarea>
+                    <textarea id="changeQuestionTextarea" name="questionText"><?php echo $question; ?></textarea>
                     <input type="hidden"  id="changeQuestionLanguage" name="questionLanguage" value="<?php echo $lang;?>">
                 </p>
             </div>
@@ -142,6 +142,78 @@ if(isset($isAdmin) && $isAdmin == true){
         </div>
     </div>
 
+    <?php if(isset($options[$lang])){?> 
+        <!-- modal for options change (also handling answers for options questions)-->
+        <div class="modal fade" id="changeOptionsModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2"><?php echo $changeOptionsModalHeader; ?></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php $explodedOptionsAnswers = explode(",", $answer);?>
+                    <?php  foreach($options[$lang] as $key => $value) {?>
+                        <input type="hidden" id="answerOptionsQuestionType" name="answerOptionsQuestionType" value="<?php echo $selectedQuestion->questionType;?>">
+                        <input type="hidden" id="answerOptionsLang" name="answerOptionsLang" value="<?php echo $lang;?>">
+                        <div class="input-group mb-3" style="margin-bottom: 5px !important;">
+                            <div class="input-group-text">
+                                <?php if($selectedQuestion->questionType == "MultiOptions"){?> 
+                                    <input class="form-check-input mt-0 editOptionsCheck" type="checkbox" aria-label="options Input" <?php if(in_array($key, $explodedOptionsAnswers)){echo "checked";}?>>
+                                <?php }else{?>
+                                    <input class="form-check-input mt-0 editOptionsCheck" name="editQuestionOption" type="radio" aria-label="options Input" <?php if(in_array($key, $explodedOptionsAnswers)){echo "checked";}?>>
+                                <?php }?>
+                            </div>
+                            <input type="text" class="text-bg-secondary form-control editOptionsValue" value="<?php echo $value;?>">
+                        </div>
+                    <?php }?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="sumbitOptionsBtn"  data-bs-dismiss="modal" class="btn btn-primary">Save</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    <?php }?>
+
+
+    <?php if(!isset($options[$lang])){?> 
+        <!-- modal for answer change (only open questions)-->
+        <div class="modal fade" id="changeAnswerModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2"><?php echo $changeAnswerModalHeader; ?></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="answerQuestionType" name="answerQuestionType" value="<?php echo $selectedQuestion->questionType;?>">
+                    <?php if($selectedQuestion->questionType == "YesNo"){?> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="radio" name="trueFalseRadio" role="switch" id="flexSwitchCheckAnswerTrue" <?php if($answer == "true"){ echo "checked";}?>>
+                            <label class="form-check-label" for="flexSwitchCheckAnswerTrue"><?php echo $editTrueAnswer;?></label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="radio" name="trueFalseRadio" role="switch" id="flexSwitchCheckAnswerFalse" <?php if($answer == "false"){ echo "checked";}?>>
+                            <label class="form-check-label" for="flexSwitchCheckAnswerFalse"><?php echo $editFalseAnswer;?></label>
+                        </div>
+                    <?php }else{?>
+                        <p id="ChangeModal-body">
+                            <textarea id="changeAnswerTextarea" name="answerText"><?php echo $answer; ?></textarea>
+                        </p>
+                    <?php }?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="sumbitAnswerBtn"  data-bs-dismiss="modal" class="btn btn-primary">Save</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    <?php }?>
+
+
 
 
     <h1 id="editQuestionHeader">Frage bearbeiten</h1>
@@ -171,7 +243,10 @@ if(isset($isAdmin) && $isAdmin == true){
                                     <span class="badge rounded-pill text-bg-success"><?php echo $value;?></span>
                                 <?php }?>
                             <?php }?>
-                        <?php }?>                   
+                        <?php }?> 
+                        <?php if(!isset($options[$lang])){?>          
+                            <button class="btn btn-primary" onclick="changeAnswer('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>     
+                        <?php }?>      
                     </div>
                 </div>
 
@@ -199,7 +274,7 @@ if(isset($isAdmin) && $isAdmin == true){
                                     <span class="badge rounded-pill text-bg-secondary"><?php echo $value;?></span>
                                 <?php }?>
                             </p>
-                            <button class="btn btn-primary"><?php echo $adjustButton;?></button>
+                            <button class="btn btn-primary" onclick="changeOptions('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
                         </div>
                     </div>
                 <?php }?>

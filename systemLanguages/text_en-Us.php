@@ -77,6 +77,10 @@
     $currentVerificationStatusText = "Current Status: ";
     $verifiedStatus = "Verified";
     $notVerifiedStatus = "Not verified";
+    $changeOptionsModalHeader = "Change the question options and answers";
+    $changeAnswerModalHeader = "Change the answer of the question";
+    $editTrueAnswer = "True";
+    $editFalseAnswer = "False";
 
      //usersSettings.php
      $deleteAccountText = "Permanently delete your account";

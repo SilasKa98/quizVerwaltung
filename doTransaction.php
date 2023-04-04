@@ -1464,4 +1464,198 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionVerification"){
 
     echo "Edit successfull!";
 }
+
+if(isset($_POST["method"]) && $_POST["method"] == "editQuestionAnswer"){
+    $answerPayload = $_POST["payload"];
+    $questionId = $_POST["id"];
+    $answerType = $answerPayload["answerType"];
+    $answerText = $answerPayload["answerText"];
+
+    /**
+     * Catching all possible exploit values to protect the database
+     */
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
+        echo "Illegal id given!";
+        exit();
+    }
+
+
+    /**
+     * sanitise the give values for XSS exploits
+     */
+    $sanitiser = new SanitiseInputService();
+    $questionId = $sanitiser->sanitiseInput($questionId);
+    $answerText = $sanitiser->sanitiseInput($answerText);
+    $answerType = $sanitiser->sanitiseInput($answerType);
+
+
+    //check if the answer type is allowed to dectect illegally user modified types
+    $legalAnswerTypes = ["YesNo", "Open"];
+    if(!in_array($answerType, $legalAnswerTypes)){
+        echo "Illegal answerType given!";
+        exit();
+    }
+
+    if($answerType == "YesNo"){
+        $legalAnswers = ["true", "false"];
+        if(!in_array($answerText, $legalAnswers)){
+            echo "Illegal answerText given!";
+            exit();
+        }
+    }
+
+
+    //check if the user is allowed to edit this question
+    $searchQuestionFilter = (['id'=>$questionId]);
+    $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
+    $questionTags = (array)$searchQuestion->tags;
+    $questionAuthor = $searchQuestion->author;
+
+    session_start();
+    $filterQueryCurrentUser = (['userId' => $_SESSION["userData"]["userId"]]);
+    $userInfoCurrentUser= $mongo->findSingle("accounts",$filterQueryCurrentUser);
+
+    $isCurrentUserAdmin = $userInfoCurrentUser["isAdmin"];
+
+    if($questionAuthor != $_SESSION["userData"]["username"] && !$isCurrentUserAdmin){
+        echo "You are not allowed to edit this question!";
+        exit();
+    } 
+  
+    #####end of exploit catching
+
+    $update = ['$set' =>  ['answer'=> $answerText]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
+
+    echo "Edit successfull!";
+}
+
+if(isset($_POST["method"]) && $_POST["method"] == "editQuestionOptions"){
+    $answerPayload = $_POST["payload"];
+    $questionId = $_POST["id"];
+    $optionValues = $answerPayload["optionValues"];
+    $optionChecks = $answerPayload["optionChecks"];
+    $questionType = $answerPayload["questionType"];
+    $answerOptionsLang = $answerPayload["answerOptionsLang"];
+
+    /**
+     * Catching all possible exploit values to protect the database
+     */
+    if(!preg_match("/^[a-zA-Z0-9]*$/", strval($questionId))){
+        echo "Illegal id given!";
+        exit();
+    }
+
+    /**
+     * sanitise the give values for XSS exploits
+     */
+    $sanitiser = new SanitiseInputService();
+    $questionId = $sanitiser->sanitiseInput($questionId);
+    $questionType = $sanitiser->sanitiseInput($questionType);
+    $sanitisedOptionValues = [];
+    foreach($optionValues as $value){
+        array_push($sanitisedOptionValues, $sanitiser->sanitiseInput($value));
+    }
+    $sanitisedOptionChecks = [];
+    foreach($optionChecks as $value){
+        array_push($sanitisedOptionChecks, $sanitiser->sanitiseInput($value));
+    }
+
+    $allSupportedLanguages = $getQuestionsTranslator->getAllTargetLanguageCodes();
+    //catching falsly given languages from the user 
+    if(!in_array($answerOptionsLang,$allSupportedLanguages)){
+        echo "Illegal target language!";
+        exit();
+    }
+
+    $allowedQuestionTypes = ["Options", "MultiOptions"];
+    if(!in_array($questionType,$allowedQuestionTypes)){
+        echo "Illegal question Type!";
+        exit();
+    }
+
+    ###end of checking for illegal values
+
+    //get all currentLanguage versions of the question to create new translation with the new options for each question
+    $searchQuestionFilter = (['id'=>$questionId]);
+    $searchQuestion = $mongo->findSingle("questions",$searchQuestionFilter);
+    $question_keys = array_keys((array)$searchQuestion->question);
+    $questionAuthor = $searchQuestion->author;
+    $currentQuestionVersion = $searchQuestion->version;
+
+    session_start();
+
+    $filterQueryCurrentUser = (['userId' => $_SESSION["userData"]["userId"]]);
+    $userInfoCurrentUser= $mongo->findSingle("accounts",$filterQueryCurrentUser);
+
+    $isCurrentUserAdmin = $userInfoCurrentUser["isAdmin"];
+
+    if($questionAuthor != $_SESSION["userData"]["username"] && !$isCurrentUserAdmin){
+        echo "You are not allowed to edit this question!";
+        exit();
+    } 
+
+    //build new Options array with all translations
+    $newOptionsArray = [];
+    foreach($question_keys as $questionLangVersion){
+        $translation = new TranslationService($questionLangVersion);
+        $newTranslatedOptions = [];
+        foreach($sanitisedOptionValues as $option){
+            $newOption = $translation->translateText($option);
+            array_push($newTranslatedOptions, $newOption);
+        }
+        $newQuestionArray[$questionLangVersion] = $newTranslatedOptions;
+    }
+
+
+    //update options
+    $update = ['$set' =>  ['options'=> $newQuestionArray]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$update); 
+
+
+    //build new answer string with the correct indexes
+    $finalAnswerString = "";
+
+    $array_keys = array_keys($sanitisedOptionChecks);
+    $last_key = end($array_keys);
+    reset($sanitisedOptionChecks);
+
+    foreach($sanitisedOptionChecks as $key => $value){
+        if($value == "true"){
+            if($questionType == "MultiOptions"){
+                if($last_key == $key){
+                    $finalAnswerString .= $key;
+                }else{
+                    $finalAnswerString .= $key.",";
+                }
+            }else{
+                $finalAnswerString .= $key;
+            }
+        }
+    }
+
+    //update answer
+    $updateAnswer = ['$set' =>  ['answer'=> $finalAnswerString]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$updateAnswer); 
+
+
+    //update the question Version
+    include_once "services/versionService.php";
+    $version = new VersionService();
+    $newVersion = $version->increaseVersion($currentQuestionVersion);
+
+    $updateVersion = ['$set' =>  ['version'=> $newVersion]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$updateVersion); 
+
+    //update the question modificationDate
+    $modificationDate = date("Y-m-d");
+    $updateModificationDate = ['$set' =>  ['modificationDate'=> $modificationDate]];
+    $mongo->updateEntry("questions",$searchQuestionFilter,$updateModificationDate); 
+
+    echo "Edit successfull!";
+    
+
+}
+
+
 ?>

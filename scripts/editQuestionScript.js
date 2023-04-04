@@ -73,6 +73,71 @@ async function changeVerification(id){
 }
 
 
+async function changeOptions(id){
+    console.log(id);
+
+    $('#changeOptionsModal').modal('toggle');
+    await submitTagSelection("sumbitOptionsBtn");
+    let answerOptionsQuestionType = document.getElementById("answerOptionsQuestionType").value;
+    let answerOptionsLang = document.getElementById("answerOptionsLang").value;
+    let editOptionsValue = document.querySelectorAll(".editOptionsValue");
+    let allOptionsValues = [];
+    for(let i=0;i<editOptionsValue.length;i++){
+        allOptionsValues.push(editOptionsValue[i].value);
+    }
+    console.log(allOptionsValues);
+
+    let editOptionsCheck = document.querySelectorAll(".editOptionsCheck");
+    let allOptionsChecks = [];
+    for(let i=0;i<editOptionsCheck.length;i++){
+        allOptionsChecks.push(editOptionsCheck[i].checked);
+    }
+    console.log(allOptionsChecks);
+
+    let payload = {
+        "optionValues": allOptionsValues,
+        "optionChecks": allOptionsChecks,
+        "questionType": answerOptionsQuestionType,
+        "answerOptionsLang": answerOptionsLang
+    };
+
+    sendAjax("editQuestionOptions", payload, id);
+}
+
+/**
+ * 
+ * This function only handels answer setting for Open Questions.. Options answers are handled in the changeOptions function
+ */
+async function changeAnswer(id){
+    console.log(id);
+
+    $('#changeAnswerModal').modal('toggle');
+    await submitTagSelection("sumbitAnswerBtn");
+    let answerQuestionType = document.getElementById("answerQuestionType").value;
+    console.log(answerQuestionType);
+    if(answerQuestionType == "YesNo"){
+        let answerTrue = document.getElementById("flexSwitchCheckAnswerTrue").checked;
+        let answerFalse = document.getElementById("flexSwitchCheckAnswerFalse").checked;
+        var answerText;
+        if(answerTrue == true){
+            answerText = "true";
+        }else if(answerFalse == true){
+            answerText = "false";
+        }
+    }else{
+        answerText = document.getElementById("changeAnswerTextarea").value;
+    }
+    
+    let payload = {
+        "answerText": answerText,
+        "answerType": answerQuestionType
+    };
+
+    sendAjax("editQuestionAnswer", payload, id);
+}
+
+
+
 function submitTagSelection(saveBtn){
     subCheck =  new Promise(function (resolve, reject) {
         var submitTagSel = document.getElementById(saveBtn);

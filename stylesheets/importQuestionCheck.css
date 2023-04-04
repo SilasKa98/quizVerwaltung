@@ -34,7 +34,7 @@
     text-align: center;
 }
 
-#changeQuestionTextarea{
+#changeQuestionTextarea,#changeAnswerTextarea{
     width: 100%;
     min-height: 130px;
 }
