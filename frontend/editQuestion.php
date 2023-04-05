@@ -234,7 +234,7 @@ if(isset($isAdmin) && $isAdmin == true){
                 <div class="card mb-3 innerImportCard" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Antwort</h5>
-                        <?php if(!isset($options[$lang])){?>        
+                        <?php if(!isset($options[$lang]) || $selectedQuestion->questionType == "Order"){?>        
                             <p class="card-text"><?php echo $answer;?></p>
                         <?php }else{?>
                             <?php $explodedAnswers = explode(",", $answer);?>
@@ -274,7 +274,9 @@ if(isset($isAdmin) && $isAdmin == true){
                                     <span class="badge rounded-pill text-bg-secondary"><?php echo $value;?></span>
                                 <?php }?>
                             </p>
-                            <button class="btn btn-primary" onclick="changeOptions('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
+                            <?php if($selectedQuestion->questionType != "Order"){?>
+                                <button class="btn btn-primary" onclick="changeOptions('<?php echo $_GET['questionId']; ?>')"><?php echo $adjustButton;?></button>
+                            <?php }?>
                         </div>
                     </div>
                 <?php }?>
