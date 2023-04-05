@@ -480,7 +480,20 @@ body{
     overflow: auto;
   }
 
+  #quizManagerAdmin{
+    font-size: 15pt;
+    margin-bottom: 10px;
+  }
 
+
+  #quizManagerEarlyAdopter{
+    margin-bottom: 10px;
+    font-size: 13pt;
+  }
+
+  #quizManagerUser{
+    font-weight: bold;
+  }
 
   @media only screen and (max-width: 1199px) {
     #navOpenDrpDwnBtn {

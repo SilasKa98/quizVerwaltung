@@ -10,9 +10,10 @@
     include_once "../services/mongoService.php";
     include_once "../services/questionService.php";
     include_once "../services/printService.php";
-
+    include_once "../services/accountService.php";
     
 
+    $account = new AccountService();
     $mongo = new MongoDBService();
     $question = new QuestionService();
     $printer = new Printer();
@@ -103,7 +104,7 @@
                     <img src="../media/defaultAvatar.png" alt="avatar"
                     class="rounded-circle img-fluid" style="width: 150px;">
                     <h5 class="my-3"><?php echo $foundProfile->username;?></h5>
-                    <p class="text-muted mb-1">Full Stack Developer</p>
+                    <p class="text-muted mb-1"><?php echo $account->generateUserInformationText($foundProfile->userId);?></p>
                     <p class="text-muted mb-4"><?php echo $userJoinDateInfo." ".$foundProfile->joinDate; ?></p>
                     <div class="d-flex justify-content-center mb-2">
                     <?php if($foundProfile->userId != $userId){ ?>

@@ -247,6 +247,30 @@ class AccountService{
         }
         return $lang;
     }
+
+
+    function generateUserInformationText($userId){
+        $searchUserFilter = (['userId'=>$userId]);
+        $searchUser = $this->mongo->findSingle("accounts",$searchUserFilter);
+        $userInfoText = "";
+        if($searchUser->isAdmin == "true"){
+            $userInfoText = "<span class='badge rounded-pill text-bg-warning' id='quizManagerAdmin'>Quiz Manager Admin</span>";
+        }elseif(strtotime($searchUser->joinDate) <= strtotime("2023-12-31")){
+            $userInfoText = "<span class='badge rounded-pill text-bg-info' id='quizManagerEarlyAdopter'>Quiz Manager Early Adopter</span>";
+        }else{
+            $userInfoText = "<span id='quizManagerUser'>Quiz Manager User</span>";
+        }
+        //later add Guest here?
+
+        $firstFavTags = array_slice((array)$searchUser->favoritTags, 0, 3);
+        if(!empty($firstFavTags)){
+            $userInfoTextAddition = "Loves ".implode(" & ", (array)$firstFavTags); 
+        }else{
+            $userInfoTextAddition = "";
+        }
+        
+        return $userInfoText."<br>".$userInfoTextAddition;
+    }
     
 }
 
