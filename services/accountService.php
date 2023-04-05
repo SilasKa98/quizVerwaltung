@@ -262,7 +262,7 @@ class AccountService{
         }
         //later add Guest here?
 
-        $firstFavTags = array_slice((array)$searchUser->favoritTags, 0, 3);
+        $firstFavTags = array_slice((array)$searchUser->favoritTags, 0, 2);
         if(!empty($firstFavTags)){
             $userInfoTextAddition = "Loves ".implode(" & ", (array)$firstFavTags); 
         }else{
