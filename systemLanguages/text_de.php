@@ -66,6 +66,8 @@
     //navbar.php
     $searchResultUsersHeader = "Nutzer";
     $searchResultQuestionsHeader = "Fragen";
+    $helppageNavText = "Hilfe";
+    $datenschutzNavbar = "Datenschutz";
 
     //searchResult (navbar.php) but used in a script
     $noSearchMatches = "Keine passenden Treffer";

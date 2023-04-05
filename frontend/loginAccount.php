@@ -60,6 +60,13 @@
             border: 1px solid white;
         }
 
+        #impressumLink{
+            float:right;
+            text-decoration: none;
+            color: black;
+            margin-right: 1%;
+        }
+
         @media only screen and (max-width: 800px) {
             .menuBar.fixed {
                 position: relative;
@@ -81,16 +88,6 @@
 </head>
 <body style="background-color: #cbc8c8">
 <div id="topSection"></div>
-    <!--
-    <form action="/quizVerwaltung/doTransaction.php" method="post">
-		<input type="text" name="mailuid" placeholder="E-mail/Benutzername...">
-		<input type="password" name="pwd" placeholder="Passwort...">
-        <input type="hidden" name="method" value="loginAccount">
-		<input type="submit" name="login_submit" value="Einloggen">
-	</form>
-    <br>
-    <a href="registerAccount.php">No Account yet? Sign up now!</a>
--->
 
     <div class="card wrapperCard" style="margin-top: 10px;">
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" style=" padding: 0 !important; margin: 0 !important; border-radius: 10px;">
@@ -284,7 +281,7 @@
             </div>
         </div>
     </div>
-
+    <?php include_once "footer.php"; ?>
 </body>
 <script>
 //smooth scroll to section

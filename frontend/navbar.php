@@ -35,8 +35,10 @@ else {
         </button>
         <div class="collapse navbar-collapse" id="navbarRight">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/quizVerwaltung/frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
-                <a class="nav-link" href="/quizVerwaltung/frontend/helpPage.php">Help</a>
+                <a class="nav-link" aria-current="page" href="/quizVerwaltung/frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
+                <a class="nav-link" href="/quizVerwaltung/frontend/helpPage.php"><?php echo $helppageNavText;?></a>
+                <a class="nav-link" href="https://www.thm.de/site/impressum.html" target="_blank">Impressum</a>
+                <a class="nav-link" href="https://www.thm.de/site/datenschutz.html" target="_blank"><?php echo $datenschutzNavbar;?></a>
             </div>
             
             <ul class="navbar-nav ms-auto">

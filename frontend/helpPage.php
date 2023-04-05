@@ -257,6 +257,8 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
         </h1>
     </a>
   </div>
+  <a href="https://www.thm.de/site/impressum.html" target="_blank" class="nav-link px-2 text-muted" style="color: white !important;">Impressum</a>
+  <a href="https://www.thm.de/site/datenschutz.html" target="_blank" class="nav-link px-2 text-muted" style="color: white !important;">Datenschutz</a>
 </header>
 <aside class="bd-aside sticky-xl-top text-muted align-self-start mb-3 mb-xl-5 px-2">
   <h2 class="h6 pt-4 pb-3 mb-4 border-bottom"><?php echo $helpContentsHeading;?></h2>
@@ -565,6 +567,7 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
         </div>
 
     </article>
-
+</section>
+</div>
 </body>
 </html>
