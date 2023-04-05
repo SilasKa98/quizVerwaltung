@@ -216,6 +216,13 @@ class AccountService{
      */
     function logout(){
         session_start();
+
+        //set timestamp to 0 so user is flagged as offline
+        $offlineTimestmp = 0;
+        $currentUserFilter = (['userId' => $_SESSION["userData"]["userId"]]);
+        $updateLastActivityTimestamp = ['$set' =>  ['lastActivityTimestamp'=> $offlineTimestmp]];
+        $this->mongo->updateEntry("accounts",$currentUserFilter,$updateLastActivityTimestamp); 
+
         session_destroy();
         header("Location: /quizVerwaltung/frontend/loginAccount.php?logout=success");
         exit();
@@ -271,6 +278,24 @@ class AccountService{
         
         return $userInfoText."<br>".$userInfoTextAddition;
     }
+
+
+    function is_user_online($userId) {
+        $searchUserFilter = (['userId'=>$userId]);
+        $searchUser = $this->mongo->findSingle("accounts",$searchUserFilter);
+        if(isset($searchUser->lastActivityTimestamp)){
+            $lastUserActivityTimestamp = $searchUser->lastActivityTimestamp;
+        }else{
+            $lastUserActivityTimestamp = 0;
+        }
+        $timeout_minutes = 5;
+        $timeout_seconds = $timeout_minutes * 60;
+        if (isset($lastUserActivityTimestamp) && (time() - $lastUserActivityTimestamp) < $timeout_seconds) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     
 }
 

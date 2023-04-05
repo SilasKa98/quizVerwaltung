@@ -99,6 +99,42 @@
 
 
 
+<script type="text/javascript">
+    //script to track if the user is active atm, then inserts the current timestamp in the database     
+    var timeout;
+    var delay = 2000;   // 2s
+    document.addEventListener("mousemove", function(e) {
+        if(timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(function() {
+            <?php
+                //update the last user activity time
+                $currentTimestamp = time();
+                $currentUserFilter = (['userId' => $_SESSION["userData"]["userId"]]);
+                $updateLastActivityTimestamp = ['$set' =>  ['lastActivityTimestamp'=> $currentTimestamp]];
+                $mongo->updateEntry("accounts",$currentUserFilter,$updateLastActivityTimestamp); 
+            ?>
+        }, delay);
+    });
+
+    document.addEventListener("keypress", function(e) {
+        if(timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(function() {
+            <?php
+                //update the last user activity time
+                $currentTimestamp = time();
+                $currentUserFilter = (['userId' => $_SESSION["userData"]["userId"]]);
+                $updateLastActivityTimestamp = ['$set' =>  ['lastActivityTimestamp'=> $currentTimestamp]];
+                $mongo->updateEntry("accounts",$currentUserFilter,$updateLastActivityTimestamp); 
+            ?>
+        }, delay);
+    });
+
+  </script>
+
   <!-- fly to card animation scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="/quizVerwaltung/scripts/flyToCartAnimation.js"></script>

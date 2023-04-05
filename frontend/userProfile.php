@@ -94,15 +94,22 @@
     <?php include_once "modal_showFollower.php";?>
     <?php include_once "modal_showFollowing.php";?>
   
-
     <section style="background-color: #eee;">
         <div class="container py-5">
             <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img src="../media/defaultAvatar.png" alt="avatar"
-                    class="rounded-circle img-fluid" style="width: 150px;">
+                    
+                    <div>
+                        <div class="position-relative" style="width: fit-content; margin: 0 auto;">
+                            <img src="../media/defaultAvatar.png" alt="avatar" class="rounded-circle" style="width: 150px;">
+                            <div class="status-circle position-absolute bottom-0 end-0 bg-<?php if($account->is_user_online($foundProfile->userId)){echo "success";}else{echo "danger";}?> rounded-circle"></div>
+                            <!-- Setze die Farbe des Kreises je nach Online/Offline-Status -->
+                        </div>
+                    </div>
+
+                    <!--<img src="../media/defaultAvatar.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">-->
                     <h5 class="my-3"><?php echo $foundProfile->username;?></h5>
                     <p class="text-muted mb-1"><?php echo $account->generateUserInformationText($foundProfile->userId);?></p>
                     <p class="text-muted mb-4"><?php echo $userJoinDateInfo." ".$foundProfile->joinDate; ?></p>
@@ -338,6 +345,43 @@
     </script>
 
     <?php include_once "notificationToast.php";?>
+
+
+    <script type="text/javascript">
+        //script to track if the user is active atm, then inserts the current timestamp in the database 
+        var timeout;
+        var delay = 2000;   // 2s
+        document.addEventListener("mousemove", function(e) {
+            if(timeout) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(function() {
+                <?php
+                    //update the last user activity time
+                    $currentTimestamp = time();
+                    $currentUserFilter = (['userId' => $_SESSION["userData"]["userId"]]);
+                    $updateLastActivityTimestamp = ['$set' =>  ['lastActivityTimestamp'=> $currentTimestamp]];
+                    $mongo->updateEntry("accounts",$currentUserFilter,$updateLastActivityTimestamp); 
+                ?>
+            }, delay);
+        });
+
+        document.addEventListener("keypress", function(e) {
+            if(timeout) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(function() {
+                <?php
+                    //update the last user activity time
+                    $currentTimestamp = time();
+                    $currentUserFilter = (['userId' => $_SESSION["userData"]["userId"]]);
+                    $updateLastActivityTimestamp = ['$set' =>  ['lastActivityTimestamp'=> $currentTimestamp]];
+                    $mongo->updateEntry("accounts",$currentUserFilter,$updateLastActivityTimestamp); 
+                ?>
+            }, delay);
+        });
+
+    </script>
 
         <!-- fly to card animation scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
