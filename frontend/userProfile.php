@@ -104,7 +104,7 @@
                     <div>
                         <div class="position-relative" style="width: fit-content; margin: 0 auto;">
                             <img src="../media/defaultAvatar.png" alt="avatar" class="rounded-circle" style="width: 150px;">
-                            <div class="status-circle position-absolute bottom-0 end-0 bg-<?php if($account->is_user_online($foundProfile->userId)){echo "success";}else{echo "danger";}?> rounded-circle"></div>
+                            <div class="status-circle position-absolute bg-<?php if($account->is_user_online($foundProfile->userId)){echo "success";}else{echo "secondary";}?> rounded-circle onlineStatusDot"></div>
                             <!-- Setze die Farbe des Kreises je nach Online/Offline-Status -->
                         </div>
                     </div>
