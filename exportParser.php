@@ -39,7 +39,8 @@ class ExportParser{
           }
         }
         elseif($questionType == "Open"){
-          $latex .= "\\item[$\\bigcirc$] ".$value->answer."\n";
+          //$latex .= "\\item[$\\bigcirc$] ".$value->answer."\n";
+          $latex .= "\\item[] \line(1,0){90}\n";
         }
         $latex .= "\\end{itemize}\n\n";
       }
