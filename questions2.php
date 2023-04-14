@@ -1,5 +1,7 @@
 <?php
 
+//An abstract Question Class for all kind of question types. 
+//Containing all minimal characteristics that every question needs
 class Question {
   public $question;
   public $answer;
@@ -22,6 +24,8 @@ class Question {
 
 }
 
+// From here on there are specialized Question classes for different types with extra 
+//characteristics if needed
 class YesNoQuestion extends Question{
 
 }
@@ -87,7 +91,8 @@ class OrderQuestion extends Question{
   }
 }
 
-
+//Here the actual simpqui parser is coded
+// it splits the question string form the format into parts which then are converted into the respective question type object 
 function parseLine( $line ) {
 	$parts = preg_split( "/#/", $line );
 	$parts = str_replace( "&num;", "#", $parts );
@@ -122,7 +127,7 @@ function parseLine( $line ) {
     }
   }
 
-
+// creating all nessecary meta data for a new question
   $karma = 0;
 
   include_once "services/versionService.php";
@@ -138,6 +143,7 @@ function parseLine( $line ) {
 
   $verification = "not verified";
   $downloadCount = 0;
+  //Here the type of the question is checked
 	if( $parts[0] == "YesNo" ) {
 		return new YesNoQuestion( [$language=>$parts[1]], $parts[2], $questionType, $version, uniqid(), $karma, $author, $tags, $creationDate, $modificationDate, $verification, $downloadCount);
 	} else if( $parts[0] == "RegOpen" ) {
