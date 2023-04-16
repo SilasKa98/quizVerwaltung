@@ -3,10 +3,11 @@
 
     class MoodleXMLParser{
 
-        private $dom;
+        private $dom; // the document
         private $catalogName;
-        private $root;
+        private $root;          // top element of a dom at which ever oder element is then placed on 
 
+        //Create a basic empty dom (xml) document which later is filled with questions
         function __construct($catalogName){
             $this->account = new AccountService();
             $this->dom = new DOMDocument();
@@ -18,12 +19,15 @@
             $this->root = $this->dom->createElement('quiz');
         }
 
+        // In this function first the question type is determined 
+        // which is an important step  
         function parseQuestionObject($questionObject){
             $questionSection = $this->dom->createElement('question');
             $questionType = $questionObject->questionType;
             $questionId = $questionObject->id;
 
             //Question Type separation
+            // for each type another object is created to insure the correct parsing of the question
             switch($questionType) {
                 case 'Options':
                     $questionType = 'multichoice';
@@ -48,12 +52,16 @@
             Fragetypen die noch gemacht werden müssen => Order
             */
 
+            //now the acutal content is created which is the same for all types
+            //first question type
             $questionType = new DOMAttr('type', $questionType);
             $questionSection->setAttributeNode($questionType);
 
+            //question name
             $nameSection = $this->dom->createElement('name');   //TODO ggf. kann man hier sogar noch Tags in als Namen verwenden // andererseits scheint moodle xml auch tags zu unterstützen
             $nameText = $this->dom->createElement('text', $this->catalogName);
 
+            //question text
             $questionTextSection = $this->dom->createElement('questiontext');
             $lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $questionId);
             $questionText = $this->dom->createElement('text', $questionObject->question->$lang); //TODO sprachen auslesen aus db !!!!

@@ -2,6 +2,9 @@
 include_once "services/accountService.php";
 //in this class all exports get handeld expect the moodle xml export, this is excluded in the moodleXMLParser.php because its more complexe...
 
+// This class contains more than one parser
+// JSON / LaTeX / Standard 
+// Parser used here are rather simple and implementable with few lines of code
 class ExportParser{
     
     function serializeQuestion($questionObject){
@@ -49,6 +52,7 @@ class ExportParser{
     }
 
 
+    //This converts the object to the simpqui format
     function convertToStandard($obj, $userId, $exportName){
       $account = new AccountService();
 
@@ -58,8 +62,10 @@ class ExportParser{
         $questionText = $value->question->$lang;
         $questionType = $value->questionType;
 
+        //here we add the deilimter # to nessecary spots
         $standard .= $questionType."#";
         $standard .= $questionText."#";
+        //check for the question typen and then add type specific tokens
         if($questionType == "YesNo" || $questionType == "Open"){
           $standard .=  $value->answer."\n";
         }
@@ -74,7 +80,7 @@ class ExportParser{
       return $standard;
     }
 
-
+    //function to download the file from the platform, does not exactly correspond to a parser
     function downloadFile($objectToSave, $exportName, $userId, $fileEnding){
         $filename = 'catalogExports/'.$exportName.'_'.$userId.$fileEnding;
         $filenamePrint = $exportName.$fileEnding;
