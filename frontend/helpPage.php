@@ -287,6 +287,7 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
           <li><a class="d-inline-flex align-items-center rounded" href="#useExistingTranslation"><?php echo $helpMenuSubExistingTranslation;?></a></li>
         </ul>
       </li>
+      <li><a class="btn d-inline-flex align-items-center collapsed" href="#about"><?php echo $helpMenuAboutTranslation;?></a></li>
     </ul>
   </nav>
 </aside>
@@ -564,6 +565,29 @@ include "../systemLanguages/text_".$selectedLanguage.".php";
                 </p>
             </div>
             <img src="/quizVerwaltung/media/translateQuestionExample.PNG" style="width: 50%; margin-top: 0 !important;">
+        </div>
+
+    </article>
+
+    <article class="my-3" id="about">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+            <h3><?php echo $helpMenuAboutTranslation;?></h3>
+        </div>
+
+        <div>
+            <br>
+            <h2 class="importPossibility"><?php echo $helpAboutInforamtionMain;?></h2>
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $helpAboutInformationText;?>
+                </p>
+            </div>
+            <h2 class="importPossibility"><?php echo $helpAboutProjectMemberMain;?></h2>
+            <div class="alert alert-dark importPossibilityText" role="alert">
+                <p>
+                    <?php echo $helpAboutProjectText;?>
+                </p>
+            </div>
         </div>
 
     </article>

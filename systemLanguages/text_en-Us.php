@@ -145,7 +145,19 @@
        $helpMenuExport = "Export";
    
        $helpMenuTranslation = "Translate";
-   
+
+       $helpMenuAboutTranslation = "About";
+
+       $helpAboutInforamtionMain = "Informations about the Project";
+        $helpAboutInformationText = "This project was carried out and implemented as a master's project in the 
+        study program Wirtschaftsinformatik at the Technische Hochschule Mittelhessen (THM). It is intended to fill 
+        a gap in the quiz industry, since after some research no or not widespread openly accessible quiz question platforms were found.
+        So this project wants to be an open-access platform for all kinds of questions, where users can add, edit and export questions in 
+        various formats for further use.";
+        $helpAboutProjectMemberMain = "Project Member";
+        $helpAboutProjectText = "Dennis Zimmer  - Developer <br>
+        Silas Kammerer - Developer <br>
+        Prof. Dr. Stephan Euler - Project Supervisor";
    
        $helpContentsHeading = "Content";
    
