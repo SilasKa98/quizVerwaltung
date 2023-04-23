@@ -474,7 +474,7 @@
               if(followedQuestionsArray.length == 0){
                 cardHolder.innerHTML +=
                     '<div class="card recentQuestionWrapper">'+
-                        '<div class="card-body">'+
+                        '<div class="card-body recentQuestion" style="--bs-card-spacer-y: 0.5rem;">'+
                             '<p class="recentQuestionText"><br><br><br><br></p>'+
                         '</div>'+
                     '</div>'
