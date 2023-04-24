@@ -103,8 +103,7 @@ class Printer{
                                 }
                                 
                       print'</div>';
-                      print '<br><div class="questionHeaderInfosWrapper">';
-                        print "<hr>";
+                      print '<div class=" card-footer questionHeaderInfosWrapper">';
                         print'<p "card-text" class="downloadCounter"><img src="/quizVerwaltung/media/download.svg" width=15px height=15px> '.$questionObject[$i]->downloadCount."</p>";
                         print'<p "card-text" class="questionHeaderAuthor"><a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
                     print '</div>';
