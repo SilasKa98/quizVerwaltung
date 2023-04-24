@@ -102,11 +102,18 @@ class Printer{
                                     print'</select>';
                                 }
                                 
-                      print'</div>
-                        </div>
+                      print'</div>';
+                      print '<br><div class="questionHeaderInfosWrapper">';
+                        print "<hr>";
+                        print'<p "card-text" class="downloadCounter"><img src="/quizVerwaltung/media/download.svg" width=15px height=15px> '.$questionObject[$i]->downloadCount."</p>";
+                        print'<p "card-text" class="questionHeaderAuthor"><a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
+                    print '</div>';
+                print'</div>
                         <div class="collapse" id="collapsable_'.$questionObject[$i]->id.'">';
                             print'<div class="card-body">';
-                                print'<p "card-text">'.$answerField.': '.$questionObject[$i]->answer."</p>";
+                                if(!isset($questionObject[$i]->options)){
+                                    print'<p "card-text">'.$answerField.': '.$questionObject[$i]->answer."</p>";
+                                }
                                 print'<p "card-text">'.$questionTypeField.': '.$questionObject[$i]->questionType."</p>";
 
                                 if(isset($questionObject[$i]->options)){
@@ -123,8 +130,11 @@ class Printer{
                                     print'</p>';
                                 }
                                 
-                                print'<p "card-text">'.$creationDateField.': '.$questionObject[$i]->creationDate."</p>";
-                                print'<p "card-text">'.$lastChangeField.': '.$questionObject[$i]->modificationDate."</p>";
+                                print'<p "card-text">'.$creationDateField.': '.$questionObject[$i]->creationDate;
+                                    if($questionObject[$i]->modificationDate != ""){
+                                        print ' ('.$lastChangeField.': '.$questionObject[$i]->modificationDate.')';
+                                    }
+                                print'</p>';
                                 print'<p "card-text">'.$versionField.': '.$questionObject[$i]->version."</p>";
                                 
                                 if(isset($questionObject[$i]->tags)){
@@ -136,8 +146,6 @@ class Printer{
                                     print'</p>';
                                 }
 
-                                print'<p "card-text">'.$downloadsNumberField.': '.$questionObject[$i]->downloadCount."</p>";
-                                print'<p "card-text">'.$authorField.': <a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author."</span></a></p>";
                                 print'<p "card-text">';
                                     if($questionObject[$i]->verification == "verified"){
                                         print '<img src="/quizVerwaltung/media/verified.png" width=25px>'.$questionVerifiedStatusDisplay;

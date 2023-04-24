@@ -121,7 +121,7 @@
     $questionTypeField = "Tipo";
     $optionsField = "Opciones";
     $creationDateField = "Fecha de creación";
-    $lastChangeField = "Última actualización";
+    $lastChangeField = "Cambiado en";
     $versionField = "Versión";
     $tagsField = "Etiquetas";
     $downloadsNumberField = "Descargas";

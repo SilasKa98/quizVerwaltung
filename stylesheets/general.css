@@ -506,6 +506,20 @@ body{
     border: 4px solid white;
   }
 
+
+  .downloadCounter{
+    float: right;
+  }
+
+  .questionHeaderAuthor{
+    float: left;
+  }
+
+  .questionHeaderInfosWrapper{
+    overflow: auto;
+    margin-top: 50px;
+  }
+
   @media only screen and (max-width: 1199px) {
     #navOpenDrpDwnBtn {
       margin-left: 0 !important;
