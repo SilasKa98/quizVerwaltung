@@ -509,6 +509,10 @@
               let firstnames = jsonResponse.matchingFirstnames;
               let lastnames = jsonResponse.matchingLastnames;
               let recommendationHolder = document.getElementById("recommendationPersonHolder");
+              console.log(usernames.length);
+              if(usernames.length == 0){
+                document.getElementById("personsRecommendation").style.display = "none";;
+              }
               for(let i=0;i<usernames.length;i++){
                 recommendationHolder.innerHTML += 
                 '<div class="card personRecommendationCard">'+
