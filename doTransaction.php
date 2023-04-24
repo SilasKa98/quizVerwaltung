@@ -1268,6 +1268,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
             $filterQueryQuestion = (['id' => $cartQuestionId]);
             $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
             array_push($allQuestionsInCard, $searchQuestion);
+            $questionService->increaseDownloadCount($cartQuestionId);
         }
         $serializedJsonObject = $jsonParser->serializeQuestion($allQuestionsInCard);
         $jsonParser->downloadFile($serializedJsonObject, $exportName, $userId, ".json");
@@ -1284,6 +1285,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
             $filterQueryQuestion = (['id' => $cartQuestionId]);
             $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
             array_push($allQuestionsInCard, $searchQuestion);
+            $questionService->increaseDownloadCount($cartQuestionId);
         }
         $parsedLatexObj = $latexParser->convertToLatex($allQuestionsInCard, $userId, $exportName);
         $latexParser->downloadFile($parsedLatexObj, $exportName, $userId, ".tex");
@@ -1300,6 +1302,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "downloadCart"){
             $filterQueryQuestion = (['id' => $cartQuestionId]);
             $searchQuestion = $mongo->findSingle('questions', $filterQueryQuestion);
             array_push($allQuestionsInCard, $searchQuestion);
+            $questionService->increaseDownloadCount($cartQuestionId);
         }
         $parsedStdObj = $stdParser->convertToStandard($allQuestionsInCard, $userId, $exportName);
         $stdParser->downloadFile($parsedStdObj, $exportName, $userId, ".txt");
