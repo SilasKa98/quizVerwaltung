@@ -607,7 +607,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "changeFavoritTags"){
 
 
     //check if the given tag isnt containing any illegal chars (catch exploits)
-    if(!preg_match("/^[a-zA-ZäöüÄÖÜß0-9 ]*$/", strval($selectedTags))){
+    if(!preg_match("([A-Za-z0-9\-\_]+)", strval($selectedTags))){
         echo "Illegal chars detected!";
         exit();
     }
