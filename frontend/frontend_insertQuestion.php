@@ -106,7 +106,6 @@
     <script src="/quizVerwaltung/scripts/createQuestionForm.js"></script>
     <script>
         function loadQuestionContent(e){
-            console.log(e.id);
             var questionForm = document.getElementById("createQuestionForm");
 
             document.getElementById("questionTextWrapper").style.display = "block";

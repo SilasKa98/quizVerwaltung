@@ -136,14 +136,12 @@ function createhiddenInput(name, value){
 
 
 function addInputAndRadio(e){
-    console.log(e);
     let option = createInputWithRadio();
     e.after(option);
 }
 
 
 function addInputAndCheckbox(e){
-    console.log(e);
     let option = createInputWithCheckbox();
     e.after(option);
 }
@@ -155,6 +153,5 @@ function setCheckboxOrRadioValue(e){
 
 
 function delInputOption(e){
-    console.log(e);
     e.parentNode.remove();
 }

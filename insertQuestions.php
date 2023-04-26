@@ -218,7 +218,6 @@
             //select the choosen tags when the save button is pressed and procceed with the steps to save them
             var selectedTags = [];
             let allBtnTags = document.querySelectorAll(".btn-check");
-            console.log(allBtnTags);
             for(let i=0;i<allBtnTags.length;i++){
                 if(allBtnTags[i].checked){
                     let selectedTag = (allBtnTags[i].name).toString();

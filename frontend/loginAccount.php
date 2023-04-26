@@ -288,7 +288,6 @@
 $(document).ready(function(){
    $('a[href^="#"]').on('click', function(event) {
        var target = $(this.getAttribute('href'));
-       console.log(target);
        if( target.length ) {
            event.preventDefault();
            $('html, body').stop().animate({
@@ -321,7 +320,6 @@ var observer = new IntersectionObserver(function(entries) {
 const distanceToTop = document.querySelector('#topSection').getBoundingClientRect().top;
 window.addEventListener('scroll', function() {
   if (window.scrollY === 0) {
-    console.log('Oben angekommen');
     fixedBereich.classList.remove('fixed');
   }
 });

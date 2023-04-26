@@ -68,8 +68,6 @@
                     $(".toast").toast('show');
                     return;
                 }
-                console.log(response);
-                console.log("save successfull");
                 toastMsgBody.innerHTML = "New Language added successfully!";
                 $(".toast").toast('show');
                 //currently just reloading the site to display new things, maybe can also be added with js
@@ -96,7 +94,6 @@
                 id: id
             },
             success: function(response) {
-                console.log(response);
                 //instantly shows the changes to the karma without reload
                 let karmaId = document.getElementById("karma_"+id);  
                 if(job == "increaseKarma"){
@@ -113,7 +110,6 @@
                 
                 
                 karmaId.innerHTML = response;
-                console.log("karma change successfull");
             }
         });
 
@@ -139,7 +135,6 @@
                     $(".toast").toast('show');
                     return;
                 }
-                console.log(response);
                 //in the backend a json is created with all needed return values. Here the json needs to be parsed to use it for displaying changes
                 let jsonResponse = JSON.parse(response);
 
@@ -155,7 +150,6 @@
                     }
                 }
 
-                console.log("language change successfull");
                 toastMsgBody.innerHTML = "Changed the question language successfully!";
                 $(".toast").toast('show');
             }
@@ -256,7 +250,6 @@
     function createOptionsBubbles(options, answers) {
         let answerPills = "";
         answers = answers.split(",");
-        console.log(answers);
         options.forEach((option, index) => {
             if (answers.includes(index.toString())) {
                 answerPills += `<span class='badge rounded-pill text-bg-success' style='margin-right: 2px;'> ${option} </span>`;
@@ -415,8 +408,7 @@
     }
 
     function changeTagFilter(e){
-        console.log(e);
-        console.log(e.checked);
+
         let selectedTag = e.name;
         let method = "changeFavoritTags";
         $.ajax({

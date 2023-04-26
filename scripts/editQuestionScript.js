@@ -1,7 +1,6 @@
 var toastMsgBody = document.getElementById("toastMsgBody");
 
 async function changeQuestionTags(id){
-    console.log(id);
 
     $('#changeTagsModal').modal('toggle');
     await submitTagSelection("submitTagSelectionBtn");
@@ -9,7 +8,6 @@ async function changeQuestionTags(id){
     //select the choosen tags when the save button is pressed and procceed with the steps to save them
     var selectedTags = [];
     let allBtnTags = document.querySelectorAll(".tagBtn");
-    console.log(allBtnTags);
     for(let i=0;i<allBtnTags.length;i++){
         if(allBtnTags[i].checked){
             let selectedTag = (allBtnTags[i].name).toString();
@@ -22,7 +20,6 @@ async function changeQuestionTags(id){
 
 
 async function changeQuestion(id){
-    console.log(id);
 
     $('#changeQuestionModal').modal('toggle');
     await submitTagSelection("submitQuestionChangeBtn");
@@ -35,7 +32,6 @@ async function changeQuestion(id){
         "questionText":questionText,
         "questionLanguage":questionLanguage
     };
-    console.log(payload);
     sendAjax("editQuestionText", payload, id);
 }
 
@@ -52,29 +48,24 @@ function frontendChangeVerificationDisplay(e){
 }
 
 async function changeVerification(id){
-    console.log(id);
 
     $('#changeVerificationModal').modal('toggle');
     await submitTagSelection("sumbitVerificationBtn");
 
     var verificationStatus = [];
     let verificationBtn = document.querySelectorAll(".verificationBtn");
-    console.log(verificationBtn);
     for(let i=0;i<verificationBtn.length;i++){
-        console.log(verificationBtn[i].id);
         if(verificationBtn[i].id == 1){
             var verificationStatus = verificationBtn[i].name; 
         }
     }
 
-    console.log(verificationStatus);
 
     sendAjax("editQuestionVerification", verificationStatus, id);
 }
 
 
 async function changeOptions(id){
-    console.log(id);
 
     $('#changeOptionsModal').modal('toggle');
     await submitTagSelection("sumbitOptionsBtn");
@@ -85,14 +76,12 @@ async function changeOptions(id){
     for(let i=0;i<editOptionsValue.length;i++){
         allOptionsValues.push(editOptionsValue[i].value);
     }
-    console.log(allOptionsValues);
 
     let editOptionsCheck = document.querySelectorAll(".editOptionsCheck");
     let allOptionsChecks = [];
     for(let i=0;i<editOptionsCheck.length;i++){
         allOptionsChecks.push(editOptionsCheck[i].checked);
     }
-    console.log(allOptionsChecks);
 
     let payload = {
         "optionValues": allOptionsValues,
@@ -109,12 +98,10 @@ async function changeOptions(id){
  * This function only handels answer setting for Open Questions.. Options answers are handled in the changeOptions function
  */
 async function changeAnswer(id){
-    console.log(id);
 
     $('#changeAnswerModal').modal('toggle');
     await submitTagSelection("sumbitAnswerBtn");
     let answerQuestionType = document.getElementById("answerQuestionType").value;
-    console.log(answerQuestionType);
     if(answerQuestionType == "YesNo"){
         let answerTrue = document.getElementById("flexSwitchCheckAnswerTrue").checked;
         let answerFalse = document.getElementById("flexSwitchCheckAnswerFalse").checked;
@@ -174,7 +161,6 @@ function sendAjax(method, payload, id){
 
             toastMsgBody.innerHTML = response;
             $(".toast").toast('show');
-            console.log(response);
             setTimeout(function() {
                 location.reload();
             }, 1000);

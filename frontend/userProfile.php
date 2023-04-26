@@ -260,7 +260,6 @@
                         $(".toast").toast('show');
                         return;
                     }
-                    console.log(response);
                     //change the color of the button without reload for the moment...
                     //the permanent display handling is done above with php inside of the html
                     if(response == "isFollowing"){
@@ -316,7 +315,6 @@
                 success: function(response) {
                     $('#showFollowing').modal('toggle');
                     let jsonResponse = JSON.parse(response);   
-                    console.log(jsonResponse);
                     let followingModalBody = document.getElementById("followingModalBody");
                     let followingUsernames = jsonResponse.followingUsernames;
                     let followingFirstnames = jsonResponse.followingFirstnames;
