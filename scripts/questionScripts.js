@@ -162,8 +162,6 @@
         });
     }
 
-    //TODO Fehler mit Open questions diese werden hier irgendwie nicht aktualisiert --> nur wenn die seite geladen wird 
-    //cart wird jedoch nach hinzufügen eines anderen Fragentyps dann wíeder aktualisiert etc. !!!!
     function addToCart(e){    
         let questionId = e.getAttribute("name");
         let method = "addToCart";
@@ -215,7 +213,6 @@
                     });
                 }
                
-                //TODO hier muss noch irgednwie festgestellt werden welche sprache der user ausgewählt hat damit dann auch die sprachdatei zugegriffen werden kann
                 canvasBody.innerHTML += "<div class='card' id=" + questionId + " style='margin: .5rem; --bs-card-spacer-y: .5rem;'> " +
                                             "<div class='card-body'>" + 
                                                 "<div class='row'>" + 
@@ -255,7 +252,7 @@
         });
     }
 
-    //TODO hier vllt noch etwas mehr formatierung machen damit das nicht so überlappt ?????!?!??
+    //TODO OptionsBubbles etwas anders (schöner) anordnen (siehe cartService.php)!!
     function createOptionsBubbles(options, answers) {
         let answerPills = "";
         answers = answers.split(",");
@@ -270,10 +267,8 @@
         return answerPills;
     }
     
-    //TODO logs herausnehmen !!!!
-    //check if save button clicked!!!!
+    //checks if save button clicked
     async function submitCatalog(){
-        console.log("in submitCatalog");
         buttonCheck = new Promise(function (resolve, reject){
             var submit = document.getElementById("catalogSave");
             
@@ -295,13 +290,9 @@
         return buttonCheck;
     }
     
-    //TODO logs herausnehmen !!!!
     //get all neccesary infos from frontend
     async function getCatalogSettings(){
-        console.log("in getCatalogSettings");
-        
         var buttonPressed = await submitCatalog();
-        console.log(buttonPressed)
         
         p = new Promise(function (resolve, reject){
             var name = document.getElementById("catalogName").value;
@@ -320,24 +311,16 @@
         return p;
     }
 
-    //TODO logs herausnehmen !!!!
     async function createCatalog(e){
-        console.log("befor await");
-        
         let catalogSettings;
         try {
             catalogSettings = await getCatalogSettings();
         } catch (error) {
-            console.log("Hier sollte das aufgerufen werden !!!!");
             return ;
         }
         
-        console.log("after await");
         let method = "createCatalog";
-        console.log(catalogSettings);
-        //TODO wie bekomme ich hier attribute!!!
         let name = catalogSettings.name;
-        console.log("name: " + name);
         let status = "";
         if (catalogSettings.publicStatus == true){
             status = "public";
@@ -502,14 +485,11 @@
                 method: method
             },
             success: function(response) {
-              console.log(response);
               let jsonResponse = JSON.parse(response);
-              console.log(jsonResponse);
               let usernames = jsonResponse.matchingUsernames;
               let firstnames = jsonResponse.matchingFirstnames;
               let lastnames = jsonResponse.matchingLastnames;
               let recommendationHolder = document.getElementById("recommendationPersonHolder");
-              console.log(usernames.length);
               if(usernames.length == 0){
                 document.getElementById("personsRecommendation").style.display = "none";;
               }

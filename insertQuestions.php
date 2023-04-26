@@ -124,8 +124,6 @@
                                         <div class="card-body">
                                             <h5 class="card-title">'.$innerKey.'</h5>
                                             <p class="card-text">'.$innerValue.'</p>';
-                                            #TODO insert button for chaning question here
-                                            #<button class="btn btn-primary">Anpassen</button>
                                         echo'</div>
                                     </div>
                                 ';

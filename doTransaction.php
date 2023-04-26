@@ -76,8 +76,6 @@ if(isset($_POST["method"]) && $_POST["method"] == "insertNewLanguage"){
 
     //at this point the whole object is translated, now it can be taken apart and only the needed parts can be inserted into the database into the right object (object with id xxxx)
     //same as done obove with the question
-
-    //TODO options field 
     exit();
 }
 
@@ -1007,7 +1005,7 @@ if(isset($_POST["method"]) && $_POST["method"] == "getLatestQuestionsOfFollowedU
         $searchUserFollowing = $mongo->findSingle("accounts",$searchUserFilterFollowing,[]);
         $followedUser = $searchUserFollowing->username;
 
-        // TODO change from creationDate to modification date
+        // TODO change from creationDate to modification date ? (maybe)
         $searchOption = ['sort' => ['creationDate' => -1] , 'limit' => 3];
         $searchQuestionOfFollowedUserFilter = (['author'=>$followedUser]);
         $searchQuestionOfFollowedUser = $mongo->read("questions",$searchQuestionOfFollowedUserFilter, $searchOption);

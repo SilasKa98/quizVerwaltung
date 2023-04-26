@@ -46,7 +46,7 @@
                     $questionClass = new ExportYesNoQuestion($questionObject, $this->dom);
                     break;
                 default:
-                    //TODO
+                    exit(); //TODO hinzufügen von error oder nachricht an den nutzer das der typ nicht unterstützt wird !!!
             }
             /*
             Fragetypen die noch gemacht werden müssen => Order
@@ -58,13 +58,13 @@
             $questionSection->setAttributeNode($questionType);
 
             //question name
-            $nameSection = $this->dom->createElement('name');   //TODO ggf. kann man hier sogar noch Tags in als Namen verwenden // andererseits scheint moodle xml auch tags zu unterstützen
+            $nameSection = $this->dom->createElement('name');   //TODO ggf. kann man hier sogar noch Tags als Namen verwenden // andererseits scheint moodle xml auch tags zu unterstützen
             $nameText = $this->dom->createElement('text', $this->catalogName);
 
             //question text
             $questionTextSection = $this->dom->createElement('questiontext');
             $lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $questionId);
-            $questionText = $this->dom->createElement('text', $questionObject->question->$lang); //TODO sprachen auslesen aus db !!!!
+            $questionText = $this->dom->createElement('text', $questionObject->question->$lang);
             
             $nameSection->appendChild($nameText);
             $questionSection->appendChild($nameSection);
@@ -124,7 +124,7 @@
         function getQuestionBodyAsDom($questionSection){
             $answerArray = explode(',', ($this->questionObject->answer));
             $lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $this->questionObject->id);
-            $options = (array)$this->questionObject->options->$lang; //TODO hier müssen noch die anderen Sprachen angepasst werden !!!!
+            $options = (array)$this->questionObject->options->$lang;
 
             $fraction;
 
@@ -170,7 +170,9 @@
 
     class ExportOpenQuestion extends ExportQuestion {
         function getQuestionBodyAsDom($questionSection){
-            //TODO aktuell ausgeblendet da wir die antworden noch nicht übersetzen das kann noch gemacht werden
+            //TODO aktuell ausgeblendet da wir die antworden noch nicht übersetzen das kann noch gemacht werden (nur bei Open Questions)
+            //aktuell machen wir das da wir voher noch das input format anpassen müssten indem wir angeben das bestimmte abschnitte nicht übersetzt werden sollen
+            //hilfreich für key Wörter in programmiersprachen 
             //$lang = $this->account->getUserQuestionLangRelation($_SESSION["userData"]["userId"], $this->questionObject->id);
             $answerArray = explode(',', ($this->questionObject->answer));
             $fraction = "100";

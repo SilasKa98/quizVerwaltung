@@ -5,14 +5,10 @@ require $basePath. '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable($basePath);
 $dotenv->load();
 
-//TODO session management irgendwie machen damit es keine überschneidungen etc. gibt !!!!
-//TODO ebenfalls die options optional machen weil die bisher einfach nich gebraucht werden !!!! also einfach einen standardwert mit [] !!!!!
-
 class MongoDBService {
     private $client;    # Connection to The MongoDB instance
     private $db;        # The actual Database of the instance
   
-    //TODO Hier würde ich am besten schon direkt die collection definieren damit wir die nicht jedes mal neu angeben müssen !!!!
     public function __construct() {
         try {
             # Connecting to the MongoDB using the dbConnection defined in the .env file
@@ -32,7 +28,7 @@ class MongoDBService {
      * @param string     $collection     The collection name of the mongodb to which the data should be inserted
      * @param object     $data           The data to be inserted as a php object
      *
-     * @return //TODO which type     $result     The _id of the inserted Object whithin mongodb
+     * @return           $result         The _id of the inserted Object whithin mongodb
      */
     public function insertSingle($collection, $data) {
       try {
@@ -149,7 +145,7 @@ class MongoDBService {
      * 
      * @param string        $collection     The collection name of the mongodb
      */
-    public function cleanCollection($collection) {
+    private function cleanCollection($collection) {
         try {
             $this->db->$collection->drop();
             $this->db->createCollection($collection);
@@ -162,9 +158,6 @@ class MongoDBService {
     public function updateEntry($collection,$filter,$update){
         $result = $this->db->$collection->updateMany($filter, $update);
         return $result;
-    }
-
-
-    //TODO vllt auch start und end session als extra function ?!?!? --> ansonsten in den einzelnen Funktionen machen 
+    } 
   }
 ?>

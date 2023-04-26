@@ -182,7 +182,7 @@ class CartService{
         }
     }
 
-    //TODO hier vllt noch etwas mehr formatierung machen damit das nicht so überlappt ?????!?!??
+    //TODO OptionsBubbles etwas anders (schöner) anordnen (siehe questionScripts.js)!!
     function __createOptionsBubbles($options, $answers){
         $answerPills = "";
         $answers = explode(",",$answers);

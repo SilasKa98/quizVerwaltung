@@ -44,7 +44,7 @@ else {
             <ul class="navbar-nav ms-auto">
                 
                 <li class="nav-item">
-                    <div class="d-flex" id="searchInSystemWrapper" role="search" style="margin: .5rem"> <!-- //TODO hier irgenwie anders centern -->
+                    <div class="d-flex" id="searchInSystemWrapper" role="search" style="margin: .5rem">
                         
                             <input class="form-control me-2" id="searchInSystem" type="search" placeholder="Search" aria-label="Search">
                             <div class="list-group" id="searchResultsWrapper">
