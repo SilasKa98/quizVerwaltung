@@ -564,3 +564,10 @@ body{
       display: grid;
     }
   }
+
+
+  @media only screen and (max-width: 535px) {
+    .questionHeaderInfosWrapper{
+      margin-top: 90px;
+    }
+  }
