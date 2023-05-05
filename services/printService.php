@@ -47,13 +47,15 @@ class Printer{
                         <button class="btn btn-secondary btn-sm dropdown-toggle rightOuterMenuToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                            
                         </button>
-                        <ul class="dropdown-menu outerMenuItems">
-                            <li data-bs-toggle="modal" name="'.$questionObject[$i]->id.'_'.$lang.'" data-bs-target="#changeLangModal" class="outerMenuItemsListElem" onclick="insertNewLanguage(this)">
-                                <a class="dropdown-item">
-                                    <img src="/quizVerwaltung/media/language.svg" width="20px" >
-                                </a>
-                            </li>
-                            <li class="outerMenuItemsListElem" name="'.$questionObject[$i]->id.'" onclick="addToCart(this)">
+                        <ul class="dropdown-menu outerMenuItems">';
+                        if(!isset($_SESSION["user_is_guest"])){
+                            print'<li data-bs-toggle="modal" name="'.$questionObject[$i]->id.'_'.$lang.'" data-bs-target="#changeLangModal" class="outerMenuItemsListElem" onclick="insertNewLanguage(this)">
+                                    <a class="dropdown-item">
+                                        <img src="/quizVerwaltung/media/language.svg" width="20px" >
+                                    </a>
+                                </li>';
+                        }
+                        print'<li class="outerMenuItemsListElem" name="'.$questionObject[$i]->id.'" onclick="addToCart(this)">
                                 <a class="dropdown-item add-to-cart">
                                     <img src="/quizVerwaltung/media/basket-shopping.svg" width="20px">
                                 </a>
@@ -82,14 +84,17 @@ class Printer{
                                 <span id="headerText_'.$questionObject[$i]->id.'">'.$questionObject[$i]->question->$lang.'</span>
                             </a>
                             
-                            <div class="rightInnerMenuWrapper">
-                                <p class="karmaDisplay">
+                
+                        <div class="rightInnerMenuWrapper">';
+
+                    if(!isset($_SESSION["user_is_guest"])){
+                         print'<p class="karmaDisplay">
                                     <span id="karma_'.$questionObject[$i]->id.'">'.$questionObject[$i]->karma.'</span>
                                 </p>
                                 <button class="karmaBtn" id="'.$questionObject[$i]->id.'" name="increaseKarma" onclick="changeKarma(this)"'; if(array_search($questionObject[$i]->id,$userKarmaGivenUp)!== false){ print "style='background: rgb(5, 125, 238);'";} print'>&#8593;</button>
                                 <button class="karmaBtn" id="'.$questionObject[$i]->id.'" name="decreaseKarma" onclick="changeKarma(this)"'; if(array_search($questionObject[$i]->id,$userKarmaGivenDown)!== false){ print "style='background: rgb(5, 125, 238);'";} print'>&#8595;</button>
                                 <br>';
-
+                    }
                                 if(count($allAvailableTranslations) > 1){
                                     print'<select class="selLanguageDropDown" name="changeLang_'.$questionObject[$i]->id.'" onchange="changeQuestionLanguage(this)" name="language">';
                                         foreach($allAvailableTranslations as $avLang){ 

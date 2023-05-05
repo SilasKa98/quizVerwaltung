@@ -6,6 +6,7 @@
   }
   extract($_SESSION["userData"]);
 
+
   //get the selected userLanguage to display the system in the right language
   include_once "services/mongoService.php";
   $mongo = new MongoDBService();
@@ -68,22 +69,25 @@
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card mb-3" id="profileCard" style="min-height: 267px;">
-          <div class="row g-0 innerProfileDiv">         
-            <h5 class="card-title"><?php echo $latestQuestionsFollowing; ?></h5>
-              <div class="card-body" id="showRecentBody">
-                <div id="cardHolder">
-                </div>
-                <div id="personsRecommendation">
-                  <br><h5><?php echo $personsYouMayKnow; ?></h5>
-                  <div id="recommendationPersonHolder">
+      
+      <?php if(!isset($_SESSION["user_is_guest"])){?>
+        <div class="col">
+          <div class="card mb-3" id="profileCard" style="min-height: 267px;">
+            <div class="row g-0 innerProfileDiv">         
+              <h5 class="card-title"><?php echo $latestQuestionsFollowing; ?></h5>
+                <div class="card-body" id="showRecentBody">
+                  <div id="cardHolder">
+                  </div>
+                  <div id="personsRecommendation">
+                    <br><h5><?php echo $personsYouMayKnow; ?></h5>
+                    <div id="recommendationPersonHolder">
+                    </div>
                   </div>
                 </div>
-              </div>
+            </div>
           </div>
         </div>
-      </div>
+      <?php }?>
     </div>
   </div>
  

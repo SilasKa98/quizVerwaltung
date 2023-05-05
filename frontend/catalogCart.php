@@ -32,9 +32,11 @@
   </div>
 
   <div class="container-fluid" align="center" style="margin-bottom: 10px;" id=catalogButtons>
+  <?php if(!isset($_SESSION["user_is_guest"])){?>
     <button type="button" name="exportButton" class="btn btn-primary" style="width: 40%;" data-bs-toggle="modal" data-bs-target="#catalogOptions" onclick="createCatalog(this)">
       <?php echo $createCatalogButton ?>
     </button>
+  <?php }?>
     
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exportDownload" aria-expanded="false" style="width: 40%;">
       <?php echo $exportButton ?>

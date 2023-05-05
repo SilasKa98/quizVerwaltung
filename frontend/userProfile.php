@@ -113,16 +113,18 @@
                     <h5 class="my-3"><?php echo $foundProfile->username;?></h5>
                     <p class="text-muted mb-1"><?php echo $account->generateUserInformationText($foundProfile->userId);?></p>
                     <p class="text-muted mb-4"><?php echo $userJoinDateInfo." ".$foundProfile->joinDate; ?></p>
-                    <div class="d-flex justify-content-center mb-2">
-                    <?php if($foundProfile->userId != $userId){ ?>
-                        <?php if($userIsFollowing){ ?>
-                            <button type="button" id="followBtn" class="btn btn-success" onclick="follow('<?php echo $foundProfile->userId;?>')"><?php echo $followedBtnText;?></button>
-                        <?php }else{ ?>
-                            <button type="button" id="followBtn" class="btn btn-primary" onclick="follow('<?php echo $foundProfile->userId;?>')"><?php echo $notFollowedBtnText;?></button>
+                    <?php if(!isset($_SESSION["user_is_guest"])){?>
+                        <div class="d-flex justify-content-center mb-2">
+                        <?php if($foundProfile->userId != $userId){ ?>
+                            <?php if($userIsFollowing){ ?>
+                                <button type="button" id="followBtn" class="btn btn-success" onclick="follow('<?php echo $foundProfile->userId;?>')"><?php echo $followedBtnText;?></button>
+                            <?php }else{ ?>
+                                <button type="button" id="followBtn" class="btn btn-primary" onclick="follow('<?php echo $foundProfile->userId;?>')"><?php echo $notFollowedBtnText;?></button>
+                            <?php } ?>
+                            <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                         <?php } ?>
-                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-                    <?php } ?>
-                    </div>
+                        </div>
+                    <?php }?>
                 </div>
                 </div>
                 <div class="card mb-4 mb-lg-0">
@@ -158,7 +160,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <img src="/quizVerwaltung/media/lightbulb.svg" width="18px" > 
-                        <p class="mb-0">Beste Frage</p>
+                        <p class="mb-0"></p>
                     </li>
                     </ul>
                 </div>

@@ -35,7 +35,9 @@ else {
         </button>
         <div class="collapse navbar-collapse" id="navbarRight">
             <div class="navbar-nav">
-                <a class="nav-link" aria-current="page" href="/quizVerwaltung/frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
+                <?php if(!isset($_SESSION["user_is_guest"])){?>
+                    <a class="nav-link" aria-current="page" href="/quizVerwaltung/frontend/frontend_insertQuestion.php"><?php echo $navText_insertQuestion ?></a>
+                <?php }?>
                 <a class="nav-link" href="/quizVerwaltung/frontend/helpPage.php"><?php echo $helppageNavText;?></a>
                 <a class="nav-link" href="https://www.thm.de/site/impressum.html" target="_blank">Impressum</a>
                 <a class="nav-link" href="https://www.thm.de/site/datenschutz.html" target="_blank"><?php echo $datenschutzNavbar;?></a>
@@ -95,16 +97,21 @@ else {
                         </span>
                     </button>
                 </li>
-
+                
                 <li class="nav-item dropdown" id="navOpenDrpDwnBtn">
+                    <?php if(!isset($_SESSION["user_is_guest"])){?>
                         <a id="ankerWrapUserLink" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>&section=questions">
+                    <?php }?>  
                             <p id="usernameLink">
                                 <?php echo $username; ?>
                             </p>
                             <img class="rounded-circle" src="/quizVerwaltung/media/defaultAvatar.png" alt="mdo" width="40" height="40">
-                        </a>      
+                    <?php if(!isset($_SESSION["user_is_guest"])){?>
+                        </a>    
+                    <?php }?>
                         <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <?php if(!isset($_SESSION["user_is_guest"])){?>
                             <li>
                                 <!--dont remove, needed for bugfix-->
                                 <form></form>
@@ -128,6 +135,7 @@ else {
                                 <a class="dropdown-item" href="/quizVerwaltung/frontend/usersSettings.php">Settings</a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
+                            <?php }?>
                             <li>
                                 <form class="navbar-form navbar-right" method="post" action="/quizVerwaltung/doTransaction.php">
                                     <button class="dropdown-item" type="submit" name="logout"><?php echo $text_logout_btn?></button>

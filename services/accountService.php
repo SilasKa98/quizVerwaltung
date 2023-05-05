@@ -296,7 +296,13 @@ class AccountService{
           return false;
         }
       }
-    
+
+      function login_as_guest(){
+        session_start();
+        $_SESSION["user_is_guest"] = true;
+        $this->login("Guest", "Jdn21Jd+!mdm3sS");
+      }
+
 }
 
 

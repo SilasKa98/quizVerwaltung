@@ -1658,5 +1658,14 @@ if(isset($_POST["method"]) && $_POST["method"] == "editQuestionOptions"){
 
 }
 
+if(isset($_POST["method"]) && $_POST["method"] == "guestLogin"){
+
+    include_once "services/accountService.php";
+    $account = new AccountService();
+
+    $account->login_as_guest();
+    header("Location: /quizVerwaltung/index.php?login=success");
+}
+
 
 ?>

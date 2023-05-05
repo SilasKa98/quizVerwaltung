@@ -122,7 +122,7 @@
                     </p>
                 </div>
                 <div class="col-md-10 mx-auto col-lg-5">
-                    <form class="p-4 p-md-5 border rounded-3 bg-light" action="/quizVerwaltung/doTransaction.php" method="post">
+                    <form class="p-4 p-md-4 border rounded-3 bg-light" action="/quizVerwaltung/doTransaction.php" method="post">
                         <div class="form-floating mb-3">
                             <input type="text" name="mailuid" class="form-control" id="floatingInput" placeholder="E-mail or Username">
                             <label for="floatingInput">Email or Username</label>
@@ -139,8 +139,14 @@
                         <input type="hidden" name="method" value="loginAccount">
                         <input  type="submit" class="w-100 btn btn-lg btn-primary" name="login_submit" value="Login">
                         <hr class="my-4">
-                        <small class="text-muted">No Account Yet?<a href="registerAccount.php"> Sign up now!</a></small>
                     </form>
+                    <small class="text-muted">No Account Yet?<a href="registerAccount.php"> Sign up now!</a></small>
+                    <small class="text-muted">Or continue as
+                            <form action="/quizVerwaltung/doTransaction.php" method="post" style="display:inline;">
+                                <input type="hidden" name="method" value="guestLogin">
+                                <a href="#" onclick="this.closest('form').submit();return false;">Guest</a>
+                            </form>
+                        </small>
                 </div>
             </div>
         </div>
