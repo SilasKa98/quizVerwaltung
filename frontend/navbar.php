@@ -84,6 +84,7 @@ else {
             
                     </div>
                 </li>
+                <?php if(!isset($_SESSION["user_is_guest"])){ ?>
                 <li class="nav-item"> 
                     <button 
                         class="btn btn-outline-light shopping-cart" 
@@ -97,7 +98,7 @@ else {
                         </span>
                     </button>
                 </li>
-                
+                <?php }?>
                 <li class="nav-item dropdown" id="navOpenDrpDwnBtn">
                     <?php if(!isset($_SESSION["user_is_guest"])){?>
                         <a id="ankerWrapUserLink" href="/quizVerwaltung/frontend/userProfile.php?profileUsername=<?php echo $username; ?>&section=questions">

@@ -4,6 +4,7 @@
         header("Location: loginAccount.php");
         exit();
     }
+    
     extract($_SESSION["userData"]);
 
 
@@ -30,6 +31,11 @@
     $filterQueryUserprofile = (['username' => $visitedUserprofile]);
     $foundProfile= $mongo->findSingle("accounts",$filterQueryUserprofile,[]);
 
+    //cant access Guest profile
+    if($foundProfile->username == "Guest"){
+        header("Location: ../index.php");
+        exit();
+    }
 
     //get all catalogs of this user
     $filterQueryCatalogs = ['author' => $foundProfile->username];

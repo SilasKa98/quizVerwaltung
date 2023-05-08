@@ -87,6 +87,17 @@
             </div>
           </div>
         </div>
+      <?php }else{?>
+
+        <div class="col">
+          <div class="card mb-3" id="profileCard" style="min-height: 267px;">
+            <div class="row g-0 innerProfileDiv">         
+              <p style="text-align:center;margin-top: 8%; font-size: 14pt;">You are currently using a Guest account. With a Guest account you can view and browse our platform. 
+                However we highly recommend to create your own account so you have full access to all our features. </p>
+            </div>
+          </div>
+        </div>
+
       <?php }?>
     </div>
   </div>

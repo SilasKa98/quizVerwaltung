@@ -4,6 +4,12 @@
     header("Location: loginAccount.php");
     exit();
   }
+
+  if(isset($_SESSION["user_is_guest"])){
+    header("Location: ../index.php");
+    exit();
+  }
+
   extract($_SESSION["userData"]);
   //get the selected userLanguage to display the system in the right language
   include_once "../services/mongoService.php";

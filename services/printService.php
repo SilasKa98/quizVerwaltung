@@ -42,25 +42,27 @@ class Printer{
             $allAvailableTranslations = array_keys((array)$checkAvailableTranslations);
 
             print'
-                <div class="container-fluid">
-                    <div class="btn-group rightOuterMenu">
+                <div class="container-fluid">';
+                if(!isset($_SESSION["user_is_guest"])){
+                    print'<div class="btn-group rightOuterMenu">
                         <button class="btn btn-secondary btn-sm dropdown-toggle rightOuterMenuToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                            
                         </button>
                         <ul class="dropdown-menu outerMenuItems">';
-                        if(!isset($_SESSION["user_is_guest"])){
+                        
                             print'<li data-bs-toggle="modal" name="'.$questionObject[$i]->id.'_'.$lang.'" data-bs-target="#changeLangModal" class="outerMenuItemsListElem" onclick="insertNewLanguage(this)">
                                     <a class="dropdown-item">
                                         <img src="/quizVerwaltung/media/language.svg" width="20px" >
                                     </a>
                                 </li>';
-                        }
+                        
                         print'<li class="outerMenuItemsListElem" name="'.$questionObject[$i]->id.'" onclick="addToCart(this)">
                                 <a class="dropdown-item add-to-cart">
                                     <img src="/quizVerwaltung/media/basket-shopping.svg" width="20px">
                                 </a>
                             </li>
                             ';
+                
                             //check if user owns question or if user as admin access
                             if($questionObject[$i]->author == $_SESSION["userData"]["username"] || $isUserAdmin){
                                 print'
@@ -76,9 +78,10 @@ class Printer{
                             }
                             
                      //<span "card-text" style="float:left;"><a href="/quizVerwaltung/frontend/userProfile.php?profileUsername='.$questionObject[$i]->author.'&section=questions"><span class="badge rounded-pill text-bg-primary authorPill" style="margin-right: 2px;">@'.$questionObject[$i]->author.'"</span></a></span>       
-                   print'</ul>
-                    </div>
-                    <div class="card questionCard">
+                    print'</ul>
+                    </div>';
+                    }
+                print'<div class="card questionCard">
                         <div class="card-header"'; if(isset($_GET["searchedQuestionId"]) && $_GET["searchedQuestionId"] == $questionObject[$i]->id ){ print "style=\"background-color: #fbf5bf\""; } print'>
                             <a class="collapsable_header" data-bs-toggle="collapse" href="#collapsable_'.$questionObject[$i]->id.'" '; if(isset($_GET["searchedQuestionId"]) && $_GET["searchedQuestionId"] == $questionObject[$i]->id ){ print "id=\"searchFocus\""; } print'>
                                 <span id="headerText_'.$questionObject[$i]->id.'">'.$questionObject[$i]->question->$lang.'</span>
