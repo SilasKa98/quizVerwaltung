@@ -425,7 +425,7 @@
                 $(".toast").toast('show');
                 return;
             }
-            location.reload();
+            location.href = "/quizVerwaltung/index.php";
           }
         });
     }
